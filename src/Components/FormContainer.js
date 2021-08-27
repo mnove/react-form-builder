@@ -29,10 +29,28 @@ import {
 } from "./formSchemaStateReducers";
 import { formAlertValidation } from "./formAlertValidation";
 
-import { EuiText, EuiPanel } from "@elastic/eui";
+import {
+  EuiText,
+  EuiPanel,
+  EuiButtonIcon,
+  EuiButton,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiSpacer,
+  EuiSwitch,
+  EuiFormRow,
+  EuiSelect,
+} from "@elastic/eui";
 
 import { styled } from "styled-components";
-import { FormFieldContainer } from "./styled-components/formStyles";
+import {
+  AddFormFieldPanel,
+  FormFieldContainer,
+  FormFieldPanel,
+} from "./styled-components/formStyles";
+
+import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
+import { Edit } from "@styled-icons/remix-fill/Edit";
 
 // Form Schema data
 const formSchema = sampleFormSchema;
@@ -188,46 +206,26 @@ function FormContainer() {
             {formSchemaState.map((elem, index) => {
               const key = elem.key;
               return (
-                <EuiPanel hasShadow={false} hasBorder={true}>
-                  <FormFieldContainer key={index}>
-                    <div className="form-field-controls-container">
-                      <div>
-                        <button
-                          className="btn-delete-field"
-                          onClick={() => {
-                            handleFieldRemove(key, formik);
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="20"
-                            height="20"
-                          >
-                            <path fill="none" d="M0 0h24v24H0z" />
-                            <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z" />
-                          </svg>
-                        </button>
-                      </div>
-                      <div>
-                        <label className="checkbox-container">
-                          Required?
-                          <input
-                            type="checkbox"
-                            onChange={(e) => {
-                              handleRequiredCheckbox(e, key);
-                            }}
-                            value={true}
-                            checked={handleRequiredCheckboxValue(key)}
-                          />
-                          <span className="checkmark"></span>
-                        </label>
-                      </div>
+                <>
+                  <FormFieldPanel
+                    hasShadow={false}
+                    hasBorder={true}
+                    key={index}
+                  >
+                    <EuiFlexGroup
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="flexEnd"
+                    >
+                      <EuiFlexItem grow={false}>
+                        <EuiButtonIcon
+                          iconType={Edit}
+                          color="secondary"
+                          aria-label="Edit form label"
+                          display="base"
+                          onClick={() => handleOpenModal(key)}
+                        />
 
-                      <div>
-                        <button onClick={() => handleOpenModal(key)}>
-                          Open modal
-                        </button>
                         <Modal
                           open={handleModalOpening(key)}
                           onClose={() => handleCloseModal(key)}
@@ -245,12 +243,47 @@ function FormContainer() {
                             Save
                           </button>
                         </Modal>
-                      </div>
-                    </div>
+                      </EuiFlexItem>
 
+                      <EuiFlexItem grow={false}>
+                        <EuiSwitch
+                          name="switch"
+                          label="Required?"
+                          value={true}
+                          checked={handleRequiredCheckboxValue(key)}
+                          onChange={(e) => {
+                            handleRequiredCheckbox(e, key);
+                          }}
+                        />
+
+                        {/* <label className="checkbox-container">
+                          Required?
+                          <input
+                            type="checkbox"
+                            onChange={(e) => {
+                              handleRequiredCheckbox(e, key);
+                            }}
+                            value={true}
+                            checked={handleRequiredCheckboxValue(key)}
+                          />
+                          <span className="checkmark"></span>
+                        </label> */}
+                      </EuiFlexItem>
+                      <EuiFlexItem grow={false}>
+                        <EuiButtonIcon
+                          iconType={CloseCircle}
+                          color="danger"
+                          aria-label="Delete field"
+                          display="base"
+                          onClick={() => {
+                            handleFieldRemove(key, formik);
+                          }}
+                        />
+                      </EuiFlexItem>
+                    </EuiFlexGroup>
                     {getFormElement(key, elem)}
-                  </FormFieldContainer>
-                </EuiPanel>
+                  </FormFieldPanel>
+                </>
               );
             })}
 
@@ -258,10 +291,23 @@ function FormContainer() {
             {console.log("FORMIK ERRORS", formik.errors)}
 
             {formAlertValidation(formik)}
+            <AddFormFieldPanel hasShadow={false}>
+              <EuiFormRow label="Add a field">
+                <EuiSelect
+                  hasNoInitialSelection
+                  options={[
+                    { value: "textInput", text: "Text Input" },
+                    { value: "emailInput", text: "Email Input" },
+                    { value: "numberInput", text: "Number Input" },
+                  ]}
+                  onChange={(e) =>
+                    handleFieldTypeAdd(e.target.value, formSchema)
+                  }
+                  value={selectValue}
+                />
+              </EuiFormRow>
 
-            <div className="add-field-control">
-              <label htmlFor="cars"> + Add a field</label>
-              <select
+              {/* <select
                 name="cars"
                 id="cars"
                 onChange={(e) => handleFieldTypeAdd(e.target.value, formSchema)}
@@ -271,10 +317,19 @@ function FormContainer() {
                 <option value="textInput">Text Input</option>
                 <option value="emailInput">Email Input</option>
                 <option value="numberInput">Number Input</option>
-              </select>
-            </div>
+              </select> */}
+            </AddFormFieldPanel>
 
-            <button type="submit">Submit</button>
+            <EuiFlexGroup>
+              <EuiFlexItem grow={false}>
+                <EuiButton color="text">Reset Form</EuiButton>
+              </EuiFlexItem>
+              <EuiFlexItem>
+                <EuiButton type="submit" color="secondary">
+                  Submit
+                </EuiButton>
+              </EuiFlexItem>
+            </EuiFlexGroup>
           </Form>
         );
       }}

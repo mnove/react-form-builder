@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const FormFieldContainer = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.233);
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.233); */
-  padding-right: 0.8rem;
-  padding-left: 0.8rem;
-  padding-bottom: 0.4rem;
-  padding-top: 0.4rem;
-  margin-top: 0.4rem;
+import { EuiPanel } from "@elastic/eui";
+
+export const FormFieldPanel = styled(EuiPanel)`
+  margin: 1rem 0rem;
+`;
+
+export const AddFormFieldPanel = styled(EuiPanel)`
+  margin: 1rem 0rem;
+  border: 1px solid orange;
 `;
