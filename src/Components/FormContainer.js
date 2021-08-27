@@ -40,6 +40,9 @@ import {
   EuiSwitch,
   EuiFormRow,
   EuiSelect,
+  EuiPopover,
+  EuiForm,
+  EuiFieldText,
 } from "@elastic/eui";
 
 import { styled } from "styled-components";
@@ -191,6 +194,8 @@ function FormContainer() {
     return getModalValue(formContainerState, key);
   };
 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   return (
     <Formik
       initialValues={formData}
@@ -218,7 +223,7 @@ function FormContainer() {
                       justifyContent="flexEnd"
                     >
                       <EuiFlexItem grow={false}>
-                        <EuiButtonIcon
+                        {/* <EuiButtonIcon
                           iconType={Edit}
                           color="secondary"
                           aria-label="Edit form label"
@@ -242,7 +247,60 @@ function FormContainer() {
                           <button onClick={() => handleSaveFieldLabel(key)}>
                             Save
                           </button>
-                        </Modal>
+                        </Modal> */}
+
+                        <EuiPopover
+                          id="inlineFormPopover"
+                          button={
+                            <EuiButtonIcon
+                              iconType={Edit}
+                              color="secondary"
+                              aria-label="Edit form label"
+                              display="base"
+                              fill
+                              onClick={() => handleOpenModal(key)}
+                            >
+                              Edit
+                            </EuiButtonIcon>
+                          }
+                          isOpen={handleModalOpening(key)}
+                          closePopover={() => handleCloseModal(key)}
+                        >
+                          <div style={{ width: "auto" }}>
+                            {
+                              <EuiForm component="form">
+                                <EuiFlexGroup direction="column">
+                                  <EuiFlexItem>
+                                    <EuiFlexGroup>
+                                      <EuiFlexItem>
+                                        <EuiFormRow label="Field label">
+                                          <EuiFieldText
+                                            placeholder="Type here..."
+                                            onChange={(e) =>
+                                              handleOnChangeLabel(e, key)
+                                            }
+                                            value={handleValueLabel(key)}
+                                          />
+                                        </EuiFormRow>
+                                      </EuiFlexItem>
+                                      <EuiFlexItem grow={false}>
+                                        <EuiFormRow hasEmptyLabelSpace>
+                                          <EuiButton
+                                            onClick={() =>
+                                              handleSaveFieldLabel(key)
+                                            }
+                                          >
+                                            Save
+                                          </EuiButton>
+                                        </EuiFormRow>
+                                      </EuiFlexItem>
+                                    </EuiFlexGroup>
+                                  </EuiFlexItem>
+                                </EuiFlexGroup>
+                              </EuiForm>
+                            }
+                          </div>
+                        </EuiPopover>
                       </EuiFlexItem>
 
                       <EuiFlexItem grow={false}>
