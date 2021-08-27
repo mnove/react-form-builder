@@ -82,64 +82,130 @@ export function TextField(props) {
           );
         }}
       </Field>
-
-      <ErrorMessage name={name} component={TextError} />
     </>
   );
 }
+
+// export function EmailField(props) {
+//   const { name, label, placeholder, ...rest } = props;
+
+//   return (
+//     <>
+//       {label && <label htmlFor={name}>{label}</label>}
+//       <Field name={name}>
+//         {({ form, field }) => {
+//           return (
+//             <input
+//               type="email"
+//               {...field}
+//               {...rest}
+//               placeholder={placeholder || ""}
+//               style={
+//                 form.errors[name] && form.touched[name]
+//                   ? errorValidationStyles
+//                   : null
+//               }
+//             />
+//           );
+//         }}
+//       </Field>
+//       <ErrorMessage name={name} component={TextError} />
+//     </>
+//   );
+// }
 
 export function EmailField(props) {
   const { name, label, placeholder, ...rest } = props;
 
+  let fieldLabel = label;
+  if (!label) {
+    fieldLabel = "Untitled";
+  }
+
   return (
     <>
-      {label && <label htmlFor={name}>{label}</label>}
       <Field name={name}>
         {({ form, field }) => {
           return (
-            <input
-              type="email"
-              {...field}
-              {...rest}
-              placeholder={placeholder || ""}
-              style={
-                form.errors[name] && form.touched[name]
-                  ? errorValidationStyles
-                  : null
-              }
-            />
+            <EuiFormRow
+              label={fieldLabel}
+              isInvalid={form.errors[name] && form.touched[name] ? true : false}
+              error={<ErrorMessage name={name} component={TextError} />}
+            >
+              <EuiFieldText
+                type="email"
+                {...field}
+                {...rest}
+                placeholder={placeholder || ""}
+                isInvalid={
+                  form.errors[name] && form.touched[name] ? true : false
+                }
+              />
+            </EuiFormRow>
           );
         }}
       </Field>
-      <ErrorMessage name={name} component={TextError} />
     </>
   );
 }
 
+// export function NumberField(props) {
+//   const { name, label, placeholder, ...rest } = props;
+
+//   return (
+//     <>
+//       {label && <label htmlFor={name}>{label}</label>}
+//       <Field name={name}>
+//         {({ form, field }) => {
+//           return (
+//             <input
+//               type="number"
+//               {...field}
+//               {...rest}
+//               placeholder={placeholder || ""}
+//               style={
+//                 form.errors[name] && form.touched[name]
+//                   ? errorValidationStyles
+//                   : null
+//               }
+//             />
+//           );
+//         }}
+//       </Field>
+//       <ErrorMessage name={name} component={TextError} />
+//     </>
+//   );
+// }
+
 export function NumberField(props) {
   const { name, label, placeholder, ...rest } = props;
-
+  let fieldLabel = label;
+  if (!label) {
+    fieldLabel = "Untitled";
+  }
   return (
     <>
-      {label && <label htmlFor={name}>{label}</label>}
       <Field name={name}>
         {({ form, field }) => {
           return (
-            <input
-              type="number"
-              {...field}
-              {...rest}
-              placeholder={placeholder || ""}
-              style={
-                form.errors[name] && form.touched[name]
-                  ? errorValidationStyles
-                  : null
-              }
-            />
+            <EuiFormRow
+              label={fieldLabel}
+              isInvalid={form.errors[name] && form.touched[name] ? true : false}
+              error={<ErrorMessage name={name} component={TextError} />}
+            >
+              <EuiFieldText
+                type="number"
+                {...field}
+                {...rest}
+                placeholder={placeholder || ""}
+                isInvalid={
+                  form.errors[name] && form.touched[name] ? true : false
+                }
+              />
+            </EuiFormRow>
           );
         }}
       </Field>
-      <ErrorMessage name={name} component={TextError} />
     </>
   );
 }
