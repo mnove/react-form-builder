@@ -1,0 +1,197 @@
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+input + label {
+  font-weight: bold;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+
+
+
+ /* .validation-error  {
+  border: 1px solid rgb(250, 8, 8);
+} */
+
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+textarea,
+select {
+  display: block;
+  width: 400px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* margin-bottom: 20px; */
+}
+
+
+button {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: rgb(132, 202, 248);
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-top: 2rem
+}
+
+button:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+.form-control {
+  margin-bottom: 0.3rem;
+}
+
+ 
+.error {
+  color: rgb(250, 8, 8);
+}
+
+.success {
+  color: rgb(6, 189, 0);
+}
+
+.add-field-control {
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  /* background-color:rgb(231, 231, 231); */
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.add-field-control label {
+  margin-top: 0rem;
+}
+
+.form-field-container {
+  border-top: 1px solid rgba(0, 0, 0, 0.233);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.233); */
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+  margin-top: 0.4rem
+}
+
+
+ .btn-delete-field {
+  margin: 0rem;
+  right: 0%;
+  background-color: rgba(197, 197, 197, 0.349);
+  padding: 1px 4px;
+  border-radius: 0px;
+  border: 0px;
+  background-color: white;
+}
+
+.btn-delete-field:hover {
+  background-color: rgb(196, 196, 196)
+}
+
+.form-field-controls-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  
+}
+
+.form-field-controls-container > div {
+  margin-left: 1rem;
+  
+}
+
+
+
+/* Customize the label (the container) */
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 1.3rem;
+  margin: 0rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-container label {
+  margin: 0rem
+}
+
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.2rem;
+  width: 1rem;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 5px;
+  top: 4px;
+  width: 3px;
+  height: 5px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
