@@ -63,7 +63,7 @@ button:hover {
 
  
 .error {
-  color: rgb(250, 8, 8);
+  color: #BD271E;
 }
 
 .success {
@@ -84,15 +84,14 @@ button:hover {
   margin-top: 0rem;
 }
 
-.form-field-container {
+/* .form-field-container {
   border-top: 1px solid rgba(0, 0, 0, 0.233);
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.233); */
   padding-right: 0.8rem;
   padding-left: 0.8rem;
   padding-bottom: 0.4rem;
   padding-top: 0.4rem;
   margin-top: 0.4rem
-}
+} */
 
 
  .btn-delete-field {
