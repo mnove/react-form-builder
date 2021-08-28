@@ -8,7 +8,7 @@
  * @param {object} formSchemaState Previous form schema state
  * @param {object} newFieldData  Data of the field to be added
  */
-export const addNewFieldType = (formSchemaState, newFieldData) => {
+export const addSchemaField = (formSchemaState, newFieldData) => {
   return [...formSchemaState, newFieldData];
 };
 
@@ -16,7 +16,7 @@ export const addNewFieldType = (formSchemaState, newFieldData) => {
  * @param {object} formSchemaState Previous form schema state
  * @param {object} key  The key value of the targeted field to remove
  */
-export const removeFieldType = (formSchemaState, key) => {
+export const removeSchemaField = (formSchemaState, key) => {
   let oldSchema = formSchemaState;
   let newSchema = oldSchema.filter((elem) => {
     if (elem.key === key) {
@@ -35,7 +35,7 @@ export const removeFieldType = (formSchemaState, key) => {
  * @param {boolean} isRequired  Value of the required field
  */
 
-export const setFieldRequired = (formSchemaState, key, isRequired) => {
+export const setSchemaFieldRequired = (formSchemaState, key, isRequired) => {
   let oldSchema = [...formSchemaState];
   let newSchema = oldSchema.map((item, index) => {
     if (item.key === key) {
@@ -56,7 +56,7 @@ export const setFieldRequired = (formSchemaState, key, isRequired) => {
  * @param {string} key  The key value of the targeted label
  * @param {string} labelValue  The value of the new label
  */
-export const saveFieldLabel = (formSchemaState, key, labelValue) => {
+export const saveSchemaFieldLabel = (formSchemaState, key, labelValue) => {
   let oldSchema = [...formSchemaState];
   let newSchema = oldSchema.map((item, index) => {
     if (item.key === key) {

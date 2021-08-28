@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
 
 import { Formik, Form } from "formik";
-import { getFormElement } from "../getFormElement";
-import { initializeForm } from "../initializeForm";
+import {
+  initializeForm,
+  getFormElement,
+  formAlertValidation,
+} from "../../Form_builder";
+
 import { sampleFormSchema } from "./player_sampleFormSchema";
-import { formAlertValidation } from "../formAlertValidation";
+// import { formAlertValidation } from "../../Form_builder/formAlertValidation";
 let formSchema = sampleFormSchema;
 
 function FormContainerPlayer() {
@@ -36,9 +40,6 @@ function FormContainerPlayer() {
     console.log("FORM SCHEMA", formSchemaState);
     resetForm();
   };
-
-  
-  
 
   return (
     <Formik
