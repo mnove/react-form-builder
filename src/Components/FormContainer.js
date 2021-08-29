@@ -3,12 +3,15 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 
 import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import { initializeForm } from "./initializeForm";
-import { getFormElement } from "./getFormElement";
+// import { initializeForm } from "../Form_builder/initializeForm";
+import {
+  initializeForm,
+  getFormElement,
+  initializeFormContainerState,
+  fieldTypeControls,
+  formAlertValidation,
+} from "../Form_builder";
 import { sampleFormSchema } from "./sampleData/sampleFormSchema";
-import { fieldTypeControls } from "./fieldTypeControls";
-import { initializeFormContainerState } from "./formContainerStateInitializer";
 import {
   addNewField,
   getCheckboxValue,
@@ -19,36 +22,30 @@ import {
   setModalClose,
   setModalOpen,
   setRequiredCheckboxes,
-} from "./formStateReducers";
+  addSchemaField,
+  removeSchemaField,
+  saveSchemaFieldLabel,
+  setSchemaFieldRequired,
+} from "../Form_builder/reducers";
 import { logger } from "../utils/logger";
-import {
-  addNewFieldType,
-  removeFieldType,
-  saveFieldLabel,
-  setFieldRequired,
-} from "./formSchemaStateReducers";
-import { formAlertValidation } from "./formAlertValidation";
 
 import {
   EuiText,
-  EuiPanel,
   EuiButtonIcon,
   EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiSpacer,
   EuiSwitch,
   EuiFormRow,
   EuiSelect,
   EuiPopover,
   EuiForm,
   EuiFieldText,
+  EuiHorizontalRule,
 } from "@elastic/eui";
 
-import { styled } from "styled-components";
 import {
   AddFormFieldPanel,
-  FormFieldContainer,
   FormFieldPanel,
 } from "./styled-components/formStyles";
 
@@ -81,10 +78,10 @@ function FormContainer() {
     setFormData(initializedData.formData);
   };
 
-  logger(formData, "Form Data: ");
-  logger(validationSchema, "Validation Schema: ");
-  logger(formContainerState, "Form Container State: ");
-  logger(formSchemaState, "Form Schema State: ");
+  // logger(formData, "Form Data: ");
+  // logger(validationSchema, "Validation Schema: ");
+  // logger(formContainerState, "Form Container State: ");
+  // logger(formSchemaState, "Form Schema State: ");
 
   const [selectValue, setSelectValue] = useState("");
 
@@ -101,7 +98,7 @@ function FormContainer() {
 
     // Dispatch formSchemaState Update
     setFormSchemaState((previous) =>
-      addNewFieldType(previous, newFieldData.newField)
+      addSchemaField(previous, newFieldData.newField)
     );
 
     // Dispatch formContainerState Update
@@ -111,7 +108,7 @@ function FormContainer() {
   // handler for REMOVING a form field from the formSchema
   const handleFieldRemove = (key, formik) => {
     // Dispatch formSchemaState Update
-    setFormSchemaState((previous) => removeFieldType(previous, key));
+    setFormSchemaState((previous) => removeSchemaField(previous, key));
 
     let newFormData = {};
     setFormData(newFormData);
@@ -123,16 +120,21 @@ function FormContainer() {
     formik.resetForm();
   };
 
+  // Handle form submit button
   const onSubmit = (values, { validateForm, resetForm }) => {
     validateForm(values);
-    console.log("Form Data ", values);
-    console.log("JSON SUBMIT VALUES", JSON.stringify(values));
+    let JSONFormValues = JSON.stringify(values);
+    console.log("JSON FORM VALUES", JSONFormValues);
+    //window.alert(JSONFormValues);
+    resetForm();
+  };
 
+  // Get the current form schema as JSON
+  const getFormSchema = (formSchemaState) => {
     let JSONFormSchema = JSON.stringify(formSchemaState);
     console.log("JSON FORM SCHEMA", JSONFormSchema);
     window.alert(JSONFormSchema);
-    console.log("FORM SCHEMA", formSchemaState);
-    resetForm();
+    return JSONFormSchema;
   };
 
   // handler for setting a form field as "Required" or not in the formSchema
@@ -142,7 +144,7 @@ function FormContainer() {
 
     // Dispatch formSchemaState Update
     setFormSchemaState((previous) =>
-      setFieldRequired(previous, fieldKey, isRequired)
+      setSchemaFieldRequired(previous, fieldKey, isRequired)
     );
 
     // Dispatch formContainerState update
@@ -172,7 +174,7 @@ function FormContainer() {
 
     // Dispatch Form schema State Update
     setFormSchemaState((previous) =>
-      saveFieldLabel(previous, key, labelToSave)
+      saveSchemaFieldLabel(previous, key, labelToSave)
     );
 
     // Dispatch closing the targeted modal on save
@@ -223,32 +225,6 @@ function FormContainer() {
                       justifyContent="flexEnd"
                     >
                       <EuiFlexItem grow={false}>
-                        {/* <EuiButtonIcon
-                          iconType={Edit}
-                          color="secondary"
-                          aria-label="Edit form label"
-                          display="base"
-                          onClick={() => handleOpenModal(key)}
-                        />
-
-                        <Modal
-                          open={handleModalOpening(key)}
-                          onClose={() => handleCloseModal(key)}
-                          center
-                          animationDuration="100"
-                          key={index}
-                        >
-                          <h2>Edit form field label</h2>
-                          <input
-                            type="text"
-                            onChange={(e) => handleOnChangeLabel(e, key)}
-                            value={handleValueLabel(key)}
-                          />
-                          <button onClick={() => handleSaveFieldLabel(key)}>
-                            Save
-                          </button>
-                        </Modal> */}
-
                         <EuiPopover
                           id="inlineFormPopover"
                           button={
@@ -313,19 +289,6 @@ function FormContainer() {
                             handleRequiredCheckbox(e, key);
                           }}
                         />
-
-                        {/* <label className="checkbox-container">
-                          Required?
-                          <input
-                            type="checkbox"
-                            onChange={(e) => {
-                              handleRequiredCheckbox(e, key);
-                            }}
-                            value={true}
-                            checked={handleRequiredCheckboxValue(key)}
-                          />
-                          <span className="checkmark"></span>
-                        </label> */}
                       </EuiFlexItem>
                       <EuiFlexItem grow={false}>
                         <EuiButtonIcon
@@ -364,18 +327,6 @@ function FormContainer() {
                   value={selectValue}
                 />
               </EuiFormRow>
-
-              {/* <select
-                name="cars"
-                id="cars"
-                onChange={(e) => handleFieldTypeAdd(e.target.value, formSchema)}
-                value={selectValue}
-              >
-                <option value="">Select an option</option>
-                <option value="textInput">Text Input</option>
-                <option value="emailInput">Email Input</option>
-                <option value="numberInput">Number Input</option>
-              </select> */}
             </AddFormFieldPanel>
 
             <EuiFlexGroup>
@@ -385,6 +336,20 @@ function FormContainer() {
               <EuiFlexItem>
                 <EuiButton type="submit" color="secondary">
                   Submit
+                </EuiButton>
+              </EuiFlexItem>
+            </EuiFlexGroup>
+
+            <EuiHorizontalRule></EuiHorizontalRule>
+            <EuiFlexGroup>
+              <EuiFlexItem>
+                <EuiButton
+                  type="submit"
+                  color="text"
+                  size="s"
+                  onClick={() => getFormSchema(formSchemaState)}
+                >
+                  Print Schema to console
                 </EuiButton>
               </EuiFlexItem>
             </EuiFlexGroup>
