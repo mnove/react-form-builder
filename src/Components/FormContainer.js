@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 
 import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
 // import { initializeForm } from "../Form_builder/initializeForm";
 import {
   initializeForm,
@@ -29,22 +28,13 @@ import {
   setSchemaFieldRequired,
 } from "../Form_builder/reducers";
 import { logger } from "../utils/logger";
-// import {
-//   addSchemaField,
-//   removeSchemaField,
-//   saveSchemaFieldLabel,
-//   setSchemaFieldRequired,
-// } from "../Form_builder/formSchemaStateReducers";
-// import { formAlertValidation } from "../Form_builder/formAlertValidation";
 
 import {
   EuiText,
-  EuiPanel,
   EuiButtonIcon,
   EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiSpacer,
   EuiSwitch,
   EuiFormRow,
   EuiSelect,
@@ -54,10 +44,8 @@ import {
   EuiHorizontalRule,
 } from "@elastic/eui";
 
-import { styled } from "styled-components";
 import {
   AddFormFieldPanel,
-  FormFieldContainer,
   FormFieldPanel,
 } from "./styled-components/formStyles";
 
@@ -90,10 +78,10 @@ function FormContainer() {
     setFormData(initializedData.formData);
   };
 
-  logger(formData, "Form Data: ");
-  logger(validationSchema, "Validation Schema: ");
-  logger(formContainerState, "Form Container State: ");
-  logger(formSchemaState, "Form Schema State: ");
+  // logger(formData, "Form Data: ");
+  // logger(validationSchema, "Validation Schema: ");
+  // logger(formContainerState, "Form Container State: ");
+  // logger(formSchemaState, "Form Schema State: ");
 
   const [selectValue, setSelectValue] = useState("");
 
