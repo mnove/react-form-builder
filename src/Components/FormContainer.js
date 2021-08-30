@@ -53,13 +53,24 @@ import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 
 import { useStateMachine } from "little-state-machine";
-import { initializeLSMFormSchema } from "../Form_builder/state-machine/formSchema/reducers";
+import {
+  initializeLSMFormSchema,
+  addLSMSchemaField,
+  removeLSMSchemaField,
+} from "../Form_builder/state-machine/formSchema/reducers";
 
 // Form Schema data
 const formSchema = sampleFormSchema;
 
 function FormContainer() {
-  const { actions, state } = useStateMachine({ initializeLSMFormSchema });
+  const { actions, state } = useStateMachine({
+    initializeLSMFormSchema,
+    addLSMSchemaField,
+    removeLSMSchemaField,
+  });
+
+  // global FORM SCHEMA (little state machine)
+  const LSMFormSchemaState = state.formSchemaState;
 
   const handleCreationFormSchema = () => {
     actions.initializeLSMFormSchema(sampleFormSchema);
@@ -83,7 +94,7 @@ function FormContainer() {
 
   // initialize the form schema, setting Form Data and Yup Validation Schema
   const formInitializer = () => {
-    let initializedData = initializeForm(formSchemaState);
+    let initializedData = initializeForm(state.formSchemaState);
     setValidationSchema(Yup.object().shape(initializedData.schemaData));
     setFormData(initializedData.formData);
   };
@@ -99,7 +110,13 @@ function FormContainer() {
   useEffect(() => {
     formInitializer(); // re-initialize the form
     setSelectValue("");
-  }, [formSchemaState]);
+    console.log(state.formSchemaState);
+  }, [state.formSchemaState]);
+
+  // useEffect(() => {
+  //   formInitializer(); // re-initialize the form
+  //   setSelectValue("");
+  // }, [formSchemaState]);
 
   // handler for ADDING a new field type to the form schema
   const handleFieldTypeAdd = (value, formSchema) => {
@@ -107,9 +124,12 @@ function FormContainer() {
     let newKey = newFieldData.newField.key;
 
     // Dispatch formSchemaState Update
-    setFormSchemaState((previous) =>
-      addSchemaField(previous, newFieldData.newField)
-    );
+    // setFormSchemaState((previous) =>
+    //   addSchemaField(previous, newFieldData.newField)
+    // );
+
+    actions.addLSMSchemaField(newFieldData.newField);
+    console.log(state.formSchemaState);
 
     // Dispatch formContainerState Update
     setFormContainerState((previous) => addNewField(previous, newKey));
@@ -118,7 +138,10 @@ function FormContainer() {
   // handler for REMOVING a form field from the formSchema
   const handleFieldRemove = (key, formik) => {
     // Dispatch formSchemaState Update
-    setFormSchemaState((previous) => removeSchemaField(previous, key));
+    // setFormSchemaState((previous) => removeSchemaField(previous, key));
+
+    actions.removeLSMSchemaField(key);
+    console.log(state.formSchemaState);
 
     let newFormData = {};
     setFormData(newFormData);
@@ -140,8 +163,8 @@ function FormContainer() {
   };
 
   // Get the current form schema as JSON
-  const getFormSchema = (formSchemaState) => {
-    let JSONFormSchema = JSON.stringify(formSchemaState);
+  const getFormSchema = () => {
+    let JSONFormSchema = JSON.stringify(LSMFormSchemaState);
     console.log("JSON FORM SCHEMA", JSONFormSchema);
     window.alert(JSONFormSchema);
     return JSONFormSchema;
@@ -220,7 +243,7 @@ function FormContainer() {
             <EuiText>
               <h1>YOUR FORM</h1>
             </EuiText>
-            {formSchemaState.map((elem, index) => {
+            {LSMFormSchemaState.map((elem, index) => {
               const key = elem.key;
               return (
                 <>
@@ -363,7 +386,7 @@ function FormContainer() {
                   type="submit"
                   color="text"
                   size="s"
-                  onClick={() => getFormSchema(formSchemaState)}
+                  onClick={() => getFormSchema()}
                 >
                   Print Schema to console
                 </EuiButton>
