@@ -78,10 +78,10 @@ function FormContainer() {
     setFormData(initializedData.formData);
   };
 
-  // logger(formData, "Form Data: ");
-  // logger(validationSchema, "Validation Schema: ");
-  // logger(formContainerState, "Form Container State: ");
-  // logger(formSchemaState, "Form Schema State: ");
+  logger(formData, "Form Data: ");
+  logger(validationSchema, "Validation Schema: ");
+  logger(formContainerState, "Form Container State: ");
+  logger(formSchemaState, "Form Schema State: ");
 
   const [selectValue, setSelectValue] = useState("");
 

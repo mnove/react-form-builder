@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 
 export const initializeForm = (formSchema) => {
+  console.log(formSchema);
+
   let _formData = {};
   let _schemaData = {};
 
@@ -21,8 +23,15 @@ export const initializeForm = (formSchema) => {
         .nullable(true);
     }
 
+    // if (elem.type === "radioGroupInput") {
+    //   _schemaData[elem.key] = Yup.string().oneOf(
+    //     elem.options,
+    //     "Select one of the options"
+    //   );
+    // }
+
     if (elem.type === "radioGroupInput") {
-      _schemaData[elem.key] = Yup.boolean();
+      _schemaData[elem.key] = Yup.string();
     }
 
     if (elem.required) {
@@ -36,6 +45,6 @@ export const initializeForm = (formSchema) => {
   };
 
   console.log(intializedData);
-  console.log(formSchema);
+
   return intializedData;
 };

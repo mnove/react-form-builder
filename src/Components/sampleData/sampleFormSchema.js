@@ -22,4 +22,22 @@ export const sampleFormSchema = [
     placeholder: "Enter text here",
     required: false,
   },
+
+  {
+    key: "abc4",
+    type: "radioGroupInput",
+    label: "Default Radio Label",
+    placeholder: "",
+    options: [
+      {
+        id: `1001`,
+        value: "Opt one",
+      },
+      {
+        id: `1002`,
+        value: "Opt two",
+      },
+    ],
+    required: false,
+  },
 ];

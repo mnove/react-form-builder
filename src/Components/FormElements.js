@@ -5,6 +5,7 @@ import {
   EuiFormRow,
   EuiFieldText,
   EuiRadioGroup,
+  EuiRadio,
   EuiHorizontalRule,
   EuiButton,
 } from "@elastic/eui";
@@ -115,24 +116,19 @@ export function NumberField(props) {
 
 const idPrefix = nanoid(10);
 
-const radios = [
+const radioOptions = [
   {
     id: `${idPrefix}0`,
-    label: "Option one",
+    value: "Option one",
   },
   {
     id: `${idPrefix}1`,
-    label: "Option two is checked by default",
-  },
-  {
-    id: `${idPrefix}2`,
-    label: "Option three is disabled",
-    disabled: false,
+    value: "Option two",
   },
 ];
 
 export function RadioGroupField(props) {
-  const { name, label, placeholder, ...rest } = props;
+  const { name, label, placeholder, options, ...rest } = props;
 
   let fieldLabel = label;
   if (!label) {
@@ -148,19 +144,39 @@ export function RadioGroupField(props) {
 
   return (
     <>
+      <label htmlFor={name}>{label}</label>
       <Field name={name}>
         {({ form, field }) => {
-          return (
-            <>
-              {/* <EuiFormRow
+          return options.map((option) => {
+            return (
+              <>
+                {/* <EuiFormRow
               label={fieldLabel}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
               error={<ErrorMessage name={name} component={TextError} />}
             > */}
-              <EuiRadioGroup
+                <input
+                  type="radio"
+                  id={option.value}
+                  {...field}
+                  {...rest}
+                  value={option.value}
+                  checked={field.value === option.value}
+                  // label="Option one"
+                  // // onChange={(id) => onChange(id)}
+                  // name="radio group"
+                  // placeholder={placeholder || ""}
+                  // isInvalid={
+                  //   form.errors[name] && form.touched[name] ? true : false
+                  // }
+                />
+                <label htmlFor={option.value}>{option.value}</label>
+
+                {/* <EuiRadioGroup
                 {...field}
                 {...rest}
-                options={radios}
+                value={"Option one"}
+                options={radioOptions}
                 idSelected={radioIdSelected}
                 onChange={(id) => onChange(id)}
                 name="radio group"
@@ -171,7 +187,50 @@ export function RadioGroupField(props) {
                 isInvalid={
                   form.errors[name] && form.touched[name] ? true : false
                 }
+              /> */}
+                {/* </EuiFormRow> */}
+              </>
+            );
+          });
+
+          return (
+            <>
+              {/* <EuiFormRow
+              label={fieldLabel}
+              isInvalid={form.errors[name] && form.touched[name] ? true : false}
+              error={<ErrorMessage name={name} component={TextError} />}
+            > */}
+              <EuiRadio
+                type="radio"
+                {...field}
+                {...rest}
+                value={"Option one"}
+                checked="Option one"
+                label="Option one"
+                // onChange={(id) => onChange(id)}
+                name="radio group"
+                placeholder={placeholder || ""}
+                isInvalid={
+                  form.errors[name] && form.touched[name] ? true : false
+                }
               />
+
+              {/* <EuiRadioGroup
+                {...field}
+                {...rest}
+                value={"Option one"}
+                options={radioOptions}
+                idSelected={radioIdSelected}
+                onChange={(id) => onChange(id)}
+                name="radio group"
+                legend={{
+                  children: <span>{fieldLabel}</span>,
+                }}
+                placeholder={placeholder || ""}
+                isInvalid={
+                  form.errors[name] && form.touched[name] ? true : false
+                }
+              /> */}
               {/* </EuiFormRow> */}
             </>
           );
