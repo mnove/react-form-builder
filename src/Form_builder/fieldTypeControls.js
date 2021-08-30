@@ -36,6 +36,16 @@ export const fieldTypeControls = (value, formSchema) => {
         required: false,
       };
       break;
+
+    case "radioGroupInput":
+      fieldToAdd = {
+        key: randomId,
+        type: "radioGroupInput",
+        label: "Default radio label",
+        placeholder: "default radio placeholder",
+        required: false,
+      };
+      break;
   }
 
   //  NEW LABEL

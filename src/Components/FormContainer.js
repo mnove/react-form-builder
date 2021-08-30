@@ -320,6 +320,7 @@ function FormContainer() {
                     { value: "textInput", text: "Text Input" },
                     { value: "emailInput", text: "Email Input" },
                     { value: "numberInput", text: "Number Input" },
+                    { value: "radioGroupInput", text: "Radio Input" },
                   ]}
                   onChange={(e) =>
                     handleFieldTypeAdd(e.target.value, formSchema)
