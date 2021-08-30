@@ -60,8 +60,10 @@ import {
   setLSMSchemaFieldRequired,
 } from "../Form_builder/state-machine/formSchema/reducers";
 import {
-  LSMAddNewFieldCheckbox,
-  LSMAddNewValueLabel,
+  LSMAddNewElementToFormContainerState,
+  LSMRemoveElementFromFormContainerState,
+  // LSMAddNewFieldCheckbox,
+  // LSMAddNewValueLabel,
 } from "../Form_builder/state-machine/formState/reducers";
 
 // Form Schema data
@@ -73,8 +75,10 @@ function FormContainer() {
     addLSMSchemaField,
     removeLSMSchemaField,
     setLSMSchemaFieldRequired,
-    LSMAddNewFieldCheckbox,
-    LSMAddNewValueLabel,
+    // LSMAddNewFieldCheckbox,
+    // LSMAddNewValueLabel,
+    LSMAddNewElementToFormContainerState,
+    LSMRemoveElementFromFormContainerState,
   });
 
   // global FORM SCHEMA (little state machine)
@@ -142,6 +146,16 @@ function FormContainer() {
 
     // Dispatch formContainerState Update
     setFormContainerState((previous) => addNewField(previous, newKey));
+
+    let newFieldElementState = {
+      key: newKey,
+      isRequiredChecked: false,
+      labelValue: "Default label",
+      isModalOpened: false,
+    };
+
+    actions.LSMAddNewElementToFormContainerState(newFieldElementState);
+    console.log(state);
   };
 
   // handler for REMOVING a form field from the formSchema
@@ -154,6 +168,13 @@ function FormContainer() {
 
     let newFormData = {};
     setFormData(newFormData);
+
+    let payload = {
+      key: key,
+    };
+
+    actions.LSMRemoveElementFromFormContainerState(payload);
+    console.log(state.formSchemaState);
 
     // Dispatch formContainerState Update
     setFormContainerState((previous) => removeField(previous, key));
@@ -196,25 +217,8 @@ function FormContainer() {
     actions.setLSMSchemaFieldRequired(payload);
     console.log(state.formSchemaState);
 
-    let newFieldElementState = {
-      newCheckbox: {
-        checkboxKey: key,
-        checked: false,
-      },
-      newLabel: {
-        labelKey: key,
-        value: "Default Label",
-      },
-      newModal: {
-        modalKey: key,
-        isOpen: false,
-      },
-    };
-
-    actions.LSMAddNewFieldCheckbox(newFieldElementState.newCheckbox);
-
-    actions.LSMAddNewValueLabel(newFieldElementState.newLabel);
     console.log(state);
+
     // Dispatch formContainerState update
     // setFormContainerState((previous) =>
     //   setRequiredCheckboxes(state.formSchemaState, isRequired, fieldKey)

@@ -12,7 +12,7 @@ import {
 createStore({
   yourDetail: { name: "" },
   formSchemaState: [],
-  formContainerState: {},
+  formContainerState: [],
 });
 
 function App() {
