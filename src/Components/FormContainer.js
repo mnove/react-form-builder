@@ -53,15 +53,20 @@ import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 
 import { useStateMachine } from "little-state-machine";
+import { initializeLSMFormSchema } from "../Form_builder/state-machine/formSchema/reducers";
 
 // Form Schema data
 const formSchema = sampleFormSchema;
 
 function FormContainer() {
-  const { actions, state } = useStateMachine();
-  console.log(state);
+  const { actions, state } = useStateMachine({ initializeLSMFormSchema });
 
-  const [formSchemaState, setFormSchemaState] = useState(formSchema);
+  const handleCreationFormSchema = () => {
+    actions.initializeLSMFormSchema(sampleFormSchema);
+    console.log(state);
+  };
+
+  const [formSchemaState, setFormSchemaState] = useState(state.formSchemaState);
 
   // STATE
   const [formData, setFormData] = useState({});
@@ -363,6 +368,10 @@ function FormContainer() {
                   Print Schema to console
                 </EuiButton>
               </EuiFlexItem>
+
+              <button onClick={handleCreationFormSchema}>
+                Create Schema to LSM
+              </button>
             </EuiFlexGroup>
           </Form>
         );
