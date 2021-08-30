@@ -38,3 +38,24 @@ export const removeLSMSchemaField = (state, payload) => {
     formSchemaState: toReturn,
   };
 };
+
+/** Change the label within Form Schema State
+ * @param {object} formSchemaState Previous form schema state
+ * @param {string} key  c
+ * @param {boolean} isRequired  Value of the required field
+ */
+
+export const setLSMSchemaFieldRequired = (state, payload) => {
+  return produce(state, (draft) => {
+    console.log(draft);
+    const index = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.key
+    );
+
+    console.log(index);
+    console.log(draft.formSchemaState);
+
+    if (index !== -1)
+      draft.formSchemaState[index].required = !payload.isRequired;
+  });
+};
