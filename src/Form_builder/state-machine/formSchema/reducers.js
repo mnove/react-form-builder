@@ -56,6 +56,6 @@ export const setLSMSchemaFieldRequired = (state, payload) => {
     console.log(draft.formSchemaState);
 
     if (index !== -1)
-      draft.formSchemaState[index].required = !payload.isRequired;
+      draft.formSchemaState[index].required = payload.isRequired;
   });
 };

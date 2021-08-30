@@ -62,8 +62,7 @@ import {
 import {
   LSMAddNewElementToFormContainerState,
   LSMRemoveElementFromFormContainerState,
-  // LSMAddNewFieldCheckbox,
-  // LSMAddNewValueLabel,
+  LSMsetRequiredCheckboxFormContainerState,
 } from "../Form_builder/state-machine/formState/reducers";
 
 // Form Schema data
@@ -75,10 +74,9 @@ function FormContainer() {
     addLSMSchemaField,
     removeLSMSchemaField,
     setLSMSchemaFieldRequired,
-    // LSMAddNewFieldCheckbox,
-    // LSMAddNewValueLabel,
     LSMAddNewElementToFormContainerState,
     LSMRemoveElementFromFormContainerState,
+    LSMsetRequiredCheckboxFormContainerState,
   });
 
   // global FORM SCHEMA (little state machine)
@@ -223,10 +221,17 @@ function FormContainer() {
     // setFormContainerState((previous) =>
     //   setRequiredCheckboxes(state.formSchemaState, isRequired, fieldKey)
     // );
+
+    actions.LSMsetRequiredCheckboxFormContainerState(payload);
   };
 
   const handleRequiredCheckboxValue = (key) => {
-    return getCheckboxValue(formContainerState, key);
+    let item = state.formContainerState.filter((item) => {
+      return item.key === key;
+    });
+    console.log(item);
+    console.log(item[0].isRequiredChecked);
+    return item[0].isRequiredChecked;
   };
 
   // display the correct label value inside the modal input

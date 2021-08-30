@@ -30,3 +30,17 @@ export const LSMRemoveElementFromFormContainerState = (state, payload) => {
     if (index !== -1) draft.formContainerState.splice(index, 1);
   });
 };
+
+export const LSMsetRequiredCheckboxFormContainerState = (state, payload) => {
+  return produce(state, (draft) => {
+    const index = draft.formContainerState.findIndex(
+      (elem) => elem.key === payload.key
+    );
+
+    console.log(index);
+    console.log(draft.formContainerState);
+
+    if (index !== -1)
+      draft.formContainerState[index].isRequiredChecked = payload.isRequired;
+  });
+};
