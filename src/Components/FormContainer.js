@@ -52,10 +52,15 @@ import {
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 
+import { useStateMachine } from "little-state-machine";
+
 // Form Schema data
 const formSchema = sampleFormSchema;
 
 function FormContainer() {
+  const { actions, state } = useStateMachine();
+  console.log(state);
+
   const [formSchemaState, setFormSchemaState] = useState(formSchema);
 
   // STATE
