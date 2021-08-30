@@ -302,7 +302,12 @@ function FormContainer() {
                         />
                       </EuiFlexItem>
                     </EuiFlexGroup>
-                    {getFormElement(key, elem)}
+                    {getFormElement(
+                      key,
+                      elem,
+                      formSchemaState,
+                      formContainerState
+                    )}
                   </FormFieldPanel>
                 </>
               );

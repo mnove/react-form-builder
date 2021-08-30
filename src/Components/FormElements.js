@@ -10,6 +10,7 @@ import {
   EuiButton,
 } from "@elastic/eui";
 import { nanoid } from "nanoid";
+import { addRadioOption } from "../Form_builder/reducers/radio/radioSchemaStateReducer";
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
@@ -116,7 +117,7 @@ export function NumberField(props) {
 
 const idPrefix = nanoid(10);
 
-const radioOptions = [
+let defaultRadioOptions = [
   {
     id: `${idPrefix}0`,
     value: "Option one",
@@ -128,11 +129,26 @@ const radioOptions = [
 ];
 
 export function RadioGroupField(props) {
-  const { name, label, placeholder, options, ...rest } = props;
+  const {
+    name,
+    label,
+    placeholder,
+    options,
+    formSchemaState,
+    formContainerState,
+    ...rest
+  } = props;
 
+  console.log(name);
   let fieldLabel = label;
   if (!label) {
     fieldLabel = "Untitled";
+  }
+
+  let radioOptions = options;
+
+  if (!options) {
+    radioOptions = defaultRadioOptions;
   }
 
   const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
@@ -142,12 +158,25 @@ export function RadioGroupField(props) {
     console.log(radioIdSelected);
   };
 
+  const handleAddRadioOptionToField = () => {
+    let newOption = {
+      id: `${nanoid()}`,
+      value: "Another option",
+    };
+    console.log("Added");
+    // Add the new form option to the whole form schema state.
+    // >> Create a specific set of reducers to just handle changes for radio buttons
+    // >> Keep the form state updated as the schema gets modified
+
+    addRadioOption(formSchemaState, name, newOption);
+  };
+
   return (
     <>
       <label htmlFor={name}>{label}</label>
       <Field name={name}>
         {({ form, field }) => {
-          return options.map((option) => {
+          return radioOptions.map((option) => {
             return (
               <>
                 {/* <EuiFormRow
@@ -239,7 +268,7 @@ export function RadioGroupField(props) {
 
       <EuiHorizontalRule />
 
-      <EuiButton>+ Add Field</EuiButton>
+      <EuiButton onClick={handleAddRadioOptionToField}>+ Add Field</EuiButton>
     </>
   );
 }
