@@ -3,7 +3,7 @@ import produce from "immer";
 export const initializeLSMFormSchema = (state, payload) => {
   return {
     ...state,
-    formSchemaState: payload,
+    formSchemaState: [...payload],
   };
 };
 

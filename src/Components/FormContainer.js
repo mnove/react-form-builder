@@ -62,11 +62,13 @@ import {
 } from "../Form_builder/state-machine/formSchema/reducers";
 import {
   LSMAddNewElementToFormContainerState,
+  LSMinitializeFormContainerState,
   LSMRemoveElementFromFormContainerState,
   LSMsetLabelValue,
   LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
 } from "../Form_builder/state-machine/formState/reducers";
+import { getCurrentLabelValue } from "../Form_builder/state-machine/formSchema/utils";
 
 // Form Schema data
 const formSchema = sampleFormSchema;
@@ -78,6 +80,7 @@ function FormContainer() {
     removeLSMSchemaField,
     setLSMSchemaFieldRequired,
     setLSMSchemaLabelField,
+    LSMinitializeFormContainerState,
     LSMAddNewElementToFormContainerState,
     LSMRemoveElementFromFormContainerState,
     LSMsetRequiredCheckboxFormContainerState,
@@ -85,71 +88,92 @@ function FormContainer() {
     LSMsetLabelValue,
   });
 
+  // STATE //
   // global FORM SCHEMA (little state machine)
   const LSMFormSchemaState = state.formSchemaState;
+  // global FORM CONTAINER STATE (Little state machine)
+  const LSMFormContainerState = state.formContainerState;
 
   const handleCreationFormSchema = () => {
-    actions.initializeLSMFormSchema(sampleFormSchema);
+    // actions.initializeLSMFormSchema(sampleFormSchema);
+    // actions.LSMinitializeFormContainerState(
+    //   LSMFormContainerState,
+    //   initialFormContainerState
+    // );
     console.log(state);
   };
 
   const [formSchemaState, setFormSchemaState] = useState(state.formSchemaState);
 
-  // STATE
   const [formData, setFormData] = useState({});
   const [validationSchema, setValidationSchema] = useState({});
 
-  let initialFormContainerState =
-    initializeFormContainerState(LSMFormSchemaState);
-  const [formContainerState, setFormContainerState] = useState(
-    initialFormContainerState
-  );
+  const initializeEmptyForm = () => {
+    // An Empty form is initialized with some sample data
+    let initializedData = initializeForm(sampleFormSchema);
+    let initialFormContainerState =
+      initializeFormContainerState(sampleFormSchema);
 
-  useEffect(() => {
-    formInitializer();
-  }, []);
+    // Dispatch state update (LSM)
+    actions.initializeLSMFormSchema(sampleFormSchema);
+    actions.LSMinitializeFormContainerState(initialFormContainerState);
 
-  // initialize the form schema, setting Form Data and Yup Validation Schema
-  const formInitializer = () => {
-    let initializedData = initializeForm(state.formSchemaState);
+    // Set validation schema and form data
     setValidationSchema(Yup.object().shape(initializedData.schemaData));
     setFormData(initializedData.formData);
   };
+  // initialize the form schema, setting Form Data and Yup Validation Schema
+  const formInitializer = () => {
+    if (LSMFormSchemaState[0] === undefined) {
+      initializeEmptyForm();
+      return;
+    } else {
+      let initializedData = initializeForm(LSMFormSchemaState);
+      let initialFormContainerState =
+        initializeFormContainerState(LSMFormSchemaState);
 
-  logger(formData, "Form Data: ");
-  logger(validationSchema, "Validation Schema: ");
-  logger(formContainerState, "Form Container State: ");
-  logger(formSchemaState, "Form Schema State: ");
+      actions.initializeLSMFormSchema(LSMFormSchemaState);
+      actions.LSMinitializeFormContainerState(initialFormContainerState);
+
+      console.log(initializedData);
+      setValidationSchema(Yup.object().shape(initializedData.schemaData));
+      setFormData(initializedData.formData);
+      console.log(formData);
+    }
+  };
+
+  useEffect(() => {
+    console.log(LSMFormSchemaState);
+    formInitializer();
+  }, []);
+
+  //logger(formData, "Form Data: ");
+  //logger(validationSchema, "Validation Schema: ");
+  //logger(formContainerState, "Form Container State: ");
+  //logger(formSchemaState, "Form Schema State: ");
 
   const [selectValue, setSelectValue] = useState("");
 
   // tracking changes on the formSchemaState - as the state updates, we initialize the form again with the latest state data
-  useEffect(() => {
-    formInitializer(); // re-initialize the form
-    setSelectValue("");
-    console.log(state.formSchemaState);
-  }, [state.formSchemaState]);
-
   // useEffect(() => {
   //   formInitializer(); // re-initialize the form
   //   setSelectValue("");
-  // }, [formSchemaState]);
+  //   console.log(state.formSchemaState);
+  // }, [state.formSchemaState]);
+
+  // useEffect(() => {
+  //   formInitializer(); // re-initialize the form
+
+  //   setSelectValue("");
+  // }, [LSMFormSchemaState]);
 
   // handler for ADDING a new field type to the form schema
   const handleFieldTypeAdd = (value, formSchema) => {
     let newFieldData = fieldTypeControls(value, formSchema);
     let newKey = newFieldData.newField.key;
 
-    // Dispatch formSchemaState Update
-    // setFormSchemaState((previous) =>
-    //   addSchemaField(previous, newFieldData.newField)
-    // );
-
     actions.addLSMSchemaField(newFieldData.newField);
     console.log(state.formSchemaState);
-
-    // Dispatch formContainerState Update
-    setFormContainerState((previous) => addNewField(previous, newKey));
 
     let newFieldElementState = {
       key: newKey,
@@ -159,17 +183,12 @@ function FormContainer() {
     };
 
     actions.LSMAddNewElementToFormContainerState(newFieldElementState);
-    console.log(state);
   };
 
   // handler for REMOVING a form field from the formSchema
   const handleFieldRemove = (key, formik) => {
-    // Dispatch formSchemaState Update
-    // setFormSchemaState((previous) => removeSchemaField(previous, key));
-
     actions.removeLSMSchemaField(key);
-    console.log(state.formSchemaState);
-
+    // console.log(state.formSchemaState);
     let newFormData = {};
     setFormData(newFormData);
 
@@ -178,10 +197,7 @@ function FormContainer() {
     };
 
     actions.LSMRemoveElementFromFormContainerState(payload);
-    console.log(state.formSchemaState);
-
-    // Dispatch formContainerState Update
-    setFormContainerState((previous) => removeField(previous, key));
+    // console.log(state.formSchemaState);
 
     formik.setValues({});
     formik.resetForm();
@@ -210,24 +226,10 @@ function FormContainer() {
       key: key,
       isRequired: e.target.checked,
     };
-    let isRequired = e.target.checked;
-    let fieldKey = key;
-
-    // Dispatch formSchemaState Update
-    // setFormSchemaState((previous) =>
-    //   setSchemaFieldRequired(previous, fieldKey, isRequired)
-    // );
 
     actions.setLSMSchemaFieldRequired(payload);
-    console.log(state.formSchemaState);
-
-    console.log(state);
-
-    // Dispatch formContainerState update
-    // setFormContainerState((previous) =>
-    //   setRequiredCheckboxes(state.formSchemaState, isRequired, fieldKey)
-    // );
-
+    // console.log(state.formSchemaState);
+    // console.log(state);
     actions.LSMsetRequiredCheckboxFormContainerState(payload);
   };
 
@@ -244,8 +246,6 @@ function FormContainer() {
       return item.key === key;
     });
     return item[0].labelValue;
-
-    // return getLabelValue(formContainerState, key);
   };
 
   const handleOnChangeLabel = (e, key) => {
@@ -254,12 +254,6 @@ function FormContainer() {
       labelValue: e.target.value,
     };
     actions.LSMsetLabelValue(payload);
-
-    // TO DELETE...
-    let labelValue = e.target.value;
-    setFormContainerState((previous) =>
-      setLabelValue(previous, key, labelValue)
-    );
   };
 
   const handleSaveFieldLabel = (key) => {
@@ -267,21 +261,10 @@ function FormContainer() {
       labelKey: key,
       labelValue: handleValueLabel(key),
     };
-
     actions.setLSMSchemaLabelField(payload);
-
-    // TO DELETE
-    // Dispatch Form schema State Update
-    // let labelToSave = handleValueLabel(key);
-
-    // setFormSchemaState((previous) =>
-    //   saveSchemaFieldLabel(previous, key, labelToSave)
-    // );
 
     // Dispatch closing the targeted modal on save
     handleCloseModal(key);
-    // let modalKey = key;
-    // setFormContainerState((previous) => setModalClose(previous, modalKey));
   };
 
   const handleOpenModal = (key) => {
@@ -289,8 +272,6 @@ function FormContainer() {
       modalKey: key,
       isModalOpened: true,
     };
-    let modalKey = key;
-    //setFormContainerState((previous) => setModalOpen(previous, modalKey));
 
     actions.LSMsetModalState(payload);
   };
@@ -300,9 +281,6 @@ function FormContainer() {
       modalKey: key,
       isModalOpened: false,
     };
-
-    let modalKey = key;
-    //setFormContainerState((previous) => setModalClose(previous, modalKey));
     actions.LSMsetModalState(payload);
   };
 
@@ -313,8 +291,6 @@ function FormContainer() {
     console.log(item[0].isModalOpened);
     return item[0].isModalOpened;
   };
-
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   return (
     <Formik
@@ -422,9 +398,9 @@ function FormContainer() {
                     </EuiFlexGroup>
                     {getFormElement(
                       key,
-                      elem,
-                      formSchemaState,
-                      formContainerState
+                      elem
+                      //formSchemaState
+                      //formContainerState
                     )}
                   </FormFieldPanel>
                 </>

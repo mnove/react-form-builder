@@ -12,6 +12,13 @@ import produce from "immer";
 //   });
 // };
 
+export const LSMinitializeFormContainerState = (state, payload) => {
+  return {
+    ...state,
+    formContainerState: [...payload],
+  };
+};
+
 export const LSMAddNewElementToFormContainerState = (state, payload) => {
   return {
     ...state,
