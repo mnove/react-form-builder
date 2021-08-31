@@ -68,7 +68,6 @@ export const setLSMSchemaLabelField = (state, payload) => {
 
     console.log(index);
 
-    if (index !== -1)
-      draft.formSchemaState[index].labelValue = payload.labelValue;
+    if (index !== -1) draft.formSchemaState[index].label = payload.labelValue;
   });
 };
