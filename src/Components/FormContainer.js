@@ -12,21 +12,21 @@ import {
   formAlertValidation,
 } from "../Form_builder";
 import { sampleFormSchema } from "./sampleData/sampleFormSchema";
-import {
-  addNewField,
-  getCheckboxValue,
-  getLabelValue,
-  getModalValue,
-  removeField,
-  setLabelValue,
-  setModalClose,
-  setModalOpen,
-  setRequiredCheckboxes,
-  addSchemaField,
-  removeSchemaField,
-  saveSchemaFieldLabel,
-  setSchemaFieldRequired,
-} from "../Form_builder/reducers";
+// import {
+//   addNewField,
+//   getCheckboxValue,
+//   getLabelValue,
+//   getModalValue,
+//   removeField,
+//   setLabelValue,
+//   setModalClose,
+//   setModalOpen,
+//   setRequiredCheckboxes,
+//   addSchemaField,
+//   removeSchemaField,
+//   saveSchemaFieldLabel,
+//   setSchemaFieldRequired,
+// } from "../Form_builder/reducers";
 import { logger } from "../utils/logger";
 
 import {
@@ -94,16 +94,7 @@ function FormContainer() {
   // global FORM CONTAINER STATE (Little state machine)
   const LSMFormContainerState = state.formContainerState;
 
-  const handleCreationFormSchema = () => {
-    // actions.initializeLSMFormSchema(sampleFormSchema);
-    // actions.LSMinitializeFormContainerState(
-    //   LSMFormContainerState,
-    //   initialFormContainerState
-    // );
-    console.log(state);
-  };
-
-  const [formSchemaState, setFormSchemaState] = useState(state.formSchemaState);
+  //const [formSchemaState, setFormSchemaState] = useState(state.formSchemaState);
 
   const [formData, setFormData] = useState({});
   const [validationSchema, setValidationSchema] = useState({});
@@ -122,37 +113,45 @@ function FormContainer() {
     setValidationSchema(Yup.object().shape(initializedData.schemaData));
     setFormData(initializedData.formData);
   };
-  // initialize the form schema, setting Form Data and Yup Validation Schema
+
+  // INITIALIZE the form schema, setting Form Data and Yup Validation Schema
   const formInitializer = () => {
+    // if form schema is empty initialize the form with sample data,
+    // otherwise use available data
     if (LSMFormSchemaState[0] === undefined) {
       initializeEmptyForm();
       return;
     } else {
+      // Initialize form with provided form schema and form container state
       let initializedData = initializeForm(LSMFormSchemaState);
       let initialFormContainerState =
         initializeFormContainerState(LSMFormSchemaState);
 
+      // Dispatch state update (LSM)
       actions.initializeLSMFormSchema(LSMFormSchemaState);
       actions.LSMinitializeFormContainerState(initialFormContainerState);
 
-      console.log(initializedData);
+      // Set validation schema and form data
       setValidationSchema(Yup.object().shape(initializedData.schemaData));
       setFormData(initializedData.formData);
-      console.log(formData);
     }
   };
 
+  // Initialize form on first render
   useEffect(() => {
-    console.log(LSMFormSchemaState);
     formInitializer();
   }, []);
+
+  // Re-initialize the form whenerver form schema is updated (e.g. adding new field)
+  useEffect(() => {
+    let initializedData = initializeForm(LSMFormSchemaState);
+    setValidationSchema(Yup.object().shape(initializedData.schemaData));
+  }, [LSMFormSchemaState]);
 
   //logger(formData, "Form Data: ");
   //logger(validationSchema, "Validation Schema: ");
   //logger(formContainerState, "Form Container State: ");
   //logger(formSchemaState, "Form Schema State: ");
-
-  const [selectValue, setSelectValue] = useState("");
 
   // tracking changes on the formSchemaState - as the state updates, we initialize the form again with the latest state data
   // useEffect(() => {
@@ -173,7 +172,6 @@ function FormContainer() {
     let newKey = newFieldData.newField.key;
 
     actions.addLSMSchemaField(newFieldData.newField);
-    console.log(state.formSchemaState);
 
     let newFieldElementState = {
       key: newKey,
@@ -228,13 +226,11 @@ function FormContainer() {
     };
 
     actions.setLSMSchemaFieldRequired(payload);
-    // console.log(state.formSchemaState);
-    // console.log(state);
     actions.LSMsetRequiredCheckboxFormContainerState(payload);
   };
 
   const handleRequiredCheckboxValue = (key) => {
-    let item = state.formContainerState.filter((item) => {
+    let item = LSMFormContainerState.filter((item) => {
       return item.key === key;
     });
     return item[0].isRequiredChecked;
@@ -242,7 +238,7 @@ function FormContainer() {
 
   // display the correct label value inside the modal input
   const handleValueLabel = (key) => {
-    let item = state.formContainerState.filter((item) => {
+    let item = LSMFormContainerState.filter((item) => {
       return item.key === key;
     });
     return item[0].labelValue;
@@ -285,182 +281,177 @@ function FormContainer() {
   };
 
   const handleModalOpening = (key) => {
-    let item = state.formContainerState.filter((item) => {
+    let item = LSMFormContainerState.filter((item) => {
       return item.key === key;
     });
-    console.log(item[0].isModalOpened);
     return item[0].isModalOpened;
   };
 
   return (
-    <Formik
-      initialValues={formData}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
-      {(formik) => {
-        return (
-          <Form>
-            <EuiText>
-              <h1>YOUR FORM</h1>
-            </EuiText>
-            {LSMFormSchemaState.map((elem, index) => {
-              const key = elem.key;
-              return (
-                <>
-                  <FormFieldPanel
-                    hasShadow={false}
-                    hasBorder={true}
-                    key={index}
-                  >
-                    <EuiFlexGroup
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="flexEnd"
+    <React.Fragment key={"1001"}>
+      <Formik
+        initialValues={formData}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        key={"1001"}
+      >
+        {(formik) => {
+          return (
+            <Form>
+              <EuiText>
+                <h1>YOUR FORM</h1>
+              </EuiText>
+              {LSMFormSchemaState.map((elem, index) => {
+                const key = elem.key;
+                return (
+                  <>
+                    <FormFieldPanel
+                      hasShadow={false}
+                      hasBorder={true}
+                      key={index}
                     >
-                      <EuiFlexItem grow={false}>
-                        <EuiPopover
-                          id="inlineFormPopover"
-                          button={
-                            <EuiButtonIcon
-                              iconType={Edit}
-                              color="secondary"
-                              aria-label="Edit form label"
-                              display="base"
-                              fill
-                              onClick={() => handleOpenModal(key)}
-                            >
-                              Edit
-                            </EuiButtonIcon>
-                          }
-                          isOpen={handleModalOpening(key)}
-                          closePopover={() => handleCloseModal(key)}
-                        >
-                          <div style={{ width: "auto" }}>
-                            {
-                              <EuiForm component="form">
-                                <EuiFlexGroup direction="column">
-                                  <EuiFlexItem>
-                                    <EuiFlexGroup>
-                                      <EuiFlexItem>
-                                        <EuiFormRow label="Field label">
-                                          <EuiFieldText
-                                            placeholder="Type here..."
-                                            onChange={(e) =>
-                                              handleOnChangeLabel(e, key)
-                                            }
-                                            value={handleValueLabel(key)}
-                                          />
-                                        </EuiFormRow>
-                                      </EuiFlexItem>
-                                      <EuiFlexItem grow={false}>
-                                        <EuiFormRow hasEmptyLabelSpace>
-                                          <EuiButton
-                                            onClick={() =>
-                                              handleSaveFieldLabel(key)
-                                            }
-                                          >
-                                            Save
-                                          </EuiButton>
-                                        </EuiFormRow>
-                                      </EuiFlexItem>
-                                    </EuiFlexGroup>
-                                  </EuiFlexItem>
-                                </EuiFlexGroup>
-                              </EuiForm>
+                      <EuiFlexGroup
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="flexEnd"
+                      >
+                        <EuiFlexItem grow={false}>
+                          <EuiPopover
+                            id="inlineFormPopover"
+                            button={
+                              <EuiButtonIcon
+                                iconType={Edit}
+                                color="subdued"
+                                aria-label="Edit form label"
+                                display="base"
+                                onClick={() => handleOpenModal(key)}
+                              >
+                                Edit
+                              </EuiButtonIcon>
                             }
-                          </div>
-                        </EuiPopover>
-                      </EuiFlexItem>
+                            isOpen={handleModalOpening(key)}
+                            closePopover={() => handleCloseModal(key)}
+                          >
+                            <div style={{ width: "auto" }}>
+                              {
+                                <EuiForm component="form">
+                                  <EuiFlexGroup direction="column">
+                                    <EuiFlexItem>
+                                      <EuiFlexGroup>
+                                        <EuiFlexItem>
+                                          <EuiFormRow label="Field label">
+                                            <EuiFieldText
+                                              placeholder="Type here..."
+                                              onChange={(e) =>
+                                                handleOnChangeLabel(e, key)
+                                              }
+                                              value={handleValueLabel(key)}
+                                            />
+                                          </EuiFormRow>
+                                        </EuiFlexItem>
+                                        <EuiFlexItem grow={false}>
+                                          <EuiFormRow hasEmptyLabelSpace>
+                                            <EuiButton
+                                              onClick={() =>
+                                                handleSaveFieldLabel(key)
+                                              }
+                                            >
+                                              Save
+                                            </EuiButton>
+                                          </EuiFormRow>
+                                        </EuiFlexItem>
+                                      </EuiFlexGroup>
+                                    </EuiFlexItem>
+                                  </EuiFlexGroup>
+                                </EuiForm>
+                              }
+                            </div>
+                          </EuiPopover>
+                        </EuiFlexItem>
 
-                      <EuiFlexItem grow={false}>
-                        <EuiSwitch
-                          name="switch"
-                          label="Required?"
-                          value={true}
-                          checked={handleRequiredCheckboxValue(key)}
-                          onChange={(e) => {
-                            handleRequiredCheckbox(e, key);
-                          }}
-                        />
-                      </EuiFlexItem>
-                      <EuiFlexItem grow={false}>
-                        <EuiButtonIcon
-                          iconType={CloseCircle}
-                          color="danger"
-                          aria-label="Delete field"
-                          display="base"
-                          onClick={() => {
-                            handleFieldRemove(key, formik);
-                          }}
-                        />
-                      </EuiFlexItem>
-                    </EuiFlexGroup>
-                    {getFormElement(
-                      key,
-                      elem
-                      //formSchemaState
-                      //formContainerState
-                    )}
-                  </FormFieldPanel>
-                </>
-              );
-            })}
+                        <EuiFlexItem grow={false}>
+                          <EuiSwitch
+                            name="switch"
+                            label="Required?"
+                            value={true}
+                            checked={handleRequiredCheckboxValue(key)}
+                            onChange={(e) => {
+                              handleRequiredCheckbox(e, key);
+                            }}
+                          />
+                        </EuiFlexItem>
+                        <EuiFlexItem grow={false}>
+                          <EuiButtonIcon
+                            iconType={CloseCircle}
+                            color="danger"
+                            aria-label="Delete field"
+                            display="base"
+                            onClick={() => {
+                              handleFieldRemove(key, formik);
+                            }}
+                          />
+                        </EuiFlexItem>
+                      </EuiFlexGroup>
+                      {getFormElement(key, elem)}
+                    </FormFieldPanel>
+                  </>
+                );
+              })}
 
-            {console.log("FORMIK", formik)}
-            {console.log("FORMIK ERRORS", formik.errors)}
+              {console.log("FORMIK", formik)}
+              {console.log("FORMIK ERRORS", formik.errors)}
 
-            {formAlertValidation(formik)}
-            <AddFormFieldPanel hasShadow={false}>
-              <EuiFormRow label="Add a field">
-                <EuiSelect
-                  hasNoInitialSelection
-                  options={[
-                    { value: "textInput", text: "Text Input" },
-                    { value: "emailInput", text: "Email Input" },
-                    { value: "numberInput", text: "Number Input" },
-                    { value: "radioGroupInput", text: "Radio Input" },
-                  ]}
-                  onChange={(e) =>
-                    handleFieldTypeAdd(e.target.value, formSchema)
-                  }
-                  value={selectValue}
-                />
-              </EuiFormRow>
-            </AddFormFieldPanel>
+              {formAlertValidation(formik)}
+              <AddFormFieldPanel hasShadow={false}>
+                <EuiFormRow label="Add a field">
+                  <EuiSelect
+                    hasNoInitialSelection
+                    options={[
+                      { value: "textInput", text: "Text Input" },
+                      { value: "emailInput", text: "Email Input" },
+                      { value: "numberInput", text: "Number Input" },
+                      { value: "radioGroupInput", text: "Radio Input" },
+                    ]}
+                    onChange={(e) =>
+                      handleFieldTypeAdd(e.target.value, formSchema)
+                    }
+                  />
+                </EuiFormRow>
+              </AddFormFieldPanel>
 
-            <EuiFlexGroup>
-              <EuiFlexItem grow={false}>
-                <EuiButton color="text">Reset Form</EuiButton>
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiButton type="submit" color="secondary">
-                  Submit
-                </EuiButton>
-              </EuiFlexItem>
-            </EuiFlexGroup>
+              <EuiFlexGroup>
+                <EuiFlexItem grow={false}>
+                  <EuiButton color="text">Reset Form</EuiButton>
+                </EuiFlexItem>
+                <EuiFlexItem>
+                  <EuiButton type="submit" color="secondary">
+                    Submit
+                  </EuiButton>
+                </EuiFlexItem>
+              </EuiFlexGroup>
 
-            <EuiHorizontalRule></EuiHorizontalRule>
-            <EuiFlexGroup>
-              <EuiFlexItem>
-                <EuiButton
-                  type="submit"
-                  color="text"
-                  size="s"
-                  onClick={() => getFormSchema()}
-                >
-                  Print Schema to console
-                </EuiButton>
-              </EuiFlexItem>
+              <EuiHorizontalRule></EuiHorizontalRule>
+              <EuiFlexGroup>
+                <EuiFlexItem>
+                  <EuiButton
+                    type="submit"
+                    color="text"
+                    size="s"
+                    onClick={() => getFormSchema()}
+                  >
+                    Print Schema to console
+                  </EuiButton>
+                </EuiFlexItem>
 
-              <button onClick={handleCreationFormSchema}>
+                {/* <button onClick={handleCreationFormSchema}>
                 Create Schema to LSM
-              </button>
-            </EuiFlexGroup>
-          </Form>
-        );
-      }}
-    </Formik>
+              </button> */}
+              </EuiFlexGroup>
+            </Form>
+          );
+        }}
+      </Formik>
+    </React.Fragment>
   );
 }
 export default FormContainer;

@@ -90,7 +90,7 @@ export function NumberField(props) {
   }
   return (
     <>
-      <Field name={name}>
+      <Field name={name} key={name}>
         {({ form, field }) => {
           return (
             <EuiFormRow
@@ -129,17 +129,8 @@ let defaultRadioOptions = [
 ];
 
 export function RadioGroupField(props) {
-  const {
-    name,
-    label,
-    placeholder,
-    options,
-    formSchemaState,
-    formContainerState,
-    ...rest
-  } = props;
+  const { name, label, placeholder, options, ...rest } = props;
 
-  console.log(name);
   let fieldLabel = label;
   if (!label) {
     fieldLabel = "Untitled";
@@ -167,18 +158,16 @@ export function RadioGroupField(props) {
     // Add the new form option to the whole form schema state.
     // >> Create a specific set of reducers to just handle changes for radio buttons
     // >> Keep the form state updated as the schema gets modified
-
-    addRadioOption(formSchemaState, name, newOption);
   };
 
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <Field name={name}>
+      <Field name={name} key={name}>
         {({ form, field }) => {
-          return radioOptions.map((option) => {
+          return radioOptions.map((option, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 {/* <EuiFormRow
               label={fieldLabel}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
@@ -218,7 +207,7 @@ export function RadioGroupField(props) {
                 }
               /> */}
                 {/* </EuiFormRow> */}
-              </>
+              </React.Fragment>
             );
           });
 

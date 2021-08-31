@@ -1,8 +1,6 @@
 import * as Yup from "yup";
 
 export const initializeForm = (formSchema) => {
-  console.log(formSchema);
-
   let _formData = {};
   let _schemaData = {};
 
@@ -43,8 +41,6 @@ export const initializeForm = (formSchema) => {
     schemaData: _schemaData,
     formData: _formData,
   };
-
-  console.log(intializedData);
 
   return intializedData;
 };

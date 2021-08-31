@@ -7,8 +7,6 @@ export const formContainerState = {
 };
 
 export const initializeFormContainerState = (formSchema) => {
-  console.log(formSchema);
-
   let formContainerInitialData = [];
 
   formSchema.forEach((elem) => {
@@ -25,8 +23,6 @@ export const initializeFormContainerState = (formSchema) => {
     };
     formContainerInitialData.push(newElement);
   });
-
-  console.log(formContainerInitialData);
 
   return formContainerInitialData;
 };

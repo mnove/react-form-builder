@@ -7,19 +7,12 @@ import {
   RadioGroupField,
 } from "../Components/FormElements";
 
-export const getFormElement = (
-  elemName,
-  elemSchema,
-  formSchemaState,
-  formContainerState
-) => {
+export const getFormElement = (elemName, elemSchema) => {
   const props = {
     name: elemName,
     label: elemSchema.label,
     placeholder: elemSchema.placeholder,
     options: elemSchema.options,
-    formSchemaState,
-    formContainerState,
   };
 
   if (elemSchema.type === "textInput") {
