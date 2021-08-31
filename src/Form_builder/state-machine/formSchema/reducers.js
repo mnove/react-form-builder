@@ -39,10 +39,7 @@ export const removeLSMSchemaField = (state, payload) => {
   };
 };
 
-/** Change the label within Form Schema State
- * @param {object} formSchemaState Previous form schema state
- * @param {string} key  c
- * @param {boolean} isRequired  Value of the required field
+/** Set field required within Form Schema State
  */
 
 export const setLSMSchemaFieldRequired = (state, payload) => {
@@ -57,5 +54,21 @@ export const setLSMSchemaFieldRequired = (state, payload) => {
 
     if (index !== -1)
       draft.formSchemaState[index].required = payload.isRequired;
+  });
+};
+
+/** Change the label within Form Schema State
+ */
+export const setLSMSchemaLabelField = (state, payload) => {
+  console.log("CALLLEDD");
+  return produce(state, (draft) => {
+    const index = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.labelKey
+    );
+
+    console.log(index);
+
+    if (index !== -1)
+      draft.formSchemaState[index].labelValue = payload.labelValue;
   });
 };

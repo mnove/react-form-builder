@@ -44,3 +44,33 @@ export const LSMsetRequiredCheckboxFormContainerState = (state, payload) => {
       draft.formContainerState[index].isRequiredChecked = payload.isRequired;
   });
 };
+
+export const LSMsetModalState = (state, payload) => {
+  return produce(state, (draft) => {
+    const index = draft.formContainerState.findIndex(
+      (elem) => elem.key === payload.modalKey
+    );
+
+    if (index !== -1) {
+      if (payload.isModalOpened) {
+        console.log(payload.isModalOpened);
+        draft.formContainerState[index].isModalOpened = true;
+      } else {
+        console.log(payload.isModalOpened);
+        draft.formContainerState[index].isModalOpened = false;
+      }
+    }
+  });
+};
+
+export const LSMsetLabelValue = (state, payload) => {
+  return produce(state, (draft) => {
+    const index = draft.formContainerState.findIndex(
+      (elem) => elem.key === payload.labelKey
+    );
+
+    if (index !== -1) {
+      draft.formContainerState[index].labelValue = payload.labelValue;
+    }
+  });
+};

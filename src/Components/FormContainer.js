@@ -58,10 +58,13 @@ import {
   addLSMSchemaField,
   removeLSMSchemaField,
   setLSMSchemaFieldRequired,
+  setLSMSchemaLabelField,
 } from "../Form_builder/state-machine/formSchema/reducers";
 import {
   LSMAddNewElementToFormContainerState,
   LSMRemoveElementFromFormContainerState,
+  LSMsetLabelValue,
+  LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
 } from "../Form_builder/state-machine/formState/reducers";
 
@@ -74,9 +77,12 @@ function FormContainer() {
     addLSMSchemaField,
     removeLSMSchemaField,
     setLSMSchemaFieldRequired,
+    setLSMSchemaLabelField,
     LSMAddNewElementToFormContainerState,
     LSMRemoveElementFromFormContainerState,
     LSMsetRequiredCheckboxFormContainerState,
+    LSMsetModalState,
+    LSMsetLabelValue,
   });
 
   // global FORM SCHEMA (little state machine)
@@ -229,17 +235,27 @@ function FormContainer() {
     let item = state.formContainerState.filter((item) => {
       return item.key === key;
     });
-    console.log(item);
-    console.log(item[0].isRequiredChecked);
     return item[0].isRequiredChecked;
   };
 
   // display the correct label value inside the modal input
   const handleValueLabel = (key) => {
-    return getLabelValue(formContainerState, key);
+    let item = state.formContainerState.filter((item) => {
+      return item.key === key;
+    });
+    return item[0].labelValue;
+
+    // return getLabelValue(formContainerState, key);
   };
 
   const handleOnChangeLabel = (e, key) => {
+    let payload = {
+      labelKey: key,
+      labelValue: e.target.value,
+    };
+    actions.LSMsetLabelValue(payload);
+
+    // TO DELETE...
     let labelValue = e.target.value;
     setFormContainerState((previous) =>
       setLabelValue(previous, key, labelValue)
@@ -247,30 +263,55 @@ function FormContainer() {
   };
 
   const handleSaveFieldLabel = (key) => {
-    let labelToSave = handleValueLabel(key);
+    let payload = {
+      labelKey: key,
+      labelValue: handleValueLabel(key),
+    };
 
+    actions.setLSMSchemaLabelField(payload);
+
+    // TO DELETE
     // Dispatch Form schema State Update
-    setFormSchemaState((previous) =>
-      saveSchemaFieldLabel(previous, key, labelToSave)
-    );
+    // let labelToSave = handleValueLabel(key);
+
+    // setFormSchemaState((previous) =>
+    //   saveSchemaFieldLabel(previous, key, labelToSave)
+    // );
 
     // Dispatch closing the targeted modal on save
-    let modalKey = key;
-    setFormContainerState((previous) => setModalClose(previous, modalKey));
+    handleCloseModal(key);
+    // let modalKey = key;
+    // setFormContainerState((previous) => setModalClose(previous, modalKey));
   };
 
   const handleOpenModal = (key) => {
+    let payload = {
+      modalKey: key,
+      isModalOpened: true,
+    };
     let modalKey = key;
-    setFormContainerState((previous) => setModalOpen(previous, modalKey));
+    //setFormContainerState((previous) => setModalOpen(previous, modalKey));
+
+    actions.LSMsetModalState(payload);
   };
 
   const handleCloseModal = (key) => {
+    let payload = {
+      modalKey: key,
+      isModalOpened: false,
+    };
+
     let modalKey = key;
-    setFormContainerState((previous) => setModalClose(previous, modalKey));
+    //setFormContainerState((previous) => setModalClose(previous, modalKey));
+    actions.LSMsetModalState(payload);
   };
 
   const handleModalOpening = (key) => {
-    return getModalValue(formContainerState, key);
+    let item = state.formContainerState.filter((item) => {
+      return item.key === key;
+    });
+    console.log(item[0].isModalOpened);
+    return item[0].isModalOpened;
   };
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
