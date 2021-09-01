@@ -12,6 +12,9 @@ import {
 import { nanoid } from "nanoid";
 import { addRadioOption } from "../Form_builder/reducers/radio/radioSchemaStateReducer";
 
+import { useStateMachine } from "little-state-machine";
+import { addLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
+
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
 
@@ -129,18 +132,24 @@ let defaultRadioOptions = [
 ];
 
 export function RadioGroupField(props) {
-  const { name, label, placeholder, options, ...rest } = props;
+  const { actions, state } = useStateMachine({
+    addLSMShemaRadioOption,
+  });
+
+  const { name, label, placeholder, options, fieldData, ...rest } = props;
+
+  console.log(fieldData);
 
   let fieldLabel = label;
   if (!label) {
     fieldLabel = "Untitled";
   }
 
-  let radioOptions = options;
+  let radioOptions = fieldData.radioOptions;
 
-  if (!options) {
-    radioOptions = defaultRadioOptions;
-  }
+  // if (!options) {
+  //   radioOptions = defaultRadioOptions;
+  // }
 
   const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
   const onChange = (optionId) => {
@@ -150,11 +159,18 @@ export function RadioGroupField(props) {
   };
 
   const handleAddRadioOptionToField = () => {
-    let newOption = {
-      id: `${nanoid()}`,
-      value: "Another option",
+    console.log(name);
+    let paylaod = {
+      fieldKey: name,
+      newOption: {
+        id: `${nanoid()}`,
+        value: "Untitled",
+      },
     };
+
+    actions.addLSMShemaRadioOption(paylaod);
     console.log("Added");
+
     // Add the new form option to the whole form schema state.
     // >> Create a specific set of reducers to just handle changes for radio buttons
     // >> Keep the form state updated as the schema gets modified
@@ -175,7 +191,7 @@ export function RadioGroupField(props) {
             > */}
                 <input
                   type="radio"
-                  id={option.value}
+                  id={option.id}
                   {...field}
                   {...rest}
                   value={option.value}

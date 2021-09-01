@@ -44,6 +44,18 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default radio label",
         placeholder: "default radio placeholder",
         required: false,
+        fieldData: {
+          radioOptions: [
+            {
+              id: `1001`,
+              value: "Opt 1",
+            },
+            {
+              id: `1002`,
+              value: "Opt 2",
+            },
+          ],
+        },
       };
       break;
   }

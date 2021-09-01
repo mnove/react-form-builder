@@ -71,3 +71,19 @@ export const setLSMSchemaLabelField = (state, payload) => {
     if (index !== -1) draft.formSchemaState[index].label = payload.labelValue;
   });
 };
+
+export const addLSMShemaRadioOption = (state, payload) => {
+  console.log("called here...");
+  return produce(state, (draft) => {
+    const index = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.fieldKey
+    );
+
+    console.log(index);
+
+    if (index !== -1)
+      draft.formSchemaState[index].fieldData.radioOptions.push(
+        payload.newOption
+      );
+  });
+};

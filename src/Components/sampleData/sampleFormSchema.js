@@ -28,6 +28,19 @@ export const sampleFormSchema = [
     type: "radioGroupInput",
     label: "Default Radio Label",
     placeholder: "",
+    required: false,
+    fieldData: {
+      radioOptions: [
+        {
+          id: `1001`,
+          value: "Opt 1",
+        },
+        {
+          id: `1002`,
+          value: "Opt 2",
+        },
+      ],
+    },
     options: [
       {
         id: `1001`,
@@ -38,6 +51,5 @@ export const sampleFormSchema = [
         value: "Opt two",
       },
     ],
-    required: false,
   },
 ];
