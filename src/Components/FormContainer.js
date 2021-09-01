@@ -69,6 +69,11 @@ import {
   LSMsetRequiredCheckboxFormContainerState,
 } from "../Form_builder/state-machine/formState/reducers";
 import { getCurrentLabelValue } from "../Form_builder/state-machine/formSchema/utils";
+import {
+  addNewElementToFormValues,
+  initializeLSMFormValues,
+  removeElementFromFormValues,
+} from "../Form_builder/state-machine/formValues/reducers";
 
 // Form Schema data
 const formSchema = sampleFormSchema;
@@ -86,6 +91,9 @@ function FormContainer() {
     LSMsetRequiredCheckboxFormContainerState,
     LSMsetModalState,
     LSMsetLabelValue,
+    initializeLSMFormValues,
+    addNewElementToFormValues,
+    removeElementFromFormValues,
   });
 
   // STATE //
@@ -93,11 +101,51 @@ function FormContainer() {
   const LSMFormSchemaState = state.formSchemaState;
   // global FORM CONTAINER STATE (Little state machine)
   const LSMFormContainerState = state.formContainerState;
+  // global FORM VALUES STATE (Little state machine)
+  const LSMFormValuesState = state.formValuesState;
 
   //const [formSchemaState, setFormSchemaState] = useState(state.formSchemaState);
 
   const [formData, setFormData] = useState({});
   const [validationSchema, setValidationSchema] = useState({});
+
+  console.log("called function");
+
+  const getInitialFormValues = () => {
+    let initialFormValues = [
+      { key: "abc1", fieldValue: "" },
+      { key: "abc2", fieldValue: "" },
+      { key: "abc3", fieldValue: "" },
+      { key: "abc4", fieldValue: "" },
+    ];
+
+    actions.initializeLSMFormValues(initialFormValues);
+
+    return initialFormValues;
+  };
+
+  const parseFormInitialValues = (valuesToParse) => {
+    let newArray = {};
+    valuesToParse.forEach((element) => {
+      newArray[element.key] = element.fieldValue;
+    });
+
+    return newArray;
+  };
+
+  const getFormInitalValues = () => {
+    console.log(LSMFormValuesState);
+    let formDataValues = parseFormInitialValues(LSMFormValuesState);
+    if (Object.keys(formDataValues).length === 0) {
+      getInitialFormValues();
+      return parseFormInitialValues(getInitialFormValues());
+    } else {
+      return parseFormInitialValues(LSMFormValuesState);
+    }
+  };
+
+  let formInitialValues = getFormInitalValues();
+  console.log(formInitialValues);
 
   const initializeEmptyForm = () => {
     // An Empty form is initialized with some sample data
@@ -140,6 +188,8 @@ function FormContainer() {
   // Initialize form on first render
   useEffect(() => {
     formInitializer();
+    //getInitialFormValues();
+    getFormInitalValues();
   }, []);
 
   // Re-initialize the form whenerver form schema is updated (e.g. adding new field)
@@ -166,24 +216,32 @@ function FormContainer() {
   //   setSelectValue("");
   // }, [LSMFormSchemaState]);
 
-  // handler for ADDING a new field type to the form schema
+  // handler for ADDING a new field type to the store
   const handleFieldTypeAdd = (value, formSchema) => {
-    let newFieldData = fieldTypeControls(value, formSchema);
+    let newFieldData = fieldTypeControls(value, formSchema); // get correct field type
     let newKey = newFieldData.newField.key;
 
+    // Update formSchemaState with schema data of the new field
     actions.addLSMSchemaField(newFieldData.newField);
 
+    // Update formContainerState with the new field
     let newFieldElementState = {
       key: newKey,
       isRequiredChecked: false,
       labelValue: "Default label",
       isModalOpened: false,
     };
-
     actions.LSMAddNewElementToFormContainerState(newFieldElementState);
+
+    // Update formValuesState with initial field data for the new field
+    let newFieldElementInitialValue = {
+      key: newKey,
+      fieldValue: "",
+    };
+    actions.addNewElementToFormValues(newFieldElementInitialValue);
   };
 
-  // handler for REMOVING a form field from the formSchema
+  // handler for REMOVING a form field from the store
   const handleFieldRemove = (key, formik) => {
     actions.removeLSMSchemaField(key);
     // console.log(state.formSchemaState);
@@ -196,6 +254,8 @@ function FormContainer() {
 
     actions.LSMRemoveElementFromFormContainerState(payload);
     // console.log(state.formSchemaState);
+
+    actions.removeElementFromFormValues(payload);
 
     formik.setValues({});
     formik.resetForm();
@@ -287,10 +347,15 @@ function FormContainer() {
     return item[0].isModalOpened;
   };
 
+  console.log(LSMFormValuesState);
+  console.log(formData);
+
+  //let formDataValues = parseFormInitialValues(LSMFormValuesState);
+
   return (
     <React.Fragment key={"1001"}>
       <Formik
-        initialValues={formData}
+        initialValues={formInitialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         key={"1001"}

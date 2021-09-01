@@ -13,6 +13,7 @@ createStore({
   yourDetail: { name: "" },
   formSchemaState: [],
   formContainerState: [],
+  formValuesState: [],
 });
 
 function App() {
