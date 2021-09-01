@@ -10,8 +10,9 @@ import {
 } from "little-state-machine";
 
 createStore({
-  yourDetail: { name: "" },
   formSchemaState: [],
+  formContainerState: [],
+  formValuesState: [],
 });
 
 function App() {

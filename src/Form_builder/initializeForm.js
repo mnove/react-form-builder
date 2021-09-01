@@ -1,8 +1,6 @@
 import * as Yup from "yup";
 
 export const initializeForm = (formSchema) => {
-  console.log(formSchema);
-
   let _formData = {};
   let _schemaData = {};
 
@@ -44,7 +42,16 @@ export const initializeForm = (formSchema) => {
     formData: _formData,
   };
 
-  console.log(intializedData);
-
   return intializedData;
+};
+
+/** Parse initial form values to formik format (so <Formik> can be initialized properly)
+ * @param {Array<Object>} valuesToParse
+ */
+export const parseToFormikInitialValues = (valuesToParse) => {
+  let newArray = {};
+  valuesToParse.forEach((element) => {
+    newArray[element.key] = element.fieldValue;
+  });
+  return newArray;
 };
