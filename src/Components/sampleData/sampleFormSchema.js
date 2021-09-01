@@ -33,11 +33,11 @@ export const sampleFormSchema = [
       radioOptions: [
         {
           id: `1001`,
-          value: "Opt 1",
+          label: "Opt 1",
         },
         {
           id: `1002`,
-          value: "Opt 2",
+          label: "Opt 2",
         },
       ],
     },

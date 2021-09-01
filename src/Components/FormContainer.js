@@ -117,7 +117,6 @@ function FormContainer() {
   const getInitialFormValues = () => {
     let initialFormValues = sampleInitialFormValues;
     actions.initializeLSMFormValues(initialFormValues);
-
     return initialFormValues;
   };
 
@@ -144,6 +143,7 @@ function FormContainer() {
   let formInitialValues = getFormInitalValues();
   console.log(formInitialValues);
 
+  // INITIALIZE the form container state
   const initializeEmptyForm = () => {
     // An Empty form is initialized with some sample data
     let initializedData = initializeForm(sampleFormSchema);
@@ -194,24 +194,6 @@ function FormContainer() {
     let initializedData = initializeForm(LSMFormSchemaState);
     setValidationSchema(Yup.object().shape(initializedData.schemaData));
   }, [LSMFormSchemaState]);
-
-  //logger(formData, "Form Data: ");
-  //logger(validationSchema, "Validation Schema: ");
-  //logger(formContainerState, "Form Container State: ");
-  //logger(formSchemaState, "Form Schema State: ");
-
-  // tracking changes on the formSchemaState - as the state updates, we initialize the form again with the latest state data
-  // useEffect(() => {
-  //   formInitializer(); // re-initialize the form
-  //   setSelectValue("");
-  //   console.log(state.formSchemaState);
-  // }, [state.formSchemaState]);
-
-  // useEffect(() => {
-  //   formInitializer(); // re-initialize the form
-
-  //   setSelectValue("");
-  // }, [LSMFormSchemaState]);
 
   // handler for ADDING a new field type to the store
   const handleFieldTypeAdd = (value, formSchema) => {
