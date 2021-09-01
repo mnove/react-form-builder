@@ -10,8 +10,9 @@ import {
   initializeFormContainerState,
   fieldTypeControls,
   formAlertValidation,
+  parseToFormikInitialValues,
 } from "../Form_builder";
-import { sampleFormSchema } from "./sampleData/sampleFormSchema";
+
 // import {
 //   addNewField,
 //   getCheckboxValue,
@@ -75,6 +76,8 @@ import {
   removeElementFromFormValues,
 } from "../Form_builder/state-machine/formValues/reducers";
 
+// Sample data
+import { sampleFormSchema, sampleInitialFormValues } from "./sampleData";
 // Form Schema data
 const formSchema = sampleFormSchema;
 
@@ -112,35 +115,29 @@ function FormContainer() {
   console.log("called function");
 
   const getInitialFormValues = () => {
-    let initialFormValues = [
-      { key: "abc1", fieldValue: "" },
-      { key: "abc2", fieldValue: "" },
-      { key: "abc3", fieldValue: "" },
-      { key: "abc4", fieldValue: "" },
-    ];
-
+    let initialFormValues = sampleInitialFormValues;
     actions.initializeLSMFormValues(initialFormValues);
 
     return initialFormValues;
   };
 
-  const parseFormInitialValues = (valuesToParse) => {
-    let newArray = {};
-    valuesToParse.forEach((element) => {
-      newArray[element.key] = element.fieldValue;
-    });
+  // const parseFormInitialValues = (valuesToParse) => {
+  //   let newArray = {};
+  //   valuesToParse.forEach((element) => {
+  //     newArray[element.key] = element.fieldValue;
+  //   });
 
-    return newArray;
-  };
+  //   return newArray;
+  // };
 
   const getFormInitalValues = () => {
     console.log(LSMFormValuesState);
-    let formDataValues = parseFormInitialValues(LSMFormValuesState);
+    let formDataValues = parseToFormikInitialValues(LSMFormValuesState);
     if (Object.keys(formDataValues).length === 0) {
       getInitialFormValues();
-      return parseFormInitialValues(getInitialFormValues());
+      return parseToFormikInitialValues(getInitialFormValues());
     } else {
-      return parseFormInitialValues(LSMFormValuesState);
+      return parseToFormikInitialValues(LSMFormValuesState);
     }
   };
 

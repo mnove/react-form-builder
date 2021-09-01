@@ -44,3 +44,14 @@ export const initializeForm = (formSchema) => {
 
   return intializedData;
 };
+
+/** Parse initial form values to formik format (so <Formik> can be initialized properly)
+ * @param {Array<Object>} valuesToParse
+ */
+export const parseToFormikInitialValues = (valuesToParse) => {
+  let newArray = {};
+  valuesToParse.forEach((element) => {
+    newArray[element.key] = element.fieldValue;
+  });
+  return newArray;
+};
