@@ -8,9 +8,15 @@ import {
   EuiRadio,
   EuiHorizontalRule,
   EuiButton,
+  EuiFlexGroup,
+  EuiFlexItem,
 } from "@elastic/eui";
 import { nanoid } from "nanoid";
 import { addRadioOption } from "../Form_builder/reducers/radio/radioSchemaStateReducer";
+
+import { useStateMachine } from "little-state-machine";
+import { addLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
+import { RadioInput } from "./RadioInput";
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
@@ -129,42 +135,104 @@ let defaultRadioOptions = [
 ];
 
 export function RadioGroupField(props) {
-  const { name, label, placeholder, options, ...rest } = props;
+  const { actions, state } = useStateMachine({
+    addLSMShemaRadioOption,
+  });
+
+  const { name, label, placeholder, options, fieldData, ...rest } = props;
+
+  console.log(fieldData);
 
   let fieldLabel = label;
   if (!label) {
     fieldLabel = "Untitled";
   }
 
-  let radioOptions = options;
+  let radioOptions = fieldData.radioOptions;
 
-  if (!options) {
-    radioOptions = defaultRadioOptions;
-  }
-
-  const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
-  const onChange = (optionId) => {
-    setRadioIdSelected(optionId);
-    console.log(optionId);
-    console.log(radioIdSelected);
-  };
+  // if (!options) {
+  //   radioOptions = defaultRadioOptions;
+  // }
 
   const handleAddRadioOptionToField = () => {
-    let newOption = {
-      id: `${nanoid()}`,
-      value: "Another option",
+    console.log(name);
+    let paylaod = {
+      fieldKey: name,
+      newOption: {
+        key: `radio_opt_${nanoid()}`,
+        label: "Untitled ssssssssssss",
+      },
     };
+    actions.addLSMShemaRadioOption(paylaod);
     console.log("Added");
-    // Add the new form option to the whole form schema state.
-    // >> Create a specific set of reducers to just handle changes for radio buttons
-    // >> Keep the form state updated as the schema gets modified
   };
+
+  const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
+
+  const onChange = (optionId) => {
+    setRadioIdSelected(optionId);
+  };
+
+  const [style, setStyle] = useState({ display: "none" });
+
+  // return (
+  //   <>
+  //     <label htmlFor={name}>{label}</label>
+  //     <Field name={name} key={name}>
+  //       {({ form, field }) => {
+  //         return (
+  //           <React.Fragment>
+  //             <EuiRadioGroup
+  //               // id={option.id}
+  //               // //key={option.id}
+  //               // type="radio"
+  //               {...field}
+  //               {...rest}
+  //               options={radioOptions}
+  //               idSelected={radioIdSelected}
+  //               onChange={(id) => onChange(id)}
+  //               placeholder={placeholder || ""}
+  //               isInvalid={
+  //                 form.errors[name] && form.touched[name] ? true : false
+  //               }
+  //             />
+  //           </React.Fragment>
+  //         );
+  //       }}
+  //     </Field>
+
+  //     <EuiHorizontalRule />
+
+  //     <EuiButton onClick={handleAddRadioOptionToField}>+ Add Field</EuiButton>
+  //   </>
+  // );
 
   return (
     <>
       <label htmlFor={name}>{label}</label>
       <Field name={name} key={name}>
         {({ form, field }) => {
+          return (
+            <EuiFlexGroup
+              direction="column"
+              alignItems="flexStart"
+              justifyContent="center"
+            >
+              {radioOptions.map((option, index) => {
+                return (
+                  <RadioInput
+                    key={index}
+                    option={option}
+                    placeholder={placeholder}
+                    name={name}
+                    form={form}
+                    field={field}
+                  />
+                );
+              })}
+            </EuiFlexGroup>
+          );
+
           return radioOptions.map((option, index) => {
             return (
               <React.Fragment key={index}>
@@ -175,83 +243,41 @@ export function RadioGroupField(props) {
             > */}
                 <input
                   type="radio"
-                  id={option.value}
+                  id={option.id}
                   {...field}
                   {...rest}
-                  value={option.value}
-                  checked={field.value === option.value}
+                  value={option.label}
+                  checked={field.value === option.label}
                   // label="Option one"
                   // // onChange={(id) => onChange(id)}
                   // name="radio group"
-                  // placeholder={placeholder || ""}
-                  // isInvalid={
-                  //   form.errors[name] && form.touched[name] ? true : false
-                  // }
+                  placeholder={placeholder || ""}
+                  isInvalid={
+                    form.errors[name] && form.touched[name] ? true : false
+                  }
                 />
-                <label htmlFor={option.value}>{option.value}</label>
-
-                {/* <EuiRadioGroup
-                {...field}
-                {...rest}
-                value={"Option one"}
-                options={radioOptions}
-                idSelected={radioIdSelected}
-                onChange={(id) => onChange(id)}
-                name="radio group"
-                legend={{
-                  children: <span>{fieldLabel}</span>,
-                }}
-                placeholder={placeholder || ""}
-                isInvalid={
-                  form.errors[name] && form.touched[name] ? true : false
-                }
-              /> */}
-                {/* </EuiFormRow> */}
+                <label htmlFor={option.label}>{option.label}</label>
+                {/* <EuiRadio
+                  id={option.id}
+                  //key={option.id}
+                  type="radio"
+                  {...field}
+                  {...rest}
+                  //value={option.value}
+                  //checked={field.value === option.value}
+                  checked={checked}
+                  label={option.value}
+                  // onChange={(id) => onChange(id)}
+                  onChange={(e) => onChange(e)}
+                  //name={option.value}
+                  placeholder={placeholder || ""}
+                  isInvalid={
+                    form.errors[name] && form.touched[name] ? true : false
+                  }
+                /> */}
               </React.Fragment>
             );
           });
-
-          return (
-            <>
-              {/* <EuiFormRow
-              label={fieldLabel}
-              isInvalid={form.errors[name] && form.touched[name] ? true : false}
-              error={<ErrorMessage name={name} component={TextError} />}
-            > */}
-              <EuiRadio
-                type="radio"
-                {...field}
-                {...rest}
-                value={"Option one"}
-                checked="Option one"
-                label="Option one"
-                // onChange={(id) => onChange(id)}
-                name="radio group"
-                placeholder={placeholder || ""}
-                isInvalid={
-                  form.errors[name] && form.touched[name] ? true : false
-                }
-              />
-
-              {/* <EuiRadioGroup
-                {...field}
-                {...rest}
-                value={"Option one"}
-                options={radioOptions}
-                idSelected={radioIdSelected}
-                onChange={(id) => onChange(id)}
-                name="radio group"
-                legend={{
-                  children: <span>{fieldLabel}</span>,
-                }}
-                placeholder={placeholder || ""}
-                isInvalid={
-                  form.errors[name] && form.touched[name] ? true : false
-                }
-              /> */}
-              {/* </EuiFormRow> */}
-            </>
-          );
         }}
       </Field>
 
