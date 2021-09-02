@@ -11,7 +11,10 @@ import {
   EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
+  EuiButtonIcon,
 } from "@elastic/eui";
+
+import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 
 import { useStateMachine } from "little-state-machine";
 
@@ -89,14 +92,20 @@ export const RadioInput = ({
             />
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <button
+            <EuiButtonIcon
+              iconType={CloseCircle}
+              color="danger"
+              aria-label="Delete"
+              display="base"
               style={style}
-              onClick={() => {
+              onClick={(e) => {
+                console.log("called delete button");
+                console.log(e.keyCode);
+                e.preventDefault();
+                e.stopPropagation();
                 handleDeleteOption(option.key);
               }}
-            >
-              Delete X
-            </button>
+            />
           </EuiFlexItem>
         </EuiFlexGroup>
       </EuiFlexItem>

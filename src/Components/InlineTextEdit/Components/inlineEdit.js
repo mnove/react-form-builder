@@ -9,7 +9,7 @@ import { useStateMachine } from "little-state-machine";
 import { setLSMSchemaRadioOption } from "../../../Form_builder/state-machine/formSchema/reducers";
 
 function InlineEdit(props) {
-  const { onSetText, fieldKey, optionKey, labelValue } = props;
+  const { onSetText, fieldKey, optionKey } = props;
 
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
@@ -46,7 +46,9 @@ function InlineEdit(props) {
     if (enter) {
       onSetText(inputValue);
       setIsInputActive(false);
+
       actions.setLSMSchemaRadioOption(payload);
+      // event.stopPropagation();
     }
   }, [enter, inputValue, onSetText]);
 
@@ -86,11 +88,16 @@ function InlineEdit(props) {
     [setIsInputActive]
   );
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    handleSpanClick();
+  };
+
   return (
     <span className="inline-text" ref={wrapperRef}>
       <span
         ref={textRef}
-        onClick={handleSpanClick}
+        onClick={(e) => handleClick(e)}
         className={`inline-text_copy inline-text_copy--${
           !isInputActive ? "active" : "hidden"
         }`}

@@ -160,7 +160,7 @@ export function RadioGroupField(props) {
       fieldKey: name,
       newOption: {
         key: `radio_opt_${nanoid()}`,
-        label: "Untitled ssssssssssss",
+        label: "Untitled",
       },
     };
     actions.addLSMShemaRadioOption(paylaod);
