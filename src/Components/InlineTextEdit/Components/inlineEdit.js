@@ -8,6 +8,8 @@ import { useStateMachine } from "little-state-machine";
 
 import { setLSMSchemaRadioOption } from "../../../Form_builder/state-machine/formSchema/reducers";
 
+import { EuiText, EuiFieldText } from "@elastic/eui";
+
 function InlineEdit(props) {
   const { onSetText, fieldKey, optionKey } = props;
 
@@ -94,28 +96,30 @@ function InlineEdit(props) {
   };
 
   return (
-    <span className="inline-text" ref={wrapperRef}>
-      <span
-        ref={textRef}
-        onClick={(e) => handleClick(e)}
-        className={`inline-text_copy inline-text_copy--${
-          !isInputActive ? "active" : "hidden"
-        }`}
-      >
-        {props.text}
+    <EuiText>
+      <span className="inline-text" ref={wrapperRef}>
+        <span
+          ref={textRef}
+          onClick={(e) => handleClick(e)}
+          className={`inline-text_copy inline-text_copy--${
+            !isInputActive ? "active" : "hidden"
+          }`}
+        >
+          {props.text}
+        </span>
+        <input
+          ref={inputRef}
+          // set the width to the input length multiplied by the x height
+          // it's not quite right but gets it close
+          style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
+          value={inputValue}
+          onChange={handleInputChange}
+          className={`inline-text_input inline-text_input--${
+            isInputActive ? "active" : "hidden"
+          }`}
+        />
       </span>
-      <input
-        ref={inputRef}
-        // set the width to the input length multiplied by the x height
-        // it's not quite right but gets it close
-        style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
-        value={inputValue}
-        onChange={handleInputChange}
-        className={`inline-text_input inline-text_input--${
-          isInputActive ? "active" : "hidden"
-        }`}
-      />
-    </span>
+    </EuiText>
   );
 }
 

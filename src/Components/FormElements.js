@@ -10,7 +10,11 @@ import {
   EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
+  EuiSpacer,
 } from "@elastic/eui";
+
+import { AddCircle } from "@styled-icons/remix-fill/AddCircle";
+
 import { nanoid } from "nanoid";
 import { addRadioOption } from "../Form_builder/reducers/radio/radioSchemaStateReducer";
 
@@ -213,30 +217,36 @@ export function RadioGroupField(props) {
       <Field name={name} key={name}>
         {({ form, field }) => {
           return (
-            <EuiFormRow
-              label={fieldLabel}
-              isInvalid={form.errors[name] && form.touched[name] ? true : false}
-              error={<ErrorMessage name={name} component={TextError} />}
-            >
-              <EuiFlexGroup
-                direction="column"
-                alignItems="flexStart"
-                justifyContent="center"
+            <>
+              <EuiFormRow
+                label={fieldLabel}
+                isInvalid={
+                  form.errors[name] && form.touched[name] ? true : false
+                }
+                error={<ErrorMessage name={name} component={TextError} />}
               >
-                {radioOptions.map((option, index) => {
-                  return (
-                    <RadioInput
-                      key={index}
-                      option={option}
-                      placeholder={placeholder}
-                      name={name}
-                      form={form}
-                      field={field}
-                    />
-                  );
-                })}
-              </EuiFlexGroup>
-            </EuiFormRow>
+                <div style={{ marginTop: 5 }}>
+                  <EuiFlexGroup
+                    direction="column"
+                    alignItems="flexStart"
+                    justifyContent="center"
+                  >
+                    {radioOptions.map((option, index) => {
+                      return (
+                        <RadioInput
+                          key={index}
+                          option={option}
+                          placeholder={placeholder}
+                          name={name}
+                          form={form}
+                          field={field}
+                        />
+                      );
+                    })}
+                  </EuiFlexGroup>
+                </div>
+              </EuiFormRow>
+            </>
           );
 
           return radioOptions.map((option, index) => {
@@ -289,7 +299,14 @@ export function RadioGroupField(props) {
 
       <EuiHorizontalRule />
 
-      <EuiButton onClick={handleAddRadioOptionToField}>+ Add Field</EuiButton>
+      <EuiButton
+        onClick={handleAddRadioOptionToField}
+        size="s"
+        color="text"
+        iconType={AddCircle}
+      >
+        Add option
+      </EuiButton>
     </>
   );
 }

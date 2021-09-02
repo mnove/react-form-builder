@@ -3,11 +3,12 @@
   font: inherit;
   color: inherit;
   text-align: inherit;
-  padding: 0;
+  padding: 0px;
   background: none;
   border: none;
   border-bottom: 1px dashed #999999;
   outline: none;
+  -webkit-appearance:none
 }
 
 .inline-text_copy--active {
@@ -22,4 +23,10 @@
 .inline-text_input--active {
   border-bottom: 1px solid #666666;
   text-align: left;
+}
+
+
+/* to override EUI theme styles since they create a think border around input  */
+*:focus:focus-visible {
+  outline-style: none !important;
 }
