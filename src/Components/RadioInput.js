@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
+
 import {
   EuiFormRow,
   EuiFieldText,
@@ -16,6 +17,7 @@ import { useStateMachine } from "little-state-machine";
 
 import { nanoid } from "nanoid";
 import { removeLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
+import { RadioInputLabel } from "./RadioInputLabel";
 
 const idPrefix = nanoid(10);
 
@@ -78,7 +80,13 @@ export const RadioInput = ({
             />
           </EuiFlexItem>
           <EuiFlexItem grow={true}>
-            <label htmlFor={option.label}>{option.label}</label>
+            {/* <label htmlFor={option.label}>{option.label}</label> */}
+
+            <RadioInputLabel
+              labelText={option.label}
+              fieldKey={name}
+              optionKey={option.key}
+            />
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
             <button
