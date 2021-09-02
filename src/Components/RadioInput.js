@@ -68,6 +68,26 @@ export const RadioInput = ({
           }}
         >
           <EuiFlexItem grow={false}>
+            <EuiRadio
+              type="radio"
+              id={option.key}
+              {...field}
+              {...rest}
+              value={option.label}
+              checked={field.value === option.label}
+              label={
+                <RadioInputLabel
+                  labelText={option.label}
+                  fieldKey={name}
+                  optionKey={option.key}
+                />
+              }
+              placeholder={placeholder || ""}
+              isInvalid={form.errors[name] && form.touched[name] ? true : false}
+            />
+          </EuiFlexItem>
+
+          {/* <EuiFlexItem grow={false}>
             <input
               type="radio"
               id={option.key}
@@ -75,22 +95,20 @@ export const RadioInput = ({
               {...rest}
               value={option.label}
               checked={field.value === option.label}
-              // label="Option one"
-              // // onChange={(id) => onChange(id)}
-              // name="radio group"
               placeholder={placeholder || ""}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
             />
           </EuiFlexItem>
           <EuiFlexItem grow={true}>
-            {/* <label htmlFor={option.label}>{option.label}</label> */}
+        
 
             <RadioInputLabel
               labelText={option.label}
               fieldKey={name}
               optionKey={option.key}
             />
-          </EuiFlexItem>
+          </EuiFlexItem> */}
+
           <EuiFlexItem grow={false}>
             <EuiButtonIcon
               iconType={CloseCircle}
