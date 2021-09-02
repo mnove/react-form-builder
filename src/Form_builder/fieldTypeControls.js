@@ -47,11 +47,11 @@ export const fieldTypeControls = (value, formSchema) => {
         fieldData: {
           radioOptions: [
             {
-              id: `1001`,
+              key: `radio_opt_1001`,
               label: "Opt 1",
             },
             {
-              id: `1002`,
+              key: `radio_opt_1002`,
               label: "Opt 2",
             },
           ],

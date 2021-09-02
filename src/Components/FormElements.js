@@ -159,7 +159,7 @@ export function RadioGroupField(props) {
     let paylaod = {
       fieldKey: name,
       newOption: {
-        id: `${nanoid()}`,
+        key: `radio_opt_${nanoid()}`,
         label: "Untitled ssssssssssss",
       },
     };

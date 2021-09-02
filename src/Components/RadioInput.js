@@ -15,6 +15,7 @@ import {
 import { useStateMachine } from "little-state-machine";
 
 import { nanoid } from "nanoid";
+import { removeLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
 
 const idPrefix = nanoid(10);
 
@@ -27,10 +28,24 @@ export const RadioInput = ({
   name,
   ...rest
 }) => {
+  const { actions, state } = useStateMachine({
+    removeLSMShemaRadioOption,
+  });
+
   const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
 
   const onChange = (optionId) => {
     setRadioIdSelected(optionId);
+  };
+
+  const handleDeleteOption = (optionKey) => {
+    console.log(optionKey);
+
+    let payload = {
+      fieldKey: name,
+      optionKey: optionKey,
+    };
+    actions.removeLSMShemaRadioOption(payload);
   };
 
   const [style, setStyle] = useState({ display: "none" });
@@ -50,7 +65,7 @@ export const RadioInput = ({
           <EuiFlexItem grow={false}>
             <input
               type="radio"
-              id={option.id}
+              id={option.key}
               {...field}
               {...rest}
               value={option.label}
@@ -66,7 +81,14 @@ export const RadioInput = ({
             <label htmlFor={option.label}>{option.label}</label>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <button style={style}>Delete X</button>
+            <button
+              style={style}
+              onClick={() => {
+                handleDeleteOption(option.key);
+              }}
+            >
+              Delete X
+            </button>
           </EuiFlexItem>
         </EuiFlexGroup>
       </EuiFlexItem>

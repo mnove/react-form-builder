@@ -29,7 +29,7 @@ export const removeSchemaField = (formSchemaState, key) => {
 
 // REQUIRED fields contraints --------------------------------------------------------------------
 
-/** Change the label within Form Schema State
+/** Set field required
  * @param {object} formSchemaState Previous form schema state
  * @param {string} key  c
  * @param {boolean} isRequired  Value of the required field

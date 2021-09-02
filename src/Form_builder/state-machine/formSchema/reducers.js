@@ -87,3 +87,25 @@ export const addLSMShemaRadioOption = (state, payload) => {
       );
   });
 };
+
+export const removeLSMShemaRadioOption = (state, payload) => {
+  return produce(state, (draft) => {
+    const radioFieldIndex = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.fieldKey
+    );
+
+    console.log(radioFieldIndex);
+    let radioOptions;
+    if (radioFieldIndex !== -1)
+      radioOptions =
+        draft.formSchemaState[radioFieldIndex].fieldData.radioOptions;
+
+    const radioOptionIndex = radioOptions.findIndex(
+      (elem) => elem.key === payload.optionKey
+    );
+
+    console.log(radioOptionIndex);
+
+    if (radioOptionIndex !== -1) radioOptions.splice(radioOptionIndex, 1);
+  });
+};
