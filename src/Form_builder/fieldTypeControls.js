@@ -47,11 +47,11 @@ export const fieldTypeControls = (value, formSchema) => {
         fieldData: {
           radioOptions: [
             {
-              key: `radio_opt_1001`,
+              key: `radio_opt_${nanoid()}`,
               label: "Opt 1",
             },
             {
-              key: `radio_opt_1002`,
+              key: `radio_opt_${nanoid()}`,
               label: "Opt 2",
             },
           ],
