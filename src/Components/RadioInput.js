@@ -33,19 +33,11 @@ export const RadioInput = ({
   name,
   ...rest
 }) => {
-  const { actions, state } = useStateMachine({
+  const { actions } = useStateMachine({
     removeLSMShemaRadioOption,
   });
 
-  const [radioIdSelected, setRadioIdSelected] = useState(`${idPrefix}1`);
-
-  const onChange = (optionId) => {
-    setRadioIdSelected(optionId);
-  };
-
   const handleDeleteOption = (optionKey) => {
-    console.log(optionKey);
-
     let payload = {
       fieldKey: name,
       optionKey: optionKey,
@@ -53,7 +45,9 @@ export const RadioInput = ({
     actions.removeLSMShemaRadioOption(payload);
   };
 
+  // Setting style so Delete Option button appears on hover
   const [style, setStyle] = useState({ display: "none" });
+
   return (
     <React.Fragment key={index}>
       <EuiFlexItem>
@@ -86,30 +80,6 @@ export const RadioInput = ({
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
             />
           </EuiFlexItem>
-          {console.log(option.label)}
-
-          {/* <EuiFlexItem grow={false}>
-            <input
-              type="radio"
-              id={option.key}
-              {...field}
-              {...rest}
-              value={option.label}
-              checked={field.value === option.label}
-              placeholder={placeholder || ""}
-              isInvalid={form.errors[name] && form.touched[name] ? true : false}
-            />
-          </EuiFlexItem>
-          <EuiFlexItem grow={true}>
-        
-
-            <RadioInputLabel
-              labelText={option.label}
-              fieldKey={name}
-              optionKey={option.key}
-            />
-          </EuiFlexItem> */}
-
           <EuiFlexItem grow={false}>
             <EuiButtonIcon
               iconType={CloseCircle}
@@ -118,8 +88,6 @@ export const RadioInput = ({
               display="base"
               style={style}
               onClick={(e) => {
-                console.log("called delete button");
-                console.log(e.keyCode);
                 e.preventDefault();
                 e.stopPropagation();
                 handleDeleteOption(option.key);

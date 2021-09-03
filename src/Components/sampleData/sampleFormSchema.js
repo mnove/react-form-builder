@@ -41,15 +41,5 @@ export const sampleFormSchema = [
         },
       ],
     },
-    options: [
-      {
-        id: `1001`,
-        value: "Opt one",
-      },
-      {
-        id: `1002`,
-        value: "Opt two",
-      },
-    ],
   },
 ];
