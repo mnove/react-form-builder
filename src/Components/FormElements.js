@@ -122,13 +122,13 @@ export function RadioGroupField(props) {
     addLSMShemaRadioOption,
   });
 
-  const { name, label, placeholder, options, fieldData, ...rest } = props;
+  const { name, label, placeholder, options, fielddata, ...rest } = props;
 
   let fieldLabel = label;
   if (!label) {
     fieldLabel = "Untitled";
   }
-  let radioOptions = fieldData.radioOptions;
+  let radioOptions = fielddata.radioOptions;
 
   const handleAddRadioOptionToField = () => {
     let paylaod = {

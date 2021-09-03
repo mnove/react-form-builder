@@ -13,6 +13,7 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default label",
         placeholder: "default placeholder",
         required: false,
+        fieldData: {},
       };
 
       break;
@@ -24,6 +25,7 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default email label",
         placeholder: "default email placeholder",
         required: false,
+        fieldData: {},
       };
       break;
 
@@ -34,6 +36,7 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default number label",
         placeholder: "default number placeholder",
         required: false,
+        fieldData: {},
       };
       break;
 

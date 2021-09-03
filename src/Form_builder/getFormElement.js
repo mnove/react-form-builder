@@ -13,7 +13,7 @@ export const getFormElement = (elemName, elemSchema) => {
     label: elemSchema.label,
     placeholder: elemSchema.placeholder,
     options: elemSchema.options,
-    fieldData: elemSchema.fieldData,
+    fielddata: elemSchema.fieldData,
   };
 
   if (elemSchema.type === "textInput") {

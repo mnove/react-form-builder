@@ -11,12 +11,10 @@ export const RadioInputLabel = ({ labelText, ...rest }) => {
   }, [labelText]);
 
   return (
-    <p>
-      <InlineEdit
-        text={storedText}
-        onSetText={(text) => setStoredText(text)}
-        {...rest}
-      />
-    </p>
+    <InlineEdit
+      text={storedText}
+      onSetText={(text) => setStoredText(text)}
+      {...rest}
+    />
   );
 };

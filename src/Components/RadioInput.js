@@ -1,23 +1,12 @@
 import React, { useState } from "react";
-import { Field, ErrorMessage } from "formik";
-import TextError from "./TextError";
-
 import {
-  EuiFormRow,
-  EuiFieldText,
-  EuiRadioGroup,
   EuiRadio,
-  EuiHorizontalRule,
-  EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
   EuiButtonIcon,
 } from "@elastic/eui";
-
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
-
 import { useStateMachine } from "little-state-machine";
-
 import { nanoid } from "nanoid";
 import { removeLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
 import { RadioInputLabel } from "./RadioInputLabel";
@@ -77,7 +66,6 @@ export const RadioInput = ({
                 />
               }
               placeholder={placeholder || ""}
-              isInvalid={form.errors[name] && form.touched[name] ? true : false}
             />
           </EuiFlexItem>
           <EuiFlexItem grow={false}>

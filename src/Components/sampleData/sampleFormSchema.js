@@ -5,6 +5,7 @@ export const sampleFormSchema = [
     label: "Default Text Label",
     placeholder: "Enter text here",
     required: true,
+    fieldData: {},
   },
 
   {
@@ -13,6 +14,7 @@ export const sampleFormSchema = [
     label: "Default Email Label",
     placeholder: "Enter text here",
     required: true,
+    fieldData: {},
   },
 
   {
@@ -21,6 +23,7 @@ export const sampleFormSchema = [
     label: "Default Number Label",
     placeholder: "Enter text here",
     required: false,
+    fieldData: {},
   },
 
   {
