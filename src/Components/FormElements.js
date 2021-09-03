@@ -231,16 +231,19 @@ export function RadioGroupField(props) {
                     alignItems="flexStart"
                     justifyContent="center"
                   >
+                    {console.log(radioOptions)}
                     {radioOptions.map((option, index) => {
                       return (
-                        <RadioInput
-                          key={index}
-                          option={option}
-                          placeholder={placeholder}
-                          name={name}
-                          form={form}
-                          field={field}
-                        />
+                        <React.Fragment key={index}>
+                          <RadioInput
+                            index={index}
+                            option={option}
+                            placeholder={placeholder}
+                            name={name}
+                            form={form}
+                            field={field}
+                          />
+                        </React.Fragment>
                       );
                     })}
                   </EuiFlexGroup>

@@ -8,16 +8,16 @@ import { useStateMachine } from "little-state-machine";
 
 import { setLSMSchemaRadioOption } from "../../../Form_builder/state-machine/formSchema/reducers";
 
-import { EuiText, EuiFieldText } from "@elastic/eui";
+import { EuiText } from "@elastic/eui";
 
 function InlineEdit(props) {
-  const { onSetText, fieldKey, optionKey } = props;
+  const { onSetText, fieldKey, optionKey, text } = props;
 
   const [isInputActive, setIsInputActive] = useState(false);
-  const [inputValue, setInputValue] = useState(props.text);
+  const [inputValue, setInputValue] = useState(text);
 
   // LSM
-  const { actions, state } = useStateMachine({
+  const { actions } = useStateMachine({
     setLSMSchemaRadioOption,
   });
 

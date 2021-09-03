@@ -25,7 +25,7 @@ import { RadioInputLabel } from "./RadioInputLabel";
 const idPrefix = nanoid(10);
 
 export const RadioInput = ({
-  key,
+  index,
   option,
   form,
   field,
@@ -55,7 +55,7 @@ export const RadioInput = ({
 
   const [style, setStyle] = useState({ display: "none" });
   return (
-    <React.Fragment key={key}>
+    <React.Fragment key={index}>
       <EuiFlexItem>
         <EuiFlexGroup
           alignItems="center"
@@ -86,6 +86,7 @@ export const RadioInput = ({
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
             />
           </EuiFlexItem>
+          {console.log(option.label)}
 
           {/* <EuiFlexItem grow={false}>
             <input
