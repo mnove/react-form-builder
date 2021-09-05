@@ -351,89 +351,91 @@ const FormElementsContainer = ({ formik }) => {
                     hasBorder={true}
                     key={index}
                   >
-                    <EuiFlexGroup
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="flexEnd"
-                    >
-                      <EuiFlexItem grow={false}>
-                        <EuiPopover
-                          id="inlineFormPopover"
-                          button={
-                            <EuiButtonIcon
-                              iconType={Edit}
-                              color="subdued"
-                              aria-label="Edit form label"
-                              display="base"
-                              onClick={() => handleOpenModal(key)}
-                            >
-                              Edit
-                            </EuiButtonIcon>
-                          }
-                          isOpen={handleModalOpening(key)}
-                          closePopover={() => handleCloseModal(key)}
-                        >
-                          <div style={{ width: "auto" }}>
-                            {
-                              <EuiForm component="form">
-                                <EuiFlexGroup direction="column">
-                                  <EuiFlexItem>
-                                    <EuiFlexGroup>
-                                      <EuiFlexItem>
-                                        <EuiFormRow label="Field label">
-                                          <EuiFieldText
-                                            placeholder="Type here..."
-                                            onChange={(e) =>
-                                              handleOnChangeLabel(e, key)
-                                            }
-                                            value={handleValueLabel(key)}
-                                          />
-                                        </EuiFormRow>
-                                      </EuiFlexItem>
-                                      <EuiFlexItem grow={false}>
-                                        <EuiFormRow hasEmptyLabelSpace>
-                                          <EuiButton
-                                            onClick={() =>
-                                              handleSaveFieldLabel(key)
-                                            }
-                                          >
-                                            Save
-                                          </EuiButton>
-                                        </EuiFormRow>
-                                      </EuiFlexItem>
-                                    </EuiFlexGroup>
-                                  </EuiFlexItem>
-                                </EuiFlexGroup>
-                              </EuiForm>
+                    <motion.div layout>
+                      <EuiFlexGroup
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="flexEnd"
+                      >
+                        <EuiFlexItem grow={false}>
+                          <EuiPopover
+                            id="inlineFormPopover"
+                            button={
+                              <EuiButtonIcon
+                                iconType={Edit}
+                                color="subdued"
+                                aria-label="Edit form label"
+                                display="base"
+                                onClick={() => handleOpenModal(key)}
+                              >
+                                Edit
+                              </EuiButtonIcon>
                             }
-                          </div>
-                        </EuiPopover>
-                      </EuiFlexItem>
+                            isOpen={handleModalOpening(key)}
+                            closePopover={() => handleCloseModal(key)}
+                          >
+                            <div style={{ width: "auto" }}>
+                              {
+                                <EuiForm component="form">
+                                  <EuiFlexGroup direction="column">
+                                    <EuiFlexItem>
+                                      <EuiFlexGroup>
+                                        <EuiFlexItem>
+                                          <EuiFormRow label="Field label">
+                                            <EuiFieldText
+                                              placeholder="Type here..."
+                                              onChange={(e) =>
+                                                handleOnChangeLabel(e, key)
+                                              }
+                                              value={handleValueLabel(key)}
+                                            />
+                                          </EuiFormRow>
+                                        </EuiFlexItem>
+                                        <EuiFlexItem grow={false}>
+                                          <EuiFormRow hasEmptyLabelSpace>
+                                            <EuiButton
+                                              onClick={() =>
+                                                handleSaveFieldLabel(key)
+                                              }
+                                            >
+                                              Save
+                                            </EuiButton>
+                                          </EuiFormRow>
+                                        </EuiFlexItem>
+                                      </EuiFlexGroup>
+                                    </EuiFlexItem>
+                                  </EuiFlexGroup>
+                                </EuiForm>
+                              }
+                            </div>
+                          </EuiPopover>
+                        </EuiFlexItem>
 
-                      <EuiFlexItem grow={false}>
-                        <EuiSwitch
-                          name="switch"
-                          label="Required?"
-                          value={true}
-                          checked={handleRequiredCheckboxValue(key)}
-                          onChange={(e) => {
-                            handleRequiredCheckbox(e, key);
-                          }}
-                        />
-                      </EuiFlexItem>
-                      <EuiFlexItem grow={false}>
-                        <EuiButtonIcon
-                          iconType={CloseCircle}
-                          color="danger"
-                          aria-label="Delete field"
-                          display="base"
-                          onClick={() => {
-                            handleFieldRemove(key, formik);
-                          }}
-                        />
-                      </EuiFlexItem>
-                    </EuiFlexGroup>
-                    {getFormElement(key, elem)}
+                        <EuiFlexItem grow={false}>
+                          <EuiSwitch
+                            name="switch"
+                            label="Required?"
+                            value={true}
+                            checked={handleRequiredCheckboxValue(key)}
+                            onChange={(e) => {
+                              handleRequiredCheckbox(e, key);
+                            }}
+                          />
+                        </EuiFlexItem>
+                        <EuiFlexItem grow={false}>
+                          <EuiButtonIcon
+                            iconType={CloseCircle}
+                            color="danger"
+                            aria-label="Delete field"
+                            display="base"
+                            onClick={() => {
+                              handleFieldRemove(key, formik);
+                            }}
+                          />
+                        </EuiFlexItem>
+                      </EuiFlexGroup>
+                    </motion.div>
+                    <motion.div layout>{getFormElement(key, elem)}</motion.div>
                   </FormFieldPanel>
                 </motion.div>
               </>
