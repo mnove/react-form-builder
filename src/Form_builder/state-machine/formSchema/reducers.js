@@ -60,7 +60,6 @@ export const setLSMSchemaFieldRequired = (state, payload) => {
 /** Change the label within Form Schema State
  */
 export const setLSMSchemaLabelField = (state, payload) => {
-  console.log("CALLLEDD");
   return produce(state, (draft) => {
     const index = draft.formSchemaState.findIndex(
       (elem) => elem.key === payload.labelKey
@@ -72,8 +71,9 @@ export const setLSMSchemaLabelField = (state, payload) => {
   });
 };
 
+// RADIO FIELD
+
 export const addLSMShemaRadioOption = (state, payload) => {
-  console.log("called here...");
   return produce(state, (draft) => {
     const index = draft.formSchemaState.findIndex(
       (elem) => elem.key === payload.fieldKey
@@ -124,5 +124,63 @@ export const setLSMSchemaRadioOption = (state, payload) => {
 
     if (radioOptionIndex !== -1)
       radioOptions[radioOptionIndex].label = payload.labelValue;
+  });
+};
+
+// CHECKBOX FIELD
+
+export const addLSMShemaCheckboxOption = (state, payload) => {
+  console.log("called here...");
+  return produce(state, (draft) => {
+    const index = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.fieldKey
+    );
+
+    console.log(index);
+
+    if (index !== -1)
+      draft.formSchemaState[index].fieldData.checkboxOptions.push(
+        payload.newOption
+      );
+  });
+};
+
+export const removeLSMShemaCheckboxOption = (state, payload) => {
+  return produce(state, (draft) => {
+    const checkboxFieldIndex = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.fieldKey
+    );
+
+    let checkboxOptions;
+    if (checkboxFieldIndex !== -1)
+      checkboxOptions =
+        draft.formSchemaState[checkboxFieldIndex].fieldData.checkboxOptions;
+
+    const checkboxOptionIndex = checkboxOptions.findIndex(
+      (elem) => elem.key === payload.optionKey
+    );
+
+    if (checkboxOptionIndex !== -1)
+      checkboxOptions.splice(checkboxOptionIndex, 1);
+  });
+};
+
+export const setLSMSchemaCheckboxOption = (state, payload) => {
+  return produce(state, (draft) => {
+    const checkboxFieldIndex = draft.formSchemaState.findIndex(
+      (elem) => elem.key === payload.fieldKey
+    );
+
+    let checkboxOptions;
+    if (checkboxFieldIndex !== -1)
+      checkboxOptions =
+        draft.formSchemaState[checkboxFieldIndex].fieldData.checkboxOptions;
+
+    const checkboxOptionIndex = checkboxOptions.findIndex(
+      (elem) => elem.key === payload.optionKey
+    );
+
+    if (checkboxOptionIndex !== -1)
+      checkboxOptions[checkboxOptionIndex].label = payload.labelValue;
   });
 };

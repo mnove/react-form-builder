@@ -169,6 +169,7 @@ function FormContainer() {
         key={"1001"}
       >
         {(formik) => {
+          console.log("FORMIK ERORRS: ", formik.errors);
           return (
             <Form>
               <EuiText>

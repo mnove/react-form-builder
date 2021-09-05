@@ -6,19 +6,27 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
 import { useStateMachine } from "little-state-machine";
 
-import { setLSMSchemaRadioOption } from "../../../Form_builder/state-machine/formSchema/reducers";
+import {
+  setLSMSchemaRadioOption,
+  setLSMSchemaCheckboxOption,
+} from "../../../Form_builder/state-machine/formSchema/reducers";
 
 import { EuiText } from "@elastic/eui";
 
-function InlineEdit(props) {
-  const { onSetText, fieldKey, optionKey, text } = props;
-
+function InlineEdit({
+  onSetText,
+  fieldKey,
+  optionKey,
+  text,
+  stateAction = null,
+}) {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(text);
 
   // LSM
   const { actions } = useStateMachine({
     setLSMSchemaRadioOption,
+    setLSMSchemaCheckboxOption,
   });
 
   const wrapperRef = useRef(null);
@@ -40,7 +48,8 @@ function InlineEdit(props) {
     if (isInputActive) {
       onSetText(inputValue);
       setIsInputActive(false);
-      actions.setLSMSchemaRadioOption(payload);
+      // actions.setLSMSchemaRadioOption(payload);
+      actions.setLSMSchemaCheckboxOption(payload);
     }
   });
 
@@ -49,7 +58,9 @@ function InlineEdit(props) {
       onSetText(inputValue);
       setIsInputActive(false);
 
-      actions.setLSMSchemaRadioOption(payload);
+      // actions.setLSMSchemaRadioOption(payload);
+      actions.setLSMSchemaCheckboxOption(payload);
+
       // event.stopPropagation();
     }
   }, [enter, inputValue, onSetText]);

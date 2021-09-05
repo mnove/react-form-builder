@@ -13,9 +13,13 @@ import { AddCircle } from "@styled-icons/remix-fill/AddCircle";
 import { RadioInput } from "./RadioInput";
 import { nanoid } from "nanoid";
 import { useStateMachine } from "little-state-machine";
-import { addLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
+import {
+  addLSMShemaRadioOption,
+  addLSMShemaCheckboxOption,
+} from "../Form_builder/state-machine/formSchema/reducers";
 
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { CheckboxInput } from "./CheckboxInput";
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
@@ -120,6 +124,7 @@ export function NumberField(props) {
   );
 }
 
+// RADIO INPUT
 export function RadioGroupField(props) {
   const { actions } = useStateMachine({
     addLSMShemaRadioOption,
@@ -151,6 +156,7 @@ export function RadioGroupField(props) {
           {({ form, field }) => {
             return (
               <>
+                {console.log(field)}
                 <EuiFormRow
                   label={fieldLabel}
                   isInvalid={
@@ -195,6 +201,94 @@ export function RadioGroupField(props) {
 
       <EuiButton
         onClick={handleAddRadioOptionToField}
+        size="s"
+        color="text"
+        iconType={AddCircle}
+      >
+        Add option
+      </EuiButton>
+    </>
+  );
+}
+
+// CHECKBOX INPUT
+export function CheckboxGroupField(props) {
+  const { actions } = useStateMachine({
+    addLSMShemaCheckboxOption,
+  });
+
+  const { name, label, placeholder, options, fielddata, ...rest } = props;
+
+  let fieldLabel = label;
+  if (!label) {
+    fieldLabel = "Untitled";
+  }
+  let checkboxOptions = fielddata.checkboxOptions;
+  console.log(checkboxOptions);
+
+  const handleAddCheckboxOptionToField = () => {
+    let payload = {
+      fieldKey: name,
+      newOption: {
+        key: `check_opt_${nanoid()}`,
+        label: "Untitled",
+      },
+    };
+    actions.addLSMShemaCheckboxOption(payload);
+  };
+
+  return (
+    <>
+      <motion.div layout>
+        <Field name={name} key={name}>
+          {({ form, field }) => {
+            return (
+              <>
+                {console.log(field)}
+                <EuiFormRow
+                  label={fieldLabel}
+                  isInvalid={
+                    form.errors[name] && form.touched[name] ? true : false
+                  }
+                  error={<ErrorMessage name={name} component={TextError} />}
+                >
+                  <div style={{ marginTop: 5 }}>
+                    <EuiFlexGroup
+                      direction="column"
+                      alignItems="flexStart"
+                      justifyContent="center"
+                    >
+                      {checkboxOptions.map((option, index) => {
+                        return (
+                          <React.Fragment key={index}>
+                            <EuiFlexItem>
+                              <motion.div layout>
+                                <CheckboxInput
+                                  index={index}
+                                  option={option}
+                                  placeholder={placeholder}
+                                  name={name}
+                                  form={form}
+                                  field={field}
+                                />
+                              </motion.div>
+                            </EuiFlexItem>
+                          </React.Fragment>
+                        );
+                      })}
+                    </EuiFlexGroup>
+                  </div>
+                </EuiFormRow>
+              </>
+            );
+          }}
+        </Field>
+      </motion.div>
+
+      <EuiHorizontalRule />
+
+      <EuiButton
+        onClick={handleAddCheckboxOptionToField}
         size="s"
         color="text"
         iconType={AddCircle}

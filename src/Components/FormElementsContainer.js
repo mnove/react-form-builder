@@ -148,6 +148,7 @@ export const FormElementsContainer = ({ formik }) => {
       <AnimateSharedLayout>
         <motion.div layout>
           {LSMFormSchemaState.map((elem, index) => {
+            console.log(LSMFormSchemaState);
             const key = elem.key;
             return (
               <>

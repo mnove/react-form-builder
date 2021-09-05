@@ -5,6 +5,7 @@ import {
   EmailField,
   NumberField,
   RadioGroupField,
+  CheckboxGroupField,
 } from "../Components/FormElements";
 
 export const getFormElement = (elemName, elemSchema) => {
@@ -24,5 +25,7 @@ export const getFormElement = (elemName, elemSchema) => {
     return <NumberField key={elemName} {...props} />;
   } else if (elemSchema.type === "radioGroupInput") {
     return <RadioGroupField key={elemName} {...props} />;
+  } else if (elemSchema.type === "checkboxGroupInput") {
+    return <CheckboxGroupField key={elemName} {...props} />;
   }
 };
