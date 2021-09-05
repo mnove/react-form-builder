@@ -4,13 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
-import { useStateMachine } from "little-state-machine";
-
-import {
-  setLSMSchemaRadioOption,
-  setLSMSchemaCheckboxOption,
-} from "../../../Form_builder/state-machine/formSchema/reducers";
-
 import { EuiText } from "@elastic/eui";
 
 function InlineEdit({
@@ -18,21 +11,14 @@ function InlineEdit({
   fieldKey,
   optionKey,
   text,
-  stateAction = null,
+  stateActions = null,
+  stateActionType = "",
 }) {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(text);
-
-  // LSM
-  const { actions } = useStateMachine({
-    setLSMSchemaRadioOption,
-    setLSMSchemaCheckboxOption,
-  });
-
   const wrapperRef = useRef(null);
   const textRef = useRef(null);
   const inputRef = useRef(null);
-
   const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
 
@@ -48,8 +34,11 @@ function InlineEdit({
     if (isInputActive) {
       onSetText(inputValue);
       setIsInputActive(false);
-      // actions.setLSMSchemaRadioOption(payload);
-      actions.setLSMSchemaCheckboxOption(payload);
+
+      // If stateActions is passed as prop, then dispatch the state update
+      if (stateActions) {
+        stateActions[stateActionType](payload);
+      }
     }
   });
 
@@ -58,8 +47,10 @@ function InlineEdit({
       onSetText(inputValue);
       setIsInputActive(false);
 
-      // actions.setLSMSchemaRadioOption(payload);
-      actions.setLSMSchemaCheckboxOption(payload);
+      // If stateActions is passed as prop, then dispatch the state update
+      if (stateActions) {
+        stateActions[stateActionType](payload);
+      }
 
       // event.stopPropagation();
     }
@@ -67,10 +58,10 @@ function InlineEdit({
 
   const onEsc = useCallback(() => {
     if (esc) {
-      setInputValue(props.text);
+      setInputValue(text);
       setIsInputActive(false);
     }
-  }, [esc, props.text]);
+  }, [esc, text]);
 
   // focus the cursor in the input field on edit start
   useEffect(() => {
@@ -116,12 +107,11 @@ function InlineEdit({
             !isInputActive ? "active" : "hidden"
           }`}
         >
-          {props.text}
+          {text}
         </span>
         <input
           ref={inputRef}
           // set the width to the input length multiplied by the x height
-          // it's not quite right but gets it close
           style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
           value={inputValue}
           onChange={handleInputChange}

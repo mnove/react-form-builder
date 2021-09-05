@@ -9,10 +9,12 @@ import {
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { useStateMachine } from "little-state-machine";
 import { nanoid } from "nanoid";
-import { removeLSMShemaCheckboxOption } from "../Form_builder/state-machine/formSchema/reducers";
-import { RadioInputLabel } from "./RadioInputLabel";
-
+import {
+  removeLSMShemaCheckboxOption,
+  setLSMSchemaCheckboxOption,
+} from "../Form_builder/state-machine/formSchema/reducers";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { OptionLabelInlineEdit } from "./OptionLabelInlineEdit";
 
 const idPrefix = nanoid(10);
 
@@ -27,6 +29,7 @@ export const CheckboxInput = ({
 }) => {
   const { actions } = useStateMachine({
     removeLSMShemaCheckboxOption,
+    setLSMSchemaCheckboxOption,
   });
 
   const handleDeleteOption = (optionKey) => {
@@ -53,9 +56,9 @@ export const CheckboxInput = ({
         }}
       >
         <EuiFlexItem grow={false}>
-          {console.log("Field.value", field.value)}
+          {/* {console.log("Field.value", field.value)}
           {console.log("option.label", option.label)}
-          {console.log("option.key", option.key)}
+          {console.log("option.key", option.key)} */}
           <EuiCheckbox
             type="inList"
             id={option.key}
@@ -65,10 +68,14 @@ export const CheckboxInput = ({
             // checked={field.value[0] === option.label}
             checked={field.value && field.value.includes(option.label)}
             label={
-              <RadioInputLabel
+              <OptionLabelInlineEdit
                 labelText={option.label}
                 fieldKey={name}
                 optionKey={option.key}
+                // We need to pass state's actions and the action type name
+                // in order to perfor state updates within the children components
+                stateActions={actions}
+                stateActionType={"setLSMSchemaCheckboxOption"}
               />
             }
             placeholder={placeholder || ""}

@@ -8,10 +8,13 @@ import {
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { useStateMachine } from "little-state-machine";
 import { nanoid } from "nanoid";
-import { removeLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
-import { RadioInputLabel } from "./RadioInputLabel";
+import {
+  removeLSMShemaRadioOption,
+  setLSMSchemaRadioOption,
+} from "../Form_builder/state-machine/formSchema/reducers";
 
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { OptionLabelInlineEdit } from "./OptionLabelInlineEdit";
 
 const idPrefix = nanoid(10);
 
@@ -26,6 +29,7 @@ export const RadioInput = ({
 }) => {
   const { actions } = useStateMachine({
     removeLSMShemaRadioOption,
+    setLSMSchemaRadioOption,
   });
 
   const handleDeleteOption = (optionKey) => {
@@ -60,10 +64,14 @@ export const RadioInput = ({
             value={option.label}
             checked={field.value === option.label}
             label={
-              <RadioInputLabel
+              <OptionLabelInlineEdit
                 labelText={option.label}
                 fieldKey={name}
                 optionKey={option.key}
+                // We need to pass state's actions and the action type name
+                // in order to perfor state updates within the children components
+                stateActions={actions}
+                stateActionType={"setLSMSchemaRadioOption"}
               />
             }
             placeholder={placeholder || ""}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import InlineEdit from "./InlineTextEdit/Components/inlineEdit";
 import "./InlineTextEdit/styles.css";
-export const RadioInputLabel = ({ labelText, ...rest }) => {
+
+export const OptionLabelInlineEdit = ({ labelText, ...rest }) => {
   const [storedText, setStoredText] = useState(labelText);
 
   // Keep track of labelText changes
