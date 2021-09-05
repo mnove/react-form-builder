@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.8.3",
     "dompurify": "^2.3.1",
     "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
     "immer": "^8.0.1",
     "little-state-machine": "^4.1.2",
     "moment": "^2.29.1",

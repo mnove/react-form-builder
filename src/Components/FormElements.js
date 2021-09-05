@@ -7,12 +7,15 @@ import {
   EuiHorizontalRule,
   EuiButton,
   EuiFlexGroup,
+  EuiFlexItem,
 } from "@elastic/eui";
 import { AddCircle } from "@styled-icons/remix-fill/AddCircle";
 import { RadioInput } from "./RadioInput";
 import { nanoid } from "nanoid";
 import { useStateMachine } from "little-state-machine";
 import { addLSMShemaRadioOption } from "../Form_builder/state-machine/formSchema/reducers";
+
+import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
@@ -143,44 +146,50 @@ export function RadioGroupField(props) {
 
   return (
     <>
-      <Field name={name} key={name}>
-        {({ form, field }) => {
-          return (
-            <>
-              <EuiFormRow
-                label={fieldLabel}
-                isInvalid={
-                  form.errors[name] && form.touched[name] ? true : false
-                }
-                error={<ErrorMessage name={name} component={TextError} />}
-              >
-                <div style={{ marginTop: 5 }}>
-                  <EuiFlexGroup
-                    direction="column"
-                    alignItems="flexStart"
-                    justifyContent="center"
-                  >
-                    {radioOptions.map((option, index) => {
-                      return (
-                        <React.Fragment key={index}>
-                          <RadioInput
-                            index={index}
-                            option={option}
-                            placeholder={placeholder}
-                            name={name}
-                            form={form}
-                            field={field}
-                          />
-                        </React.Fragment>
-                      );
-                    })}
-                  </EuiFlexGroup>
-                </div>
-              </EuiFormRow>
-            </>
-          );
-        }}
-      </Field>
+      <motion.div layout>
+        <Field name={name} key={name}>
+          {({ form, field }) => {
+            return (
+              <>
+                <EuiFormRow
+                  label={fieldLabel}
+                  isInvalid={
+                    form.errors[name] && form.touched[name] ? true : false
+                  }
+                  error={<ErrorMessage name={name} component={TextError} />}
+                >
+                  <div style={{ marginTop: 5 }}>
+                    <EuiFlexGroup
+                      direction="column"
+                      alignItems="flexStart"
+                      justifyContent="center"
+                    >
+                      {radioOptions.map((option, index) => {
+                        return (
+                          <React.Fragment key={index}>
+                            <EuiFlexItem>
+                              <motion.div layout>
+                                <RadioInput
+                                  index={index}
+                                  option={option}
+                                  placeholder={placeholder}
+                                  name={name}
+                                  form={form}
+                                  field={field}
+                                />
+                              </motion.div>
+                            </EuiFlexItem>
+                          </React.Fragment>
+                        );
+                      })}
+                    </EuiFlexGroup>
+                  </div>
+                </EuiFormRow>
+              </>
+            );
+          }}
+        </Field>
+      </motion.div>
 
       <EuiHorizontalRule />
 
