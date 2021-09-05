@@ -4,8 +4,8 @@ export const initializeForm = (formSchema) => {
   let _formData = {};
   let _schemaData = {};
 
-  formSchema.forEach( elem => {
-    _formData[elem.key] = ""
+  formSchema.forEach((elem) => {
+    _formData[elem.key] = "";
 
     if (elem.type === "textInput") {
       _schemaData[elem.key] = Yup.string();
@@ -16,14 +16,26 @@ export const initializeForm = (formSchema) => {
     }
 
     if (elem.type === "numberInput") {
-      _schemaData[elem.key] = Yup.number().integer("please enter an integer").nullable(true);
+      _schemaData[elem.key] = Yup.number()
+        .integer("please enter an integer")
+        .nullable(true);
+    }
+
+    // if (elem.type === "radioGroupInput") {
+    //   _schemaData[elem.key] = Yup.string().oneOf(
+    //     elem.options,
+    //     "Select one of the options"
+    //   );
+    // }
+
+    if (elem.type === "radioGroupInput") {
+      _schemaData[elem.key] = Yup.string();
     }
 
     if (elem.required) {
       _schemaData[elem.key] = _schemaData[elem.key].required("Required");
     }
-
-  })
+  });
 
   let intializedData = {
     schemaData: _schemaData,
@@ -31,5 +43,15 @@ export const initializeForm = (formSchema) => {
   };
 
   return intializedData;
+};
 
-}
+/** Parse initial form values to formik format (so <Formik> can be initialized properly)
+ * @param {Array<Object>} valuesToParse
+ */
+export const parseToFormikInitialValues = (valuesToParse) => {
+  let newArray = {};
+  valuesToParse.forEach((element) => {
+    newArray[element.key] = element.fieldValue;
+  });
+  return newArray;
+};

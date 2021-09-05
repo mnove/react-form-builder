@@ -1,6 +1,11 @@
 import React from "react";
 
-import { TextField, EmailField, NumberField } from "../Components/FormElements";
+import {
+  TextField,
+  EmailField,
+  NumberField,
+  RadioGroupField,
+} from "../Components/FormElements";
 
 export const getFormElement = (elemName, elemSchema) => {
   const props = {
@@ -8,6 +13,7 @@ export const getFormElement = (elemName, elemSchema) => {
     label: elemSchema.label,
     placeholder: elemSchema.placeholder,
     options: elemSchema.options,
+    fielddata: elemSchema.fieldData,
   };
 
   if (elemSchema.type === "textInput") {
@@ -16,5 +22,7 @@ export const getFormElement = (elemName, elemSchema) => {
     return <EmailField key={elemName} {...props} />;
   } else if (elemSchema.type === "numberInput") {
     return <NumberField key={elemName} {...props} />;
+  } else if (elemSchema.type === "radioGroupInput") {
+    return <RadioGroupField key={elemName} {...props} />;
   }
 };

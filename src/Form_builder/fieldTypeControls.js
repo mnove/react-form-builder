@@ -13,6 +13,7 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default label",
         placeholder: "default placeholder",
         required: false,
+        fieldData: {},
       };
 
       break;
@@ -24,6 +25,7 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default email label",
         placeholder: "default email placeholder",
         required: false,
+        fieldData: {},
       };
       break;
 
@@ -34,6 +36,29 @@ export const fieldTypeControls = (value, formSchema) => {
         label: "Default number label",
         placeholder: "default number placeholder",
         required: false,
+        fieldData: {},
+      };
+      break;
+
+    case "radioGroupInput":
+      fieldToAdd = {
+        key: randomId,
+        type: "radioGroupInput",
+        label: "Default radio label",
+        placeholder: "default radio placeholder",
+        required: false,
+        fieldData: {
+          radioOptions: [
+            {
+              key: `radio_opt_${nanoid()}`,
+              label: "Opt 1",
+            },
+            {
+              key: `radio_opt_${nanoid()}`,
+              label: "Opt 2",
+            },
+          ],
+        },
       };
       break;
   }

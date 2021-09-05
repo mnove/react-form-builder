@@ -5,6 +5,7 @@ export const sampleFormSchema = [
     label: "Default Text Label",
     placeholder: "Enter text here",
     required: true,
+    fieldData: {},
   },
 
   {
@@ -13,6 +14,7 @@ export const sampleFormSchema = [
     label: "Default Email Label",
     placeholder: "Enter text here",
     required: true,
+    fieldData: {},
   },
 
   {
@@ -21,6 +23,26 @@ export const sampleFormSchema = [
     label: "Default Number Label",
     placeholder: "Enter text here",
     required: false,
+    fieldData: {},
+  },
+
+  {
+    key: "abc4",
+    type: "radioGroupInput",
+    label: "Default Radio Label",
+    placeholder: "",
+    required: false,
+    fieldData: {
+      radioOptions: [
+        {
+          key: `radio_opt_1001`,
+          label: "Opt 1",
+        },
+        {
+          key: `radio_opt_1002`,
+          label: "Opt 2",
+        },
+      ],
+    },
   },
 ];
-
