@@ -130,7 +130,9 @@ export function RadioGroupField(props) {
     addLSMShemaRadioOption,
   });
 
-  const { name, label, placeholder, options, fielddata, ...rest } = props;
+  const { name, label, placeholder, options, fielddata, mode, ...rest } = props;
+
+  const isEditingMode = mode;
 
   let fieldLabel = label;
   if (!label) {
@@ -181,6 +183,7 @@ export function RadioGroupField(props) {
                                   name={name}
                                   form={form}
                                   field={field}
+                                  isEditingMode={isEditingMode}
                                 />
                               </motion.div>
                             </EuiFlexItem>
@@ -196,16 +199,20 @@ export function RadioGroupField(props) {
         </Field>
       </motion.div>
 
-      <EuiHorizontalRule />
+      {isEditingMode && (
+        <>
+          <EuiHorizontalRule />
 
-      <EuiButton
-        onClick={handleAddRadioOptionToField}
-        size="s"
-        color="text"
-        iconType={AddCircle}
-      >
-        Add option
-      </EuiButton>
+          <EuiButton
+            onClick={handleAddRadioOptionToField}
+            size="s"
+            color="text"
+            iconType={AddCircle}
+          >
+            Add option
+          </EuiButton>
+        </>
+      )}
     </>
   );
 }
@@ -216,7 +223,9 @@ export function CheckboxGroupField(props) {
     addLSMShemaCheckboxOption,
   });
 
-  const { name, label, placeholder, options, fielddata, ...rest } = props;
+  const { name, label, placeholder, options, fielddata, mode, ...rest } = props;
+
+  const isEditingMode = mode;
 
   let fieldLabel = label;
   if (!label) {
@@ -267,6 +276,7 @@ export function CheckboxGroupField(props) {
                                   name={name}
                                   form={form}
                                   field={field}
+                                  isEditingMode={isEditingMode}
                                 />
                               </motion.div>
                             </EuiFlexItem>
@@ -282,16 +292,20 @@ export function CheckboxGroupField(props) {
         </Field>
       </motion.div>
 
-      <EuiHorizontalRule />
+      {isEditingMode && (
+        <>
+          <EuiHorizontalRule />
 
-      <EuiButton
-        onClick={handleAddCheckboxOptionToField}
-        size="s"
-        color="text"
-        iconType={AddCircle}
-      >
-        Add option
-      </EuiButton>
+          <EuiButton
+            onClick={handleAddCheckboxOptionToField}
+            size="s"
+            color="text"
+            iconType={AddCircle}
+          >
+            Add option
+          </EuiButton>
+        </>
+      )}
     </>
   );
 }

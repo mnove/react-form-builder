@@ -25,6 +25,7 @@ export const RadioInput = ({
   field,
   placeholder,
   name,
+  isEditingMode,
   ...rest
 }) => {
   const { actions } = useStateMachine({
@@ -64,33 +65,40 @@ export const RadioInput = ({
             value={option.label}
             checked={field.value === option.label}
             label={
-              <OptionLabelInlineEdit
-                labelText={option.label}
-                fieldKey={name}
-                optionKey={option.key}
-                // We need to pass state's actions and the action type name
-                // in order to perfor state updates within the children components
-                stateActions={actions}
-                stateActionType={"setLSMSchemaRadioOption"}
-              />
+              isEditingMode ? (
+                <OptionLabelInlineEdit
+                  labelText={option.label}
+                  fieldKey={name}
+                  optionKey={option.key}
+                  // We need to pass state's actions and the action type name
+                  // in order to perfor state updates within the children components
+                  stateActions={actions}
+                  stateActionType={"setLSMSchemaRadioOption"}
+                />
+              ) : (
+                `${option.label}`
+              )
             }
             placeholder={placeholder || ""}
           />
         </EuiFlexItem>
-        <EuiFlexItem grow={false}>
-          <EuiButtonIcon
-            iconType={CloseCircle}
-            color="danger"
-            aria-label="Delete"
-            display="base"
-            style={style}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleDeleteOption(option.key);
-            }}
-          />
-        </EuiFlexItem>
+
+        {isEditingMode && (
+          <EuiFlexItem grow={false}>
+            <EuiButtonIcon
+              iconType={CloseCircle}
+              color="danger"
+              aria-label="Delete"
+              display="base"
+              style={style}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDeleteOption(option.key);
+              }}
+            />
+          </EuiFlexItem>
+        )}
       </EuiFlexGroup>
     </React.Fragment>
   );
