@@ -8,18 +8,24 @@ import {
   createStore,
   useStateMachine,
 } from "little-state-machine";
+import { FormBuilder } from "./Pages/FormBuilder";
 
 createStore({
   formSchemaState: [],
   formContainerState: [],
   formValuesState: [],
+  formBuilder: {
+    status: {
+      isEditingMode: false,
+    },
+  },
 });
 
 function App() {
   return (
     <div className="App">
       <StateMachineProvider>
-        <FormContainer />
+        <FormBuilder />
         {/* <FormContainerPlayer /> */}
       </StateMachineProvider>
     </div>

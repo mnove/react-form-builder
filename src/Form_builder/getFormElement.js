@@ -8,13 +8,14 @@ import {
   CheckboxGroupField,
 } from "../Components/FormElements";
 
-export const getFormElement = (elemName, elemSchema) => {
+export const getFormElement = (elemName, elemSchema, isEditingMode) => {
   const props = {
     name: elemName,
     label: elemSchema.label,
     placeholder: elemSchema.placeholder,
     options: elemSchema.options,
     fielddata: elemSchema.fieldData,
+    mode: isEditingMode,
   };
 
   if (elemSchema.type === "textInput") {

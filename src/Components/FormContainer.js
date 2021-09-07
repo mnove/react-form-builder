@@ -38,7 +38,7 @@ import { FormAddField } from "./FormAddField";
 import { FormButtons } from "./FormButtons";
 const formSchema = sampleFormSchema; // Form Schema data
 
-function FormContainer() {
+function FormContainer({ isEditingMode, ...rest }) {
   const { actions, state } = useStateMachine({
     initializeLSMFormSchema,
     addLSMSchemaField,
@@ -171,14 +171,22 @@ function FormContainer() {
                 <h1>YOUR FORM</h1>
               </EuiText>
 
-              <FormElementsContainer formik={formik} />
+              <FormElementsContainer
+                formik={formik}
+                isEditingMode={isEditingMode}
+                {...rest}
+              />
+              {!isEditingMode && (
+                <motion.div layout>
+                  <FormValidation formik={formik} />
+                </motion.div>
+              )}
+              {isEditingMode && (
+                <motion.div layout>
+                  <FormAddField />
+                </motion.div>
+              )}
 
-              <motion.div layout>
-                <FormValidation formik={formik} />
-              </motion.div>
-              <motion.div layout>
-                <FormAddField />
-              </motion.div>
               <motion.div layout>
                 <FormButtons formSchemaState={LSMFormSchemaState} />
               </motion.div>

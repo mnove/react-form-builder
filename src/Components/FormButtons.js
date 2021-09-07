@@ -18,9 +18,12 @@ export const FormButtons = ({ LSMFormSchemaState }) => {
 
   return (
     <>
+      <EuiHorizontalRule></EuiHorizontalRule>
       <EuiFlexGroup>
         <EuiFlexItem grow={false}>
-          <EuiButton color="text">Reset Form</EuiButton>
+          <EuiButton color="text" type="reset">
+            Clear form
+          </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem>
           <EuiButton type="submit" color="secondary">
@@ -30,7 +33,7 @@ export const FormButtons = ({ LSMFormSchemaState }) => {
       </EuiFlexGroup>
       <EuiHorizontalRule></EuiHorizontalRule>
       <EuiFlexGroup>
-        <EuiFlexItem>
+        {/* <EuiFlexItem>
           <EuiButton
             type="submit"
             color="text"
@@ -39,7 +42,7 @@ export const FormButtons = ({ LSMFormSchemaState }) => {
           >
             Print Schema to console
           </EuiButton>
-        </EuiFlexItem>
+        </EuiFlexItem> */}
       </EuiFlexGroup>
     </>
   );
