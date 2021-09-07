@@ -2,6 +2,14 @@ import React from "react";
 import FormContainer from "../Components/FormContainer";
 
 import { useStateMachine } from "little-state-machine";
+import { FormHeader } from "../Components/FormHeader";
+import styled from "styled-components";
+import { EuiFlexGroup, EuiFlexItem, EuiPanel } from "@elastic/eui";
+
+const FormContainerPanel = styled.div`
+  width: 50%;
+  margin: auto;
+`;
 
 export const FormBuilder = () => {
   const { state } = useStateMachine();
@@ -12,8 +20,17 @@ export const FormBuilder = () => {
   console.log(isEditingMode);
   return (
     <>
-      <FormContainer isEditingMode={isEditingMode} />
-      {/* <div>More...</div> */}
+      <EuiFlexGroup direction="column">
+        <EuiFlexItem>
+          <FormHeader />
+        </EuiFlexItem>
+        <EuiFlexItem>
+          <FormContainerPanel>
+            <FormContainer isEditingMode={isEditingMode} />
+          </FormContainerPanel>
+        </EuiFlexItem>
+        {/* <div>More...</div> */}
+      </EuiFlexGroup>
     </>
   );
 };
