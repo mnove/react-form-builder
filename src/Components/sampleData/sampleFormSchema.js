@@ -45,4 +45,24 @@ export const sampleFormSchema = [
       ],
     },
   },
+
+  {
+    key: "abc5",
+    type: "checkboxGroupInput",
+    label: "Default Checkbox Label",
+    placeholder: "",
+    required: false,
+    fieldData: {
+      checkboxOptions: [
+        {
+          key: `check_opt_1001`,
+          label: "Opt 1",
+        },
+        {
+          key: `check_opt_1002`,
+          label: "Opt 2",
+        },
+      ],
+    },
+  },
 ];

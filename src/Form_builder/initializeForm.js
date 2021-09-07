@@ -32,6 +32,10 @@ export const initializeForm = (formSchema) => {
       _schemaData[elem.key] = Yup.string();
     }
 
+    if (elem.type === "checkboxGroupInput") {
+      _schemaData[elem.key] = Yup.array();
+    }
+
     if (elem.required) {
       _schemaData[elem.key] = _schemaData[elem.key].required("Required");
     }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   EuiRadio,
+  EuiCheckbox,
   EuiFlexGroup,
   EuiFlexItem,
   EuiButtonIcon,
@@ -9,16 +10,15 @@ import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { useStateMachine } from "little-state-machine";
 import { nanoid } from "nanoid";
 import {
-  removeLSMShemaRadioOption,
-  setLSMSchemaRadioOption,
+  removeLSMShemaCheckboxOption,
+  setLSMSchemaCheckboxOption,
 } from "../Form_builder/state-machine/formSchema/reducers";
-
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { OptionLabelInlineEdit } from "./OptionLabelInlineEdit";
 
 const idPrefix = nanoid(10);
 
-export const RadioInput = ({
+export const CheckboxInput = ({
   index,
   option,
   form,
@@ -28,8 +28,8 @@ export const RadioInput = ({
   ...rest
 }) => {
   const { actions } = useStateMachine({
-    removeLSMShemaRadioOption,
-    setLSMSchemaRadioOption,
+    removeLSMShemaCheckboxOption,
+    setLSMSchemaCheckboxOption,
   });
 
   const handleDeleteOption = (optionKey) => {
@@ -37,7 +37,7 @@ export const RadioInput = ({
       fieldKey: name,
       optionKey: optionKey,
     };
-    actions.removeLSMShemaRadioOption(payload);
+    actions.removeLSMShemaCheckboxOption(payload);
   };
 
   // Setting style so Delete Option button appears on hover
@@ -56,13 +56,17 @@ export const RadioInput = ({
         }}
       >
         <EuiFlexItem grow={false}>
-          <EuiRadio
-            type="radio"
+          {/* {console.log("Field.value", field.value)}
+          {console.log("option.label", option.label)}
+          {console.log("option.key", option.key)} */}
+          <EuiCheckbox
+            type="inList"
             id={option.key}
             {...field}
             {...rest}
             value={option.label}
-            checked={field.value === option.label}
+            // checked={field.value[0] === option.label}
+            checked={field.value && field.value.includes(option.label)}
             label={
               <OptionLabelInlineEdit
                 labelText={option.label}
@@ -71,7 +75,7 @@ export const RadioInput = ({
                 // We need to pass state's actions and the action type name
                 // in order to perfor state updates within the children components
                 stateActions={actions}
-                stateActionType={"setLSMSchemaRadioOption"}
+                stateActionType={"setLSMSchemaCheckboxOption"}
               />
             }
             placeholder={placeholder || ""}

@@ -61,6 +61,27 @@ export const fieldTypeControls = (value, formSchema) => {
         },
       };
       break;
+    case "checkboxGroupInput":
+      fieldToAdd = {
+        key: randomId,
+        type: "checkboxGroupInput",
+        label: "Default Checkbox Label",
+        placeholder: "default checkbox placeholder",
+        required: false,
+        fieldData: {
+          checkboxOptions: [
+            {
+              key: `check_opt_${nanoid()}`,
+              label: "Opt 1",
+            },
+            {
+              key: `check_opt_${nanoid()}`,
+              label: "Opt 2",
+            },
+          ],
+        },
+      };
+      break;
   }
 
   //  NEW LABEL
