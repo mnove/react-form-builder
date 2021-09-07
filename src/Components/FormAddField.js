@@ -55,6 +55,7 @@ export const FormAddField = () => {
               { value: "emailInput", text: "Email Input" },
               { value: "numberInput", text: "Number Input" },
               { value: "radioGroupInput", text: "Radio Input" },
+              { value: "checkboxGroupInput", text: "Checkbox Input" },
             ]}
             onChange={(e) => handleFieldTypeAdd(e.target.value, formSchema)}
           />

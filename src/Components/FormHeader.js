@@ -46,7 +46,7 @@ export const FormHeader = () => {
 
   return (
     <>
-      <EuiHeader>
+      <EuiHeader position="fixed">
         <EuiHeaderSection grow={false}>
           <EuiHeaderSectionItem>
             <EuiText>

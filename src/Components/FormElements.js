@@ -183,6 +183,7 @@ export function RadioGroupField(props) {
                                   name={name}
                                   form={form}
                                   field={field}
+                                  isEditingMode={isEditingMode}
                                 />
                               </motion.div>
                             </EuiFlexItem>
@@ -275,6 +276,7 @@ export function CheckboxGroupField(props) {
                                   name={name}
                                   form={form}
                                   field={field}
+                                  isEditingMode={isEditingMode}
                                 />
                               </motion.div>
                             </EuiFlexItem>

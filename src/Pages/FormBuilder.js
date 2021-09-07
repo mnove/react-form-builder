@@ -25,9 +25,11 @@ export const FormBuilder = () => {
           <FormHeader />
         </EuiFlexItem>
         <EuiFlexItem>
-          <FormContainerPanel>
-            <FormContainer isEditingMode={isEditingMode} />
-          </FormContainerPanel>
+          <div style={{ marginTop: "2rem" }}>
+            <FormContainerPanel>
+              <FormContainer isEditingMode={isEditingMode} />
+            </FormContainerPanel>
+          </div>
         </EuiFlexItem>
         {/* <div>More...</div> */}
       </EuiFlexGroup>

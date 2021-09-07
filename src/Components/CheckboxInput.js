@@ -25,6 +25,7 @@ export const CheckboxInput = ({
   field,
   placeholder,
   name,
+  isEditingMode,
   ...rest
 }) => {
   const { actions } = useStateMachine({
@@ -68,33 +69,40 @@ export const CheckboxInput = ({
             // checked={field.value[0] === option.label}
             checked={field.value && field.value.includes(option.label)}
             label={
-              <OptionLabelInlineEdit
-                labelText={option.label}
-                fieldKey={name}
-                optionKey={option.key}
-                // We need to pass state's actions and the action type name
-                // in order to perfor state updates within the children components
-                stateActions={actions}
-                stateActionType={"setLSMSchemaCheckboxOption"}
-              />
+              isEditingMode ? (
+                <OptionLabelInlineEdit
+                  labelText={option.label}
+                  fieldKey={name}
+                  optionKey={option.key}
+                  // We need to pass state's actions and the action type name
+                  // in order to perfor state updates within the children components
+                  stateActions={actions}
+                  stateActionType={"setLSMSchemaCheckboxOption"}
+                />
+              ) : (
+                `${option.label}`
+              )
             }
             placeholder={placeholder || ""}
           />
         </EuiFlexItem>
-        <EuiFlexItem grow={false}>
-          <EuiButtonIcon
-            iconType={CloseCircle}
-            color="danger"
-            aria-label="Delete"
-            display="base"
-            style={style}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleDeleteOption(option.key);
-            }}
-          />
-        </EuiFlexItem>
+
+        {isEditingMode && (
+          <EuiFlexItem grow={false}>
+            <EuiButtonIcon
+              iconType={CloseCircle}
+              color="danger"
+              aria-label="Delete"
+              display="base"
+              style={style}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDeleteOption(option.key);
+              }}
+            />
+          </EuiFlexItem>
+        )}
       </EuiFlexGroup>
     </React.Fragment>
   );
