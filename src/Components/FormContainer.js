@@ -69,8 +69,6 @@ function FormContainer() {
   const [formData, setFormData] = useState({});
   const [validationSchema, setValidationSchema] = useState({});
 
-  console.log("called function");
-
   const getInitialFormValues = () => {
     let initialFormValues = sampleInitialFormValues;
     actions.initializeLSMFormValues(initialFormValues);
@@ -87,7 +85,6 @@ function FormContainer() {
   // };
 
   const getFormInitalValues = () => {
-    console.log(LSMFormValuesState);
     let formDataValues = parseToFormikInitialValues(LSMFormValuesState);
     if (Object.keys(formDataValues).length === 0) {
       getInitialFormValues();
@@ -98,7 +95,6 @@ function FormContainer() {
   };
 
   let formInitialValues = getFormInitalValues();
-  console.log(formInitialValues);
 
   // INITIALIZE the form container state
   const initializeEmptyForm = () => {
@@ -169,7 +165,6 @@ function FormContainer() {
         key={"1001"}
       >
         {(formik) => {
-          console.log("FORMIK ERORRS: ", formik.errors);
           return (
             <Form>
               <EuiText>

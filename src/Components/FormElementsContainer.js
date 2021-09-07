@@ -126,7 +126,7 @@ export const FormElementsContainer = ({ formik }) => {
   // handler for REMOVING a form field from the store
   const handleFieldRemove = (key, formik) => {
     actions.removeLSMSchemaField(key);
-    // console.log(state.formSchemaState);
+
     let newFormData = {};
     setFormData(newFormData);
 
@@ -135,7 +135,6 @@ export const FormElementsContainer = ({ formik }) => {
     };
 
     actions.LSMRemoveElementFromFormContainerState(payload);
-    // console.log(state.formSchemaState);
 
     actions.removeElementFromFormValues(payload);
 
@@ -148,7 +147,6 @@ export const FormElementsContainer = ({ formik }) => {
       <AnimateSharedLayout>
         <motion.div layout>
           {LSMFormSchemaState.map((elem, index) => {
-            console.log(LSMFormSchemaState);
             const key = elem.key;
             return (
               <>

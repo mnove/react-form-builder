@@ -156,7 +156,6 @@ export function RadioGroupField(props) {
           {({ form, field }) => {
             return (
               <>
-                {console.log(field)}
                 <EuiFormRow
                   label={fieldLabel}
                   isInvalid={
@@ -224,7 +223,6 @@ export function CheckboxGroupField(props) {
     fieldLabel = "Untitled";
   }
   let checkboxOptions = fielddata.checkboxOptions;
-  console.log(checkboxOptions);
 
   const handleAddCheckboxOptionToField = () => {
     let payload = {
@@ -244,7 +242,6 @@ export function CheckboxGroupField(props) {
           {({ form, field }) => {
             return (
               <>
-                {console.log(field)}
                 <EuiFormRow
                   label={fieldLabel}
                   isInvalid={
