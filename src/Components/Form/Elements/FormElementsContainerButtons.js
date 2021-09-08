@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import "react-responsive-modal/styles.css";
 // import { initializeForm } from "../Form_builder/initializeForm";
-import { getFormElement } from "../Form_builder";
 
 import {
   EuiButtonIcon,
@@ -15,7 +14,6 @@ import {
   EuiForm,
   EuiFieldText,
 } from "@elastic/eui";
-import { FormFieldPanel } from "./styled-components/formStyles";
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 import { useStateMachine } from "little-state-machine";
@@ -23,16 +21,20 @@ import {
   removeLSMSchemaField,
   setLSMSchemaFieldRequired,
   setLSMSchemaLabelField,
-} from "../Form_builder/state-machine/formSchema/reducers";
+} from "../../../Services/state-machine/formSchema/reducers";
 import {
   LSMRemoveElementFromFormContainerState,
   LSMsetLabelValue,
   LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
-} from "../Form_builder/state-machine/formState/reducers";
-import { removeElementFromFormValues } from "../Form_builder/state-machine/formValues/reducers";
+} from "../../../Services/state-machine/formState/reducers";
+import { removeElementFromFormValues } from "../../../Services/state-machine/formValues/reducers";
 
-import { motion, AnimateSharedLayout } from "framer-motion";
+import styled from "styled-components";
+
+const StyledEuiFlexGroup = styled(EuiFlexGroup)`
+  margin-bottom: 0.2rem;
+`;
 
 export const FormElementsContainerButtons = ({ formik, elemKey }) => {
   const key = elemKey;
@@ -46,12 +48,9 @@ export const FormElementsContainerButtons = ({ formik, elemKey }) => {
     LSMsetLabelValue, //
     removeElementFromFormValues, //
   });
-  // global FORM SCHEMA (little state machine)
-  const LSMFormSchemaState = state.formSchemaState;
+
   // global FORM CONTAINER STATE (Little state machine)
   const LSMFormContainerState = state.formContainerState;
-  // global FORM VALUES STATE (Little state machine)
-  const LSMFormValuesState = state.formValuesState;
 
   const handleOpenModal = (key) => {
     let payload = {
@@ -142,12 +141,15 @@ export const FormElementsContainerButtons = ({ formik, elemKey }) => {
     formik.resetForm();
   };
 
+  // return <>{width < mobileBreakpoint ? mobileRender : desktopRender}</>;
   return (
     <>
-      <EuiFlexGroup
+      {" "}
+      <StyledEuiFlexGroup
         direction="row"
         alignItems="center"
         justifyContent="flexEnd"
+        responsive={false}
       >
         <EuiFlexItem grow={false}>
           <EuiPopover
@@ -221,7 +223,7 @@ export const FormElementsContainerButtons = ({ formik, elemKey }) => {
             }}
           />
         </EuiFlexItem>
-      </EuiFlexGroup>
+      </StyledEuiFlexGroup>
     </>
   );
 };

@@ -1,15 +1,21 @@
 import React from "react";
 
-import "react-responsive-modal/styles.css";
 // import { initializeForm } from "../Form_builder/initializeForm";
-import { getFormElement } from "../Form_builder";
-import { FormFieldPanel } from "./styled-components/formStyles";
 import { useStateMachine } from "little-state-machine";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { FormElementsContainerButtons } from "./FormElementsContainerButtons";
+import { getFormElement } from "../../../Services";
+
+import { EuiPanel } from "@elastic/eui";
+import styled from "styled-components";
+
+const FormFieldPanel = styled(EuiPanel)`
+  margin: 1rem 0rem;
+  max-width: 400px;
+`;
 
 export const FormElementsContainer = ({ formik, isEditingMode }) => {
-  const { actions, state } = useStateMachine();
+  const { state } = useStateMachine();
 
   // global FORM SCHEMA (little state machine)
   const LSMFormSchemaState = state.formSchemaState;

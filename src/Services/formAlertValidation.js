@@ -1,6 +1,6 @@
 // handler for displaying a validation error / success message status (for the whole form)
 
-import { EuiCallOut, EuiLink, EuiSpacer } from "@elastic/eui";
+import { EuiCallOut } from "@elastic/eui";
 import { ThumbUp } from "@styled-icons/remix-fill/ThumbUp";
 import { ErrorWarning } from "@styled-icons/remix-fill/ErrorWarning";
 

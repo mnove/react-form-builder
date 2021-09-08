@@ -7,8 +7,7 @@ import {
   initializeForm,
   initializeFormContainerState,
   parseToFormikInitialValues,
-} from "../Form_builder";
-import { EuiText } from "@elastic/eui";
+} from "../../Services";
 import { useStateMachine } from "little-state-machine";
 import {
   initializeLSMFormSchema,
@@ -16,7 +15,7 @@ import {
   removeLSMSchemaField,
   setLSMSchemaFieldRequired,
   setLSMSchemaLabelField,
-} from "../Form_builder/state-machine/formSchema/reducers";
+} from "../../Services/state-machine/formSchema/reducers";
 import {
   LSMAddNewElementToFormContainerState,
   LSMinitializeFormContainerState,
@@ -24,20 +23,24 @@ import {
   LSMsetLabelValue,
   LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
-} from "../Form_builder/state-machine/formState/reducers";
+} from "../../Services/state-machine/formState/reducers";
 import {
   addNewElementToFormValues,
   initializeLSMFormValues,
   removeElementFromFormValues,
-} from "../Form_builder/state-machine/formValues/reducers";
-import { sampleFormSchema, sampleInitialFormValues } from "./sampleData"; // Sample data
+} from "../../Services/state-machine/formValues/reducers";
+import { sampleFormSchema, sampleInitialFormValues } from "../sampleData"; // Sample data
 import { motion } from "framer-motion";
-import { FormElementsContainer } from "./FormElementsContainer";
+import { FormElementsContainer } from "./Elements";
 import { FormValidation } from "./FormValidation";
 import { FormAddField } from "./FormAddField";
 import { FormButtons } from "./FormButtons";
-import { FormHeader } from "./FormHeader";
-const formSchema = sampleFormSchema; // Form Schema data
+import styled from "styled-components";
+
+const FormContainerDiv = styled.div`
+  max-width: 400px;
+  margin: auto;
+`;
 
 function FormContainer({ isEditingMode, ...rest }) {
   const { actions, state } = useStateMachine({
@@ -60,8 +63,7 @@ function FormContainer({ isEditingMode, ...rest }) {
   // STATE //
   // global FORM SCHEMA (little state machine)
   const LSMFormSchemaState = state.formSchemaState;
-  // global FORM CONTAINER STATE (Little state machine)
-  const LSMFormContainerState = state.formContainerState;
+
   // global FORM VALUES STATE (Little state machine)
   const LSMFormValuesState = state.formValuesState;
 
@@ -75,15 +77,6 @@ function FormContainer({ isEditingMode, ...rest }) {
     actions.initializeLSMFormValues(initialFormValues);
     return initialFormValues;
   };
-
-  // const parseFormInitialValues = (valuesToParse) => {
-  //   let newArray = {};
-  //   valuesToParse.forEach((element) => {
-  //     newArray[element.key] = element.fieldValue;
-  //   });
-
-  //   return newArray;
-  // };
 
   const getFormInitalValues = () => {
     let formDataValues = parseToFormikInitialValues(LSMFormValuesState);
@@ -168,27 +161,29 @@ function FormContainer({ isEditingMode, ...rest }) {
         {(formik) => {
           return (
             <>
-              <Form>
-                <FormElementsContainer
-                  formik={formik}
-                  isEditingMode={isEditingMode}
-                  {...rest}
-                />
-                {!isEditingMode && (
-                  <motion.div layout>
-                    <FormValidation formik={formik} />
-                  </motion.div>
-                )}
-                {isEditingMode && (
-                  <motion.div layout>
-                    <FormAddField />
-                  </motion.div>
-                )}
+              <FormContainerDiv>
+                <Form>
+                  <FormElementsContainer
+                    formik={formik}
+                    isEditingMode={isEditingMode}
+                    {...rest}
+                  />
+                  {!isEditingMode && (
+                    <motion.div layout>
+                      <FormValidation formik={formik} />
+                    </motion.div>
+                  )}
+                  {isEditingMode && (
+                    <motion.div layout>
+                      <FormAddField />
+                    </motion.div>
+                  )}
 
-                <motion.div layout>
-                  <FormButtons formSchemaState={LSMFormSchemaState} />
-                </motion.div>
-              </Form>
+                  <motion.div layout>
+                    <FormButtons formSchemaState={LSMFormSchemaState} />
+                  </motion.div>
+                </Form>
+              </FormContainerDiv>
             </>
           );
         }}

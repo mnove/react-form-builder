@@ -1,35 +1,17 @@
-import react, { useState } from "react";
+import React from "react";
 
 import {
-  EuiAvatar,
   EuiButton,
-  EuiFlexGroup,
-  EuiFlexItem,
   EuiHeader,
-  EuiHeaderBreadcrumbs,
-  EuiHeaderLogo,
   EuiHeaderSection,
   EuiHeaderSectionItem,
-  EuiHeaderSectionItemButton,
-  EuiIcon,
-  EuiKeyPadMenu,
-  EuiKeyPadMenuItem,
-  EuiLink,
-  EuiPopover,
-  EuiPopoverFooter,
-  EuiPopoverTitle,
-  EuiSelectable,
-  EuiSelectableMessage,
-  EuiSelectableTemplateSitewide,
-  EuiSpacer,
   EuiText,
-  EuiSwitch,
 } from "@elastic/eui";
 
 import { Eye } from "@styled-icons/remix-fill/Eye";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 import { useStateMachine } from "little-state-machine";
-import { setLSMFormEditingMode } from "../Form_builder/state-machine/formBuilder/reducers";
+import { setLSMFormEditingMode } from "../../Services/state-machine/formBuilder/reducers";
 
 export const FormHeader = () => {
   const { actions, state } = useStateMachine({

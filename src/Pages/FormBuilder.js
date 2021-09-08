@@ -1,14 +1,18 @@
 import React from "react";
-import FormContainer from "../Components/FormContainer";
 
 import { useStateMachine } from "little-state-machine";
-import { FormHeader } from "../Components/FormHeader";
+import { FormHeader } from "../Components/Form";
 import styled from "styled-components";
-import { EuiFlexGroup, EuiFlexItem, EuiPanel } from "@elastic/eui";
+import { EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import FormContainer from "../Components/Form/FormContainer";
 
 const FormContainerPanel = styled.div`
   width: 50%;
   margin: auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 export const FormBuilder = () => {

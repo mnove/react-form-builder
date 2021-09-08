@@ -82,6 +82,9 @@ export const fieldTypeControls = (value, formSchema) => {
         },
       };
       break;
+
+    default:
+      fieldToAdd = {};
   }
 
   //  NEW LABEL

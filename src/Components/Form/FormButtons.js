@@ -9,12 +9,12 @@ import {
 
 export const FormButtons = ({ LSMFormSchemaState }) => {
   // Get the current form schema as JSON
-  const getFormSchema = () => {
-    let JSONFormSchema = JSON.stringify(LSMFormSchemaState);
-    console.log("JSON FORM SCHEMA", JSONFormSchema);
-    window.alert(JSONFormSchema);
-    return JSONFormSchema;
-  };
+  // const getFormSchema = () => {
+  //   let JSONFormSchema = JSON.stringify(LSMFormSchemaState);
+  //   console.log("JSON FORM SCHEMA", JSONFormSchema);
+  //   window.alert(JSONFormSchema);
+  //   return JSONFormSchema;
+  // };
 
   return (
     <>

@@ -6,7 +6,7 @@ import {
   NumberField,
   RadioGroupField,
   CheckboxGroupField,
-} from "../Components/FormElements";
+} from "../Components/Form/Elements/FormElements";
 
 export const getFormElement = (elemName, elemSchema, isEditingMode) => {
   const props = {
