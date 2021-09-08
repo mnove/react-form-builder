@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  EuiRadio,
   EuiCheckbox,
   EuiFlexGroup,
   EuiFlexItem,
@@ -8,15 +7,11 @@ import {
 } from "@elastic/eui";
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
 import { useStateMachine } from "little-state-machine";
-import { nanoid } from "nanoid";
 import {
   removeLSMShemaCheckboxOption,
   setLSMSchemaCheckboxOption,
-} from "../Form_builder/state-machine/formSchema/reducers";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { OptionLabelInlineEdit } from "./OptionLabelInlineEdit";
-
-const idPrefix = nanoid(10);
+} from "../../../../Form_builder/state-machine/formSchema/reducers";
+import { OptionLabelInlineEdit } from "../OptionLabelInlineEdit";
 
 export const CheckboxInput = ({
   index,

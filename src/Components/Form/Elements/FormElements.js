@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import TextError from "./TextError";
+import TextError from "../TextError";
 import {
   EuiFormRow,
   EuiFieldText,
@@ -10,16 +10,16 @@ import {
   EuiFlexItem,
 } from "@elastic/eui";
 import { AddCircle } from "@styled-icons/remix-fill/AddCircle";
-import { RadioInput } from "./RadioInput";
+import { RadioInput } from "./Radio/RadioInput";
 import { nanoid } from "nanoid";
 import { useStateMachine } from "little-state-machine";
 import {
   addLSMShemaRadioOption,
   addLSMShemaCheckboxOption,
-} from "../Form_builder/state-machine/formSchema/reducers";
+} from "../../../Form_builder/state-machine/formSchema/reducers";
 
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { CheckboxInput } from "./CheckboxInput";
+import { motion } from "framer-motion";
+import { CheckboxInput } from "./Checkbox";
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;

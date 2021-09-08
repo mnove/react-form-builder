@@ -11,10 +11,9 @@ import { nanoid } from "nanoid";
 import {
   removeLSMShemaRadioOption,
   setLSMSchemaRadioOption,
-} from "../Form_builder/state-machine/formSchema/reducers";
+} from "../../../../Form_builder/state-machine/formSchema/reducers";
 
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { OptionLabelInlineEdit } from "./OptionLabelInlineEdit";
+import { OptionLabelInlineEdit } from "../OptionLabelInlineEdit";
 
 const idPrefix = nanoid(10);
 

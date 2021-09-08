@@ -5,6 +5,7 @@ import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
 import { EuiText } from "@elastic/eui";
+import "./styles.css";
 
 function InlineEdit({
   onSetText,

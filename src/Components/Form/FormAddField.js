@@ -2,15 +2,15 @@ import React from "react";
 
 import "react-responsive-modal/styles.css";
 // import { initializeForm } from "../Form_builder/initializeForm";
-import { fieldTypeControls } from "../Form_builder";
+import { fieldTypeControls } from "../../Form_builder";
 import { EuiFormRow, EuiSelect } from "@elastic/eui";
-import { AddFormFieldPanel } from "./styled-components/formStyles";
+import { AddFormFieldPanel } from "../styled-components/formStyles";
 import { useStateMachine } from "little-state-machine";
-import { addLSMSchemaField } from "../Form_builder/state-machine/formSchema/reducers";
-import { LSMAddNewElementToFormContainerState } from "../Form_builder/state-machine/formState/reducers";
-import { addNewElementToFormValues } from "../Form_builder/state-machine/formValues/reducers";
+import { addLSMSchemaField } from "../../Form_builder/state-machine/formSchema/reducers";
+import { LSMAddNewElementToFormContainerState } from "../../Form_builder/state-machine/formState/reducers";
+import { addNewElementToFormValues } from "../../Form_builder/state-machine/formValues/reducers";
 // Sample data
-import { sampleFormSchema, sampleInitialFormValues } from "./sampleData";
+import { sampleFormSchema } from "../sampleData";
 const formSchema = sampleFormSchema;
 
 export const FormAddField = () => {
