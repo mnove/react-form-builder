@@ -21,14 +21,14 @@ import {
   removeLSMSchemaField,
   setLSMSchemaFieldRequired,
   setLSMSchemaLabelField,
-} from "../../../Form_builder/state-machine/formSchema/reducers";
+} from "../../../Services/state-machine/formSchema/reducers";
 import {
   LSMRemoveElementFromFormContainerState,
   LSMsetLabelValue,
   LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
-} from "../../../Form_builder/state-machine/formState/reducers";
-import { removeElementFromFormValues } from "../../../Form_builder/state-machine/formValues/reducers";
+} from "../../../Services/state-machine/formState/reducers";
+import { removeElementFromFormValues } from "../../../Services/state-machine/formValues/reducers";
 
 import styled from "styled-components";
 

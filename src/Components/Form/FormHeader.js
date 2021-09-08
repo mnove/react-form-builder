@@ -11,7 +11,7 @@ import {
 import { Eye } from "@styled-icons/remix-fill/Eye";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 import { useStateMachine } from "little-state-machine";
-import { setLSMFormEditingMode } from "../../Form_builder/state-machine/formBuilder/reducers";
+import { setLSMFormEditingMode } from "../../Services/state-machine/formBuilder/reducers";
 
 export const FormHeader = () => {
   const { actions, state } = useStateMachine({

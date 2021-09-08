@@ -11,7 +11,7 @@ import { nanoid } from "nanoid";
 import {
   removeLSMShemaRadioOption,
   setLSMSchemaRadioOption,
-} from "../../../../Form_builder/state-machine/formSchema/reducers";
+} from "../../../../Services/state-machine/formSchema/reducers";
 
 import { OptionLabelInlineEdit } from "../OptionLabelInlineEdit";
 

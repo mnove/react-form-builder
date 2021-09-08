@@ -2,15 +2,23 @@ import React from "react";
 
 import "react-responsive-modal/styles.css";
 // import { initializeForm } from "../Form_builder/initializeForm";
-import { fieldTypeControls } from "../../Form_builder";
-import { EuiFormRow, EuiSelect } from "@elastic/eui";
-import { AddFormFieldPanel } from "../styled-components/formStyles";
+import { fieldTypeControls } from "../../Services";
+import { EuiFormRow, EuiSelect, EuiPanel } from "@elastic/eui";
 import { useStateMachine } from "little-state-machine";
-import { addLSMSchemaField } from "../../Form_builder/state-machine/formSchema/reducers";
-import { LSMAddNewElementToFormContainerState } from "../../Form_builder/state-machine/formState/reducers";
-import { addNewElementToFormValues } from "../../Form_builder/state-machine/formValues/reducers";
+import { addLSMSchemaField } from "../../Services/state-machine/formSchema/reducers";
+import { LSMAddNewElementToFormContainerState } from "../../Services/state-machine/formState/reducers";
+import { addNewElementToFormValues } from "../../Services/state-machine/formValues/reducers";
 // Sample data
 import { sampleFormSchema } from "../sampleData";
+
+import styled from "styled-components";
+
+const AddFormFieldPanel = styled(EuiPanel)`
+  margin: 1rem 0rem;
+  border: 2px solid rgba(0, 191, 179, 0.2);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+`;
+
 const formSchema = sampleFormSchema;
 
 export const FormAddField = () => {

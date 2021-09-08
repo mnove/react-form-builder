@@ -7,7 +7,7 @@ import {
   initializeForm,
   initializeFormContainerState,
   parseToFormikInitialValues,
-} from "../../Form_builder";
+} from "../../Services";
 import { useStateMachine } from "little-state-machine";
 import {
   initializeLSMFormSchema,
@@ -15,7 +15,7 @@ import {
   removeLSMSchemaField,
   setLSMSchemaFieldRequired,
   setLSMSchemaLabelField,
-} from "../../Form_builder/state-machine/formSchema/reducers";
+} from "../../Services/state-machine/formSchema/reducers";
 import {
   LSMAddNewElementToFormContainerState,
   LSMinitializeFormContainerState,
@@ -23,12 +23,12 @@ import {
   LSMsetLabelValue,
   LSMsetModalState,
   LSMsetRequiredCheckboxFormContainerState,
-} from "../../Form_builder/state-machine/formState/reducers";
+} from "../../Services/state-machine/formState/reducers";
 import {
   addNewElementToFormValues,
   initializeLSMFormValues,
   removeElementFromFormValues,
-} from "../../Form_builder/state-machine/formValues/reducers";
+} from "../../Services/state-machine/formValues/reducers";
 import { sampleFormSchema, sampleInitialFormValues } from "../sampleData"; // Sample data
 import { motion } from "framer-motion";
 import { FormElementsContainer } from "./Elements";

@@ -10,7 +10,7 @@ import { useStateMachine } from "little-state-machine";
 import {
   removeLSMShemaCheckboxOption,
   setLSMSchemaCheckboxOption,
-} from "../../../../Form_builder/state-machine/formSchema/reducers";
+} from "../../../../Services/state-machine/formSchema/reducers";
 import { OptionLabelInlineEdit } from "../OptionLabelInlineEdit";
 
 export const CheckboxInput = ({

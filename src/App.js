@@ -19,7 +19,6 @@ function App() {
     <div className="App">
       <StateMachineProvider>
         <FormBuilder />
-        {/* <FormContainerPlayer /> */}
       </StateMachineProvider>
     </div>
   );
