@@ -4,6 +4,7 @@ import { EuiPanel } from "@elastic/eui";
 
 export const FormFieldPanel = styled(EuiPanel)`
   margin: 1rem 0rem;
+  max-width: 400px;
 `;
 
 export const AddFormFieldPanel = styled(EuiPanel)`

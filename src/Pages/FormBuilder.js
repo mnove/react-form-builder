@@ -9,6 +9,10 @@ import { EuiFlexGroup, EuiFlexItem, EuiPanel } from "@elastic/eui";
 const FormContainerPanel = styled.div`
   width: 50%;
   margin: auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 export const FormBuilder = () => {

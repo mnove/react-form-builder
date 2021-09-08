@@ -37,7 +37,15 @@ import { FormValidation } from "./FormValidation";
 import { FormAddField } from "./FormAddField";
 import { FormButtons } from "./FormButtons";
 import { FormHeader } from "./FormHeader";
+
+import styled from "styled-components";
+
 const formSchema = sampleFormSchema; // Form Schema data
+
+const FormContainerDiv = styled.div`
+  max-width: 400px;
+  margin: auto;
+`;
 
 function FormContainer({ isEditingMode, ...rest }) {
   const { actions, state } = useStateMachine({
@@ -168,27 +176,29 @@ function FormContainer({ isEditingMode, ...rest }) {
         {(formik) => {
           return (
             <>
-              <Form>
-                <FormElementsContainer
-                  formik={formik}
-                  isEditingMode={isEditingMode}
-                  {...rest}
-                />
-                {!isEditingMode && (
-                  <motion.div layout>
-                    <FormValidation formik={formik} />
-                  </motion.div>
-                )}
-                {isEditingMode && (
-                  <motion.div layout>
-                    <FormAddField />
-                  </motion.div>
-                )}
+              <FormContainerDiv>
+                <Form>
+                  <FormElementsContainer
+                    formik={formik}
+                    isEditingMode={isEditingMode}
+                    {...rest}
+                  />
+                  {!isEditingMode && (
+                    <motion.div layout>
+                      <FormValidation formik={formik} />
+                    </motion.div>
+                  )}
+                  {isEditingMode && (
+                    <motion.div layout>
+                      <FormAddField />
+                    </motion.div>
+                  )}
 
-                <motion.div layout>
-                  <FormButtons formSchemaState={LSMFormSchemaState} />
-                </motion.div>
-              </Form>
+                  <motion.div layout>
+                    <FormButtons formSchemaState={LSMFormSchemaState} />
+                  </motion.div>
+                </Form>
+              </FormContainerDiv>
             </>
           );
         }}

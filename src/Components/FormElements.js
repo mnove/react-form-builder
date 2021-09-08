@@ -257,6 +257,7 @@ export function CheckboxGroupField(props) {
                     form.errors[name] && form.touched[name] ? true : false
                   }
                   error={<ErrorMessage name={name} component={TextError} />}
+                  style={{ width: "100%" }}
                 >
                   <div style={{ marginTop: 5 }}>
                     <EuiFlexGroup

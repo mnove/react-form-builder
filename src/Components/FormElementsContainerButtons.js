@@ -14,6 +14,8 @@ import {
   EuiPopover,
   EuiForm,
   EuiFieldText,
+  EuiContextMenuPanel,
+  EuiContextMenuItem,
 } from "@elastic/eui";
 import { FormFieldPanel } from "./styled-components/formStyles";
 import { CloseCircle } from "@styled-icons/remix-fill/CloseCircle";
@@ -32,7 +34,13 @@ import {
 } from "../Form_builder/state-machine/formState/reducers";
 import { removeElementFromFormValues } from "../Form_builder/state-machine/formValues/reducers";
 
-import { motion, AnimateSharedLayout } from "framer-motion";
+import { useViewport } from "../Hooks";
+
+import styled from "styled-components";
+
+const StyledEuiFlexGroup = styled(EuiFlexGroup)`
+  margin-bottom: 0.2rem;
+`;
 
 export const FormElementsContainerButtons = ({ formik, elemKey }) => {
   const key = elemKey;
@@ -142,12 +150,17 @@ export const FormElementsContainerButtons = ({ formik, elemKey }) => {
     formik.resetForm();
   };
 
+  const { width } = useViewport();
+
+  // return <>{width < mobileBreakpoint ? mobileRender : desktopRender}</>;
   return (
     <>
-      <EuiFlexGroup
+      {" "}
+      <StyledEuiFlexGroup
         direction="row"
         alignItems="center"
         justifyContent="flexEnd"
+        responsive={false}
       >
         <EuiFlexItem grow={false}>
           <EuiPopover
@@ -221,7 +234,7 @@ export const FormElementsContainerButtons = ({ formik, elemKey }) => {
             }}
           />
         </EuiFlexItem>
-      </EuiFlexGroup>
+      </StyledEuiFlexGroup>
     </>
   );
 };
