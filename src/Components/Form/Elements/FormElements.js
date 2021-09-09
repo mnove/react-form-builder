@@ -23,6 +23,7 @@ import { motion } from "framer-motion";
 import { CheckboxInput } from "./Checkbox";
 
 import styled from "styled-components";
+import { useFieldReqStatus, useFieldSchema } from "../../../Hooks";
 
 const RequiredMarkStyle = styled.span`
   color: red;
@@ -43,6 +44,12 @@ export function TextField(props) {
     return item.key === name;
   });
   let isElementRequired = item[0].required;
+
+  // TEST HOOK
+  const { getElementRequiredStatus, getFieldSchema } = useFieldSchema(name);
+
+  console.log(getFieldSchema(name));
+  console.log(getElementRequiredStatus(name));
 
   return (
     <>

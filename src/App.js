@@ -2,6 +2,7 @@ import "./App.css";
 
 import { StateMachineProvider, createStore } from "little-state-machine";
 import { FormBuilder } from "./Pages/FormBuilder";
+import { useFormState } from "./Hooks/useFormState";
 
 createStore({
   formSchemaState: [],
@@ -15,11 +16,15 @@ createStore({
 });
 
 function App() {
+
+
   return (
     <div className="App">
       <StateMachineProvider>
         <FormBuilder />
       </StateMachineProvider>
+
+
     </div>
   );
 }
