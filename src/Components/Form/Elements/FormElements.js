@@ -23,13 +23,18 @@ import { motion } from "framer-motion";
 import { CheckboxInput } from "./Checkbox";
 
 import styled from "styled-components";
+import { useFieldRequiredStatus } from "../../../Hooks/useFieldRequiredStatus";
 
 const RequiredMarkStyle = styled.span`
   color: red;
   font-style: italic;
 `;
 
-const requiredMark = <RequiredMarkStyle>*</RequiredMarkStyle>;
+const requiredLabel = (
+  <RequiredMarkStyle>
+    <p>*Required</p>
+  </RequiredMarkStyle>
+);
 
 export function TextField(props) {
   const { name, label, placeholder, ...rest } = props;
@@ -38,11 +43,8 @@ export function TextField(props) {
   if (!label) {
     fieldLabel = "Untitled";
   }
-  const { state } = useStateMachine();
-  let item = state.formSchemaState.filter((item) => {
-    return item.key === name;
-  });
-  let isElementRequired = item[0].required;
+
+  let isElementRequired = useFieldRequiredStatus(name);
 
   return (
     <>
@@ -53,13 +55,7 @@ export function TextField(props) {
               label={fieldLabel}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
               error={<ErrorMessage name={name} component={TextError} />}
-              labelAppend={
-                isElementRequired && (
-                  <RequiredMarkStyle>
-                    <p>*Required</p>
-                  </RequiredMarkStyle>
-                )
-              }
+              labelAppend={isElementRequired && requiredLabel}
             >
               <EuiFieldText
                 type="text"
@@ -85,11 +81,8 @@ export function EmailField(props) {
   if (!label) {
     fieldLabel = "Untitled";
   }
-  const { state } = useStateMachine();
-  let item = state.formSchemaState.filter((item) => {
-    return item.key === name;
-  });
-  let isElementRequired = item[0].required;
+
+  let isElementRequired = useFieldRequiredStatus(name);
 
   return (
     <>
@@ -100,13 +93,7 @@ export function EmailField(props) {
               label={fieldLabel}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
               error={<ErrorMessage name={name} component={TextError} />}
-              labelAppend={
-                isElementRequired && (
-                  <RequiredMarkStyle>
-                    <p>*Required</p>
-                  </RequiredMarkStyle>
-                )
-              }
+              labelAppend={isElementRequired && requiredLabel}
             >
               <EuiFieldText
                 type="email"
@@ -132,11 +119,7 @@ export function NumberField(props) {
     fieldLabel = "Untitled";
   }
 
-  const { state } = useStateMachine();
-  let item = state.formSchemaState.filter((item) => {
-    return item.key === name;
-  });
-  let isElementRequired = item[0].required;
+  let isElementRequired = useFieldRequiredStatus(name);
 
   return (
     <>
@@ -149,13 +132,7 @@ export function NumberField(props) {
               label={`${fieldLabel}`}
               isInvalid={form.errors[name] && form.touched[name] ? true : false}
               error={<ErrorMessage name={name} component={TextError} />}
-              labelAppend={
-                isElementRequired && (
-                  <RequiredMarkStyle>
-                    <p>*Required</p>
-                  </RequiredMarkStyle>
-                )
-              }
+              labelAppend={isElementRequired && requiredLabel}
             >
               <EuiFieldText
                 type="number"
@@ -189,11 +166,7 @@ export function RadioGroupField(props) {
     fieldLabel = "Untitled";
   }
 
-  const { state } = useStateMachine();
-  let item = state.formSchemaState.filter((item) => {
-    return item.key === name;
-  });
-  let isElementRequired = item[0].required;
+  let isElementRequired = useFieldRequiredStatus(name);
 
   let radioOptions = fielddata.radioOptions;
 
@@ -221,13 +194,7 @@ export function RadioGroupField(props) {
                     form.errors[name] && form.touched[name] ? true : false
                   }
                   error={<ErrorMessage name={name} component={TextError} />}
-                  labelAppend={
-                    isElementRequired && (
-                      <RequiredMarkStyle>
-                        <p>*Required</p>
-                      </RequiredMarkStyle>
-                    )
-                  }
+                  labelAppend={isElementRequired && requiredLabel}
                 >
                   <div style={{ marginTop: 5 }}>
                     <EuiFlexGroup
@@ -296,11 +263,7 @@ export function CheckboxGroupField(props) {
     fieldLabel = "Untitled";
   }
 
-  const { state } = useStateMachine();
-  let item = state.formSchemaState.filter((item) => {
-    return item.key === name;
-  });
-  let isElementRequired = item[0].required;
+  let isElementRequired = useFieldRequiredStatus(name);
 
   let checkboxOptions = fielddata.checkboxOptions;
 
@@ -328,13 +291,7 @@ export function CheckboxGroupField(props) {
                     form.errors[name] && form.touched[name] ? true : false
                   }
                   error={<ErrorMessage name={name} component={TextError} />}
-                  labelAppend={
-                    isElementRequired && (
-                      <RequiredMarkStyle>
-                        <p>*Required</p>
-                      </RequiredMarkStyle>
-                    )
-                  }
+                  labelAppend={isElementRequired && requiredLabel}
                   style={{ width: "100%" }}
                 >
                   <div style={{ marginTop: 5 }}>

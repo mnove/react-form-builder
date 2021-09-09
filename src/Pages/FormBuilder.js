@@ -5,6 +5,7 @@ import { FormHeader } from "../Components/Form";
 import styled from "styled-components";
 import { EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
 import FormContainer from "../Components/Form/FormContainer";
+import { useFormState } from "../Hooks/useFormState";
 
 const FormContainerPanel = styled.div`
   width: 50%;
@@ -16,12 +17,9 @@ const FormContainerPanel = styled.div`
 `;
 
 export const FormBuilder = () => {
-  const { state } = useStateMachine();
-  const LSMFormBuilder = state.formBuilder;
-
+  const { getEditingMode } = useFormState();
   // check if the form is in "player mode" (AKA for users to just fill-in)
-  const isEditingMode = LSMFormBuilder.status.isEditingMode;
-  console.log(isEditingMode);
+  const isEditingMode = getEditingMode();
   return (
     <>
       <EuiFlexGroup direction="column">
@@ -35,7 +33,6 @@ export const FormBuilder = () => {
             </FormContainerPanel>
           </div>
         </EuiFlexItem>
-        {/* <div>More...</div> */}
       </EuiFlexGroup>
     </>
   );

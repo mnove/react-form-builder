@@ -12,17 +12,21 @@ import { Eye } from "@styled-icons/remix-fill/Eye";
 import { Edit } from "@styled-icons/remix-fill/Edit";
 import { useStateMachine } from "little-state-machine";
 import { setLSMFormEditingMode } from "../../Services/state-machine/formBuilder/reducers";
+import { useFormState } from "../../Hooks/useFormState";
 
 export const FormHeader = () => {
   const { actions, state } = useStateMachine({
     setLSMFormEditingMode,
   });
-  const editingStatus = state.formBuilder.status.isEditingMode;
+
+  const { getEditingMode } = useFormState();
+  // check if the form is in "player mode" (AKA for users to just fill-in)
+
+  const editingStatus = getEditingMode();
   const handleClick = () => {
     let payload = {
       editingModeStatus: editingStatus,
     };
-
     actions.setLSMFormEditingMode(payload);
   };
 
