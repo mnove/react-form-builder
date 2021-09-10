@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import { useStateMachine } from "little-state-machine";
-
-import {
-  EuiButton,
-  EuiHeader,
-  EuiHeaderSection,
-  EuiHeaderSectionItem,
-  EuiText,
-} from "@elastic/eui";
+import { EuiText } from "@elastic/eui";
 import {
   setLSMFormTitle,
   setLSMFormDescription,

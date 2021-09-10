@@ -34,8 +34,8 @@ function InlineEdit({
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
     if (isInputActive) {
+      // check if inputValue is equal zero (e.g. user entering empty string)
       if (inputValue.length === 0) {
-        console.log(inputValue.length);
         setInputValue("untitled");
         payload.labelValue = "untitled";
         onSetText("untitled");
@@ -47,7 +47,6 @@ function InlineEdit({
 
       // If stateActions is passed as prop, then dispatch the state update
       if (stateActions) {
-        console.log("PAYLOAD ", payload);
         stateActions[stateActionType](payload);
       }
     }
@@ -55,8 +54,8 @@ function InlineEdit({
 
   const onEnter = useCallback(() => {
     if (enter) {
+      // check if inputValue is equal zero (e.g. user entering empty string)
       if (inputValue.length === 0) {
-        console.log(inputValue.length);
         setInputValue("untitled");
         payload.labelValue = "untitled";
         onSetText("untitled");

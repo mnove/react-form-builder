@@ -12,6 +12,7 @@ import styled from "styled-components";
 const FormFieldPanel = styled(EuiPanel)`
   margin: 1rem 0rem;
   max-width: 400px;
+  padding: 0.8rem;
 `;
 
 export const FormElementsContainer = ({ formik, isEditingMode }) => {
@@ -31,7 +32,7 @@ export const FormElementsContainer = ({ formik, isEditingMode }) => {
                 <motion.div layout>
                   <FormFieldPanel
                     hasShadow={false}
-                    hasBorder={true}
+                    hasBorder={false}
                     key={index}
                   >
                     <motion.div layout>
