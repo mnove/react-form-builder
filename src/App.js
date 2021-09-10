@@ -11,6 +11,10 @@ createStore({
     status: {
       isEditingMode: false,
     },
+    meta: {
+      formTitle: "Untitled Form",
+      formDescription: "lorem ipsum siet",
+    },
   },
 });
 
