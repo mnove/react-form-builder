@@ -14,6 +14,7 @@ function InlineEdit({
   text,
   stateActions = null,
   stateActionType = "",
+  fontSize = 16,
 }) {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(text);
@@ -33,8 +34,16 @@ function InlineEdit({
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
     if (isInputActive) {
-      onSetText(inputValue);
-      setIsInputActive(false);
+      // check if inputValue is equal zero (e.g. user entering empty string)
+      if (inputValue.length === 0) {
+        setInputValue("untitled");
+        payload.labelValue = "untitled";
+        onSetText("untitled");
+        setIsInputActive(false);
+      } else {
+        onSetText(inputValue);
+        setIsInputActive(false);
+      }
 
       // If stateActions is passed as prop, then dispatch the state update
       if (stateActions) {
@@ -45,8 +54,16 @@ function InlineEdit({
 
   const onEnter = useCallback(() => {
     if (enter) {
-      onSetText(inputValue);
-      setIsInputActive(false);
+      // check if inputValue is equal zero (e.g. user entering empty string)
+      if (inputValue.length === 0) {
+        setInputValue("untitled");
+        payload.labelValue = "untitled";
+        onSetText("untitled");
+        setIsInputActive(false);
+      } else {
+        onSetText(inputValue);
+        setIsInputActive(false);
+      }
 
       // If stateActions is passed as prop, then dispatch the state update
       if (stateActions) {
@@ -107,13 +124,17 @@ function InlineEdit({
           className={`inline-text_copy inline-text_copy--${
             !isInputActive ? "active" : "hidden"
           }`}
+          style={{ fontSize: fontSize }}
         >
           {text}
         </span>
         <input
           ref={inputRef}
           // set the width to the input length multiplied by the x height
-          style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
+          style={{
+            minWidth: Math.ceil(inputValue.length) + "ch",
+            fontSize: fontSize,
+          }}
           value={inputValue}
           onChange={handleInputChange}
           className={`inline-text_input inline-text_input--${

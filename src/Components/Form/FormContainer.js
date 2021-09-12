@@ -36,6 +36,7 @@ import { FormValidation } from "./FormValidation";
 import { FormAddField } from "./FormAddField";
 import { FormButtons } from "./FormButtons";
 import styled from "styled-components";
+import { FormTitle } from "./FormTitle";
 
 const FormContainerDiv = styled.div`
   max-width: 400px;
@@ -164,6 +165,7 @@ function FormContainer({ isEditingMode, ...rest }) {
               {console.log("RENDERED")}
               <FormContainerDiv>
                 <Form>
+                  <FormTitle isEditingMode={isEditingMode} />
                   <FormElementsContainer
                     formik={formik}
                     isEditingMode={isEditingMode}
@@ -180,9 +182,11 @@ function FormContainer({ isEditingMode, ...rest }) {
                     </motion.div>
                   )}
 
-                  <motion.div layout>
-                    <FormButtons formSchemaState={LSMFormSchemaState} />
-                  </motion.div>
+                  {!isEditingMode && (
+                    <motion.div layout>
+                      <FormButtons formSchemaState={LSMFormSchemaState} />
+                    </motion.div>
+                  )}
                 </Form>
               </FormContainerDiv>
             </>
