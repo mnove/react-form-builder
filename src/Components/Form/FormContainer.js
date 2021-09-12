@@ -182,9 +182,11 @@ function FormContainer({ isEditingMode, ...rest }) {
                     </motion.div>
                   )}
 
-                  <motion.div layout>
-                    <FormButtons formSchemaState={LSMFormSchemaState} />
-                  </motion.div>
+                  {!isEditingMode && (
+                    <motion.div layout>
+                      <FormButtons formSchemaState={LSMFormSchemaState} />
+                    </motion.div>
+                  )}
                 </Form>
               </FormContainerDiv>
             </>
