@@ -5,6 +5,7 @@ import useKeypress from "../hooks/useKeypress";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import DOMPurify from "dompurify";
 import { EuiText } from "@elastic/eui";
+
 import "./styles.css";
 
 function InlineEdit({
@@ -117,11 +118,11 @@ function InlineEdit({
 
   return (
     <EuiText>
-      <span className="inline-text" ref={wrapperRef}>
+      <span ref={wrapperRef}>
         <span
           ref={textRef}
           onClick={(e) => handleClick(e)}
-          className={`inline-text_copy inline-text_copy--${
+          className={`inline-text_copy--${
             !isInputActive ? "active" : "hidden"
           }`}
           style={{ fontSize: fontSize }}
@@ -137,7 +138,7 @@ function InlineEdit({
           }}
           value={inputValue}
           onChange={handleInputChange}
-          className={`inline-text_input inline-text_input--${
+          className={`inline-text_input--${
             isInputActive ? "active" : "hidden"
           }`}
         />

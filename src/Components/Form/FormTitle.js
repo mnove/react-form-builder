@@ -5,7 +5,7 @@ import {
   setLSMFormTitle,
   setLSMFormDescription,
 } from "../../Services/state-machine/formBuilder/reducers";
-import InlineEdit from "../InlineTextEdit/Components/inlineEdit";
+import InlineEdit from "../InlineTextEdit/Components/InlineEdit";
 
 const titleFontSize = 32; //  in px
 const descriptionFontSize = 16; // in px

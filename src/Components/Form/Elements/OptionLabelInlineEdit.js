@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import InlineEdit from "../../InlineTextEdit/Components/inlineEdit";
+import InlineEdit from "../../InlineTextEdit/Components/InlineEdit";
 
 export const OptionLabelInlineEdit = ({ labelText, ...rest }) => {
   const [storedText, setStoredText] = useState(labelText);
